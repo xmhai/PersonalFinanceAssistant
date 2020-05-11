@@ -1,0 +1,11 @@
+#menu .container {
+    margin-left: 0 !important;
+}
+
+#breadcrumb .container {
+    margin-left: 50px !important;
+}
+
+.chart {
+    margin: auto;
+}

@@ -8,8 +8,6 @@ class AssetAllocation extends React.Component {
     render() {
         if (this.props.asssetAllocation) {
             const myData = this.props.asssetAllocation.map(x => { return {angle: x.percentage, label: x.category}});
-            //const myData = [{angel: 5}, {angel: 5}, {angel: 45}, {angel: 45}]
-            console.log(myData);
 
             return (
                 <div className="ui two column row">
@@ -40,7 +38,7 @@ class AssetAllocation extends React.Component {
                             <Table.Row>
                                 <Table.HeaderCell><b>Summary</b></Table.HeaderCell>
                                 <Table.HeaderCell textAlign="right"><b>{this.props.sum.toLocaleString()}</b></Table.HeaderCell>
-                                <Table.HeaderCell textAlign="right"></Table.HeaderCell>
+                                <Table.HeaderCell textAlign="right"><button>Save</button></Table.HeaderCell>
                             </Table.Row>
                         </Table.Footer>
                         </Table>

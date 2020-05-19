@@ -2,12 +2,24 @@ import React from 'react';
 import { Container, Header, Table } from 'semantic-ui-react'
 import { RadialChart } from 'react-vis'
 
-import '../../node_modules/react-vis/dist/style.css';
+import service from '../../apis/service'
+import '../../../node_modules/react-vis/dist/style.css';
   
 class AssetAllocation extends React.Component {
+    state = {allocation: null, sum: null};
+
+    async componentDidMount() {
+        const response = await service.get('asset/allocation');
+
+        const sum = response.data.reduce((a, b) => a + b.amount,0);
+        const allocation = response.data.map(x => { return {...x, percentage: x.amount*100/sum }});
+
+        this.setState({allocation, sum});
+    }
+
     render() {
-        if (this.props.asssetAllocation) {
-            const myData = this.props.asssetAllocation.map(x => { return {angle: x.percentage, label: x.category}});
+        if (this.state.allocation) {
+            const myData = this.state.allocation.map(x => { return {angle: x.percentage, label: x.category}});
 
             return (
                 <div className="ui two column row">
@@ -22,7 +34,7 @@ class AssetAllocation extends React.Component {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                            {Object.values(this.props.asssetAllocation).map(
+                            {Object.values(this.state.allocation).map(
                                 ({ category, amount, percentage }) => {
                                     return (
                                         <Table.Row key={`row-${category}`}>
@@ -37,7 +49,7 @@ class AssetAllocation extends React.Component {
                         <Table.Footer>
                             <Table.Row>
                                 <Table.HeaderCell><b>Summary</b></Table.HeaderCell>
-                                <Table.HeaderCell textAlign="right"><b>{this.props.sum.toLocaleString()}</b></Table.HeaderCell>
+                                <Table.HeaderCell textAlign="right"><b>{this.state.sum.toLocaleString()}</b></Table.HeaderCell>
                                 <Table.HeaderCell textAlign="right"><button>Save</button></Table.HeaderCell>
                             </Table.Row>
                         </Table.Footer>
@@ -52,7 +64,7 @@ class AssetAllocation extends React.Component {
             return (
                 <div id='content'>
                     <Container text style={{ marginTop: '7em' }}>
-                        <Header as='h4'>Dashboard</Header>
+                        <Header as='h4'>Loading...</Header>
                     </Container>
                 </div>
             );

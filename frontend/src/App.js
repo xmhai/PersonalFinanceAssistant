@@ -19,9 +19,8 @@ class App extends React.Component {
         return (
             <div className="ui container">
                 <BrowserRouter>
-                    <div>
-                        <AppMenu />
-                        <AppBreadcrumb />
+                    <AppMenu />
+                    <div style={{ marginTop: '5em' }}>
                         <Switch>
                             <Route path="/" exact component={ Dashboard } />
                             <Route path="/account" exact component={ AccountList } />
@@ -31,8 +30,8 @@ class App extends React.Component {
                             <Route path="/transaction" exact component={ TransactionList } />
                             <Route path="/portfolio" exact component={ PortfolioList } />
                         </Switch>
-                        <AppFooter />
                     </div>
+                    <AppFooter />
                 </BrowserRouter>
             </div>
         );

@@ -1,7 +1,6 @@
 -- account
 TRUNCATE TABLE account;
 INSERT INTO account (
-  id,
   institute_name,
   account_no,
   account_holder,
@@ -14,7 +13,7 @@ INSERT INTO account (
   updated_by,
   updated_date
 )
-SELECT `cash`.`CashID`,
+SELECT 
     `cash`.`BankName`,
     `cash`.`BankAccountNo`,
     `cash`.`BankAccountName`,
@@ -27,6 +26,8 @@ SELECT `cash`.`CashID`,
     0,
     `cash`.`UpdatedDate`
 FROM `asset`.`cash`;
+
+ALTER TABLE account AUTO_INCREMENT = 20;
 
 -- asset_history
 DROP VIEW IF EXISTS asset.vw_asset_history;

@@ -13,19 +13,19 @@ class AppMenu extends React.Component {
                             <font color="#F2B233">PFA</font>
                         </Menu.Item>
                         <Menu.Item><Link to={`/`}>Home</Link></Menu.Item>
-                        <Menu.Item><Link to={`/account`}>Account</Link></Menu.Item>
+                        <Menu.Item><Link to={`/accounts`}>Account</Link></Menu.Item>
 
                         <Dropdown item text='Stock'>
                             <Dropdown.Menu>
-                                <Dropdown.Item text='Portfolio' as={Link} to='/portfolio' />
-                                <Dropdown.Item text='Transaction' as={Link} to='/transaction' />
-                                <Dropdown.Item text='Dividend' as={Link} to='/dividend' />
+                                <Dropdown.Item text='Portfolio' as={Link} to='/portfolios' />
+                                <Dropdown.Item text='Transaction' as={Link} to='/transactions' />
+                                <Dropdown.Item text='Dividend' as={Link} to='/dividends' />
                             </Dropdown.Menu>
                         </Dropdown>
 
                         <Dropdown item text='Config'>
                             <Dropdown.Menu>
-                                <Dropdown.Item text='Stock' as={Link} to='/stock' />
+                                <Dropdown.Item text='Stock' as={Link} to='/stocks' />
                             </Dropdown.Menu>
                         </Dropdown>
                     </Container>

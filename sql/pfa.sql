@@ -114,7 +114,7 @@ CREATE TABLE account (
   institute_name varchar(20) NOT NULL,
   account_no varchar(20),
   account_holder varchar(50),
-  category_id varchar(10) NOT NULL,
+  category_id int NOT NULL,
   currency_id int NOT NULL,
   amount decimal(10,2) NOT NULL,
   maturity_date datetime,

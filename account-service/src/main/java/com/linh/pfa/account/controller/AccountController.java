@@ -55,8 +55,11 @@ public class AccountController {
             return ResponseEntity.badRequest().build();
         }
 
+        // save original values 
         account.setCreatedBy(accountExisting.getCreatedBy());
         account.setCreatedDate(accountExisting.getCreatedDate());
+        account.setIsDeleted(false);
+        
         account.setUpdatedBy(0L);
         return ResponseEntity.ok(accountRespository.saveAndFlush(account));
     }

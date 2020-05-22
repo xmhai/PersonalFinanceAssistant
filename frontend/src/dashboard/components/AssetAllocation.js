@@ -2,14 +2,14 @@ import React from 'react';
 import { Container, Header, Table } from 'semantic-ui-react'
 import { RadialChart } from 'react-vis'
 
-import service from '../../apis/service'
+import { accountService } from '../../apis'
 import '../../../node_modules/react-vis/dist/style.css';
   
 class AssetAllocation extends React.Component {
     state = {allocation: null, sum: null};
 
     async componentDidMount() {
-        const response = await service.get('asset/allocation');
+        const response = await accountService.get('asset/allocation');
 
         const sum = response.data.reduce((a, b) => a + b.amount,0);
         const allocation = response.data.map(x => { return {...x, percentage: x.amount*100/sum }});

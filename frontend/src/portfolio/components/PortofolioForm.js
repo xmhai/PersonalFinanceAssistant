@@ -8,7 +8,7 @@ import 'antd/dist/antd.css';
 import { fetchCategories } from '../../common/actions';
 import { fetchCurrencies } from '../../common/actions';
 
-class AccountForm extends React.Component {
+class PortfolioForm extends React.Component {
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchCurrencies();
@@ -37,6 +37,7 @@ class AccountForm extends React.Component {
 
   renderDate = ({ input, label, meta }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+    console.log(input)
     return (
       <div className={className}>
         <label>{label}</label>
@@ -74,8 +75,8 @@ class AccountForm extends React.Component {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error" >
         <Field name="instituteName" component={this.renderInput} label="Institute Name" />
-        <Field name="accountNo" component={this.renderInput} label="Account No.:" />
-        <Field name="accountHolder" component={this.renderInput} label="Account Holder:" />
+        <Field name="portfolioNo" component={this.renderInput} label="Portfolio No.:" />
+        <Field name="portfolioHolder" component={this.renderInput} label="Portfolio Holder:" />
         <Field name="categoryId" component={this.renderDropdown} data={this.props.categories} label="Asset Category:" />
         <Field name="currencyId" component={this.renderDropdown} data={this.props.currencies} label="Currency:" />
         <Field name="amount" component={this.renderInput} label="Amount:" />
@@ -93,8 +94,8 @@ const validate = formValues => {
     errors.instituteName = 'You must enter a title';
   }
 
-  if (!formValues.accountNo) {
-    errors.accountNo = 'You must enter a description';
+  if (!formValues.portfolioNo) {
+    errors.portfolioNo = 'You must enter a description';
   }
 
   return errors;
@@ -107,9 +108,9 @@ const mapStateToProps = state => {
   };
 };
 
-AccountForm = connect(mapStateToProps, { fetchCategories, fetchCurrencies } )(AccountForm);
+PortfolioForm = connect(mapStateToProps, { fetchCategories, fetchCurrencies } )(PortfolioForm);
 
 export default reduxForm({
-  form: 'accountForm',
+  form: 'portfolioForm',
   validate
-})(AccountForm);
+})(PortfolioForm);

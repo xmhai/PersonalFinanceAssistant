@@ -2,24 +2,24 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchAccounts } from '../actions';
+import { fetchPortfolios } from '../actions';
 import { fetchCurrencies } from '../../common/actions';
 import { fetchCategories } from '../../common/actions';
 
-class AccountList extends React.Component {
+class PortfolioList extends React.Component {
     componentDidMount() {
         this.props.fetchCurrencies();
         this.props.fetchCategories();
-        this.props.fetchAccounts();
+        this.props.fetchPortfolios();
     }
 
-    renderAdmin(account) {
+    renderAdmin(portfolio) {
         return (
             <div className="right floated content">
-                <Link to={`/accounts/edit/${account.id}`} className="ui button primary">
+                <Link to={`/portfolios/edit/${portfolio.id}`} className="ui button primary">
                     Edit
                 </Link>
-                <Link to={`/accounts/delete/${account.id}`} className="ui button negative" >
+                <Link to={`/portfolios/delete/${portfolio.id}`} className="ui button negative" >
                     Delete
                 </Link>
             </div>
@@ -27,17 +27,17 @@ class AccountList extends React.Component {
     }
 
     renderList() {
-        return this.props.accounts.map(account => {
+        return this.props.portfolios.map(portfolio => {
             return (
-                <div className="item" key={account.id}>
-                    {this.renderAdmin(account)}
+                <div className="item" key={portfolio.id}>
+                    {this.renderAdmin(portfolio)}
                     <i className="large middle aligned icon camera" />
                     <div className="content">
-                        <Link to={`/accounts/${account.id}`} className="header">
-                            {account.instituteName}
+                        <Link to={`/portfolios/${portfolio.id}`} className="header">
+                            {portfolio.instituteName}
                         </Link>
-                        <div className="description">{account.accountNo}</div>
-                        <div className="description">{this.props.categories[account.categoryId].code}</div>
+                        <div className="description">{portfolio.portfolioNo}</div>
+                        <div className="description">{this.props.categories[portfolio.categoryId].code}</div>
                     </div>
                 </div>
             );
@@ -47,8 +47,8 @@ class AccountList extends React.Component {
     renderCreate() {
         return (
             <div style={{ textAlign: 'right' }}>
-                <Link to="/accounts/new" className="ui button primary">
-                    Create Account
+                <Link to="/portfolios/new" className="ui button primary">
+                    Create Stream
                 </Link>
             </div>
         );
@@ -57,7 +57,7 @@ class AccountList extends React.Component {
     render() {
         return (
             <div>
-                <h2>Accounts</h2>
+                <h2>Portfolios</h2>
                 {this.renderCreate()}
                 <div className="ui celled list">{this.renderList()}</div>
             </div>
@@ -67,10 +67,10 @@ class AccountList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        accounts: Object.values(state.accounts),
+        portfolios: Object.values(state.portfolios),
         currencies: state.config.currencies,
         categories: state.config.categories
     };
 };
 
-export default connect(mapStateToProps, { fetchAccounts, fetchCurrencies, fetchCategories })(AccountList);
+export default connect(mapStateToProps, { fetchPortfolios, fetchCurrencies, fetchCategories })(PortfolioList);

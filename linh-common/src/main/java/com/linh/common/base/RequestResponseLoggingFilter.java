@@ -29,10 +29,10 @@ public class RequestResponseLoggingFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		LocalDateTime startTime = LocalDateTime.now(); 
-		logger.info("Request {}: {}", req.getMethod(), req.getRequestURI());
+		logger.info("{} {}", req.getMethod(), req.getRequestURI());
 		
 		chain.doFilter(request, response);
 		
-		logger.info("Response: {} in {} ms", res.getStatus(), Duration.between(LocalDateTime.now(), startTime).toMillis());
+		logger.info("Response: {} {} {} ms", req.getRequestURI(), res.getStatus(), Duration.between(startTime, LocalDateTime.now()).toMillis());
 	}
 }

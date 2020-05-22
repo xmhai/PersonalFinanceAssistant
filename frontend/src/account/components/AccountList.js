@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchAccounts } from '../actions';
+import { fetchCurrencies } from '../../common/actions';
+import { fetchCategories } from '../../common/actions';
 
 class AccountList extends React.Component {
     componentDidMount() {
+        this.props.fetchCurrencies();
+        this.props.fetchCategories();
         this.props.fetchAccounts();
     }
 
@@ -33,6 +37,7 @@ class AccountList extends React.Component {
                             {account.instituteName}
                         </Link>
                         <div className="description">{account.accountNo}</div>
+                        <div className="description">{this.props.categories[account.categoryId].code}</div>
                     </div>
                 </div>
             );
@@ -50,6 +55,7 @@ class AccountList extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div>
                 <h2>Accounts</h2>
@@ -62,8 +68,10 @@ class AccountList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        accounts: Object.values(state.accounts)
+        accounts: Object.values(state.accounts),
+        currencies: state.config.currencies,
+        categories: state.config.categories
     };
 };
 
-export default connect(mapStateToProps, { fetchAccounts })(AccountList);
+export default connect(mapStateToProps, { fetchAccounts, fetchCurrencies, fetchCategories })(AccountList);

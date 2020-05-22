@@ -16,7 +16,6 @@ export default (state = { "currencies": [], "categories": [], "exchanges": [], "
             console.log({ ..._.mapKeys(action.payload, 'id') });
             return { ...state, "exchanges": { ..._.mapKeys(action.payload, 'id') } };
         case FETCH_TRANSACTION_TYPES:
-            console.log({ ..._.mapKeys(action.payload, 'id') });
             return { ...state, "transactionTypes": { ..._.mapKeys(action.payload, 'id') } };
         default:
             return state;

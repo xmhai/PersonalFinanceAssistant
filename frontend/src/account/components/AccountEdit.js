@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchAccount, editAccount } from '../actions';
@@ -20,7 +19,7 @@ class AccountEdit extends React.Component {
 
     return (
       <div>
-        <h3>Edit a Stream</h3>
+        <h3>Edit Account</h3>
         <AccountForm
           initialValues={this.props.account}
           onSubmit={this.onSubmit}

@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom';
 import { fetchAccounts } from '../actions';
 
 class AccountView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { id } = this.props.match.params;
 

@@ -33,6 +33,6 @@ public class RequestResponseLoggingFilter implements Filter {
 		
 		chain.doFilter(request, response);
 		
-		logger.info("Response: {} {} {} ms", req.getRequestURI(), res.getStatus(), Duration.between(startTime, LocalDateTime.now()).toMillis());
+		logger.info("Response: {} {} {} {}ms", req.getMethod(), req.getRequestURI(), res.getStatus(), Duration.between(startTime, LocalDateTime.now()).toMillis());
 	}
 }

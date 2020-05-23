@@ -7,11 +7,7 @@ INSERT INTO account (
   category_id,
   currency_id,
   amount,
-  maturity_date,
-  created_by,
-  created_date,
-  updated_by,
-  updated_date
+  maturity_date
 )
 SELECT 
     `cash`.`BankName`,
@@ -20,11 +16,7 @@ SELECT
     4, -- CASH
     `cash`.`Currency` + 1,
     `cash`.`Amount`,
-    `cash`.`MaturityDate`,
-    0,
-    `cash`.`UpdatedDate`,
-    0,
-    `cash`.`UpdatedDate`
+    `cash`.`MaturityDate`
 FROM `asset`.`cash`;
 
 ALTER TABLE account AUTO_INCREMENT = 20;

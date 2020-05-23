@@ -6,10 +6,10 @@ CREATE TABLE code_type (
   id int NOT NULL AUTO_INCREMENT,
   code_type_name varchar(60) NOT NULL,
   code_type_desc varchar(100),
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -21,10 +21,10 @@ CREATE TABLE code_table (
   code_name varchar(20) NOT NULL,
   code_value varchar(100) NOT NULL,
   code_desc varchar(100),
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -38,10 +38,10 @@ DROP TABLE IF EXISTS asset_category;
 CREATE TABLE asset_category (
   id int NOT NULL AUTO_INCREMENT,
   code varchar(20) NOT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -59,10 +59,10 @@ DROP TABLE IF EXISTS exchange;
 CREATE TABLE exchange (
   id int NOT NULL AUTO_INCREMENT,
   code varchar(10) NOT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -79,10 +79,10 @@ CREATE TABLE currency (
   id int NOT NULL AUTO_INCREMENT,
   code varchar(10) NOT NULL,
   exchange_rate decimal(10,2) NOT NULL, -- yesterday exchange rate updated by scheduled job
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -96,10 +96,10 @@ DROP TABLE IF EXISTS transaction_type;
 CREATE TABLE transaction_type (
   id int NOT NULL AUTO_INCREMENT,
   code varchar(10) NOT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -117,11 +117,11 @@ CREATE TABLE account (
   category_id int NOT NULL,
   currency_id int NOT NULL,
   amount decimal(10,2) NOT NULL,
-  maturity_date datetime,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  maturity_date date,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -133,10 +133,24 @@ CREATE TABLE asset_history (
   record_date datetime NOT NULL,	-- same value for all category within the date
   category_id varchar(10) NOT NULL,
   amount decimal(10,2) NOT NULL, -- in SGD
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
+  is_deleted bit DEFAULT 0,
+  PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS portfolio;
+CREATE TABLE portfolio (
+  id int NOT NULL AUTO_INCREMENT,
+  stock_id int NOT NULL,
+  quantity int DEFAULT NULL,
+  cost decimal(7,3) DEFAULT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_by int,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -151,10 +165,10 @@ CREATE TABLE stock (
   currency_id int NOT NULL,
   latest_price decimal(7,3) NOT NULL, -- yesterday price updated by scheduled job or current price by user-triggered manually refresh
   category_id int NOT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -167,24 +181,10 @@ CREATE TABLE stock_transaction (
   transaction_type_id int NOT NULL,
   price decimal(7,3) NOT NULL,
   quantity int DEFAULT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
-  is_deleted bit DEFAULT 0,
-  PRIMARY KEY (id)
-);
-
-DROP TABLE IF EXISTS portfolio;
-CREATE TABLE portfolio (
-  id int NOT NULL AUTO_INCREMENT,
-  stock_id int NOT NULL,
-  quantity int DEFAULT NULL,
-  cost decimal(7,3) DEFAULT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
-  updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -195,10 +195,10 @@ CREATE TABLE dividend (
   stock_id int NOT NULL,
   amount decimal(7,2) NOT NULL,
   pay_date datetime NOT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );
@@ -208,10 +208,10 @@ CREATE TABLE profit (
   id int NOT NULL AUTO_INCREMENT,
   Stock_id int NOT NULL,
   amount decimal(8,2) NOT NULL,
-  created_by int NOT NULL,
-  created_date datetime NOT NULL,
+  created_by int NOT NULL DEFAULT 0,
+  created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,
-  updated_date datetime,
+  updated_date timestamp NULL DEFAULT NULL,
   is_deleted bit DEFAULT 0,
   PRIMARY KEY (id)
 );

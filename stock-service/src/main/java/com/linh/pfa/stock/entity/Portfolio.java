@@ -1,8 +1,9 @@
-package com.linh.pfa.portfolio.entity;
+package com.linh.pfa.stock.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
 import org.hibernate.annotations.Where;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,8 @@ import com.linh.common.base.BaseEntity;
 @Where(clause = "is_deleted = 0")
 @Getter @Setter @NoArgsConstructor
 public class Portfolio extends BaseEntity {
-	private String instituteName;
-	private String portfolioNo;
-	private String portfolioHolder;
-	private Long categoryId;
-	private Long currencyId;
-	private BigDecimal amount;
-	private LocalDate maturityDate;
+	@OneToOne
+	private Stock stock;
+	private Long quantity;
+	private BigDecimal cost;
 }

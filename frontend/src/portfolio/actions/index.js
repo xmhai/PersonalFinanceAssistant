@@ -1,4 +1,4 @@
-import accountService from '../../apis/accountService';
+import { stockService } from '../../apis';
 import history from '../../history';
 import {
   CREATE_PORTFOLIO,
@@ -9,33 +9,33 @@ import {
 } from './types';
 
 export const createPortfolio = formValues => async (dispatch, getState) => {
-  const response = await service.post('/portfolios', formValues);
+  const response = await stockService.post('/portfolios', formValues);
 
   dispatch({ type: CREATE_PORTFOLIO, payload: response.data });
   history.push('/portfolios');
 };
 
 export const fetchPortfolios = () => async dispatch => {
-  const response = await service.get('/portfolios');
+  const response = await stockService.get('/portfolios');
 
   dispatch({ type: FETCH_PORTFOLIOS, payload: response.data });
 };
 
 export const fetchPortfolio = id => async dispatch => {
-  const response = await service.get(`/portfolios/${id}`);
+  const response = await stockService.get(`/portfolios/${id}`);
 
   dispatch({ type: FETCH_PORTFOLIO, payload: response.data });
 };
 
 export const editPortfolio = (id, formValues) => async dispatch => {
-  const response = await service.put(`/portfolios/${id}`, formValues);
+  const response = await stockService.put(`/portfolios/${id}`, formValues);
 
   dispatch({ type: EDIT_PORTFOLIO, payload: response.data });
   history.push('/portfolios');
 };
 
 export const deletePortfolio = id => async dispatch => {
-  await service.delete(`/portfolios/${id}`);
+  await stockService.delete(`/portfolios/${id}`);
 
   dispatch({ type: DELETE_PORTFOLIO, payload: id });
   history.push('/portfolios');

@@ -1,70 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { DatePicker } from 'antd';
-import moment from 'moment';
-import 'antd/dist/antd.css';
 
 import { fetchCategories } from '../../common/actions';
 import { fetchCurrencies } from '../../common/actions';
+import { HtmlInput, HtmlSelect } from '../../shared/components/HtmlComponents';
 
 class AccountForm extends React.Component {
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchCurrencies();
   }
-
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return (
-        <div className="ui error message">
-          <div className="header">{error}</div>
-        </div>
-      );
-    }
-  }
-
-  renderInput = ({ input, type, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
-    return (
-      <div className={className}>
-        <label>{label}</label>
-        <input {...input} type={type} />
-        {this.renderError(meta)}
-      </div>
-    );
-  };
-
-  renderDate = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
-    return (
-      <div className={className}>
-        <label>{label}</label>
-        <DatePicker defaultValue={moment(input.value, 'YYYY-MM-DD')} format='DD/MM/YYYY' />
-        {this.renderError(meta)}
-      </div>
-    );
-  };
-
-  renderDropdown = ({ input, label, data }) => {
-    if (data === undefined || data.length === 0) {
-      return (
-        <div className="field">
-          <label>{label}</label>
-          <select></select>
-        </div >
-      );
-    }
-
-    return (
-      <div className="field">
-        <label>{label}</label>
-        <select {...input}>
-          { data.map( (elem, index) => <option key={elem.id} value={elem.id}>{elem.code}</option>) }
-        </select>
-      </div >
-    );
-  };
 
   onSubmit = formValues => {
     this.props.onSubmit(formValues);
@@ -73,13 +19,13 @@ class AccountForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error" >
-        <Field name="instituteName" component={this.renderInput} label="Institute Name" />
-        <Field name="accountNo" component={this.renderInput} label="Account No.:" />
-        <Field name="accountHolder" component={this.renderInput} label="Account Holder:" />
-        <Field name="categoryId" component={this.renderDropdown} data={this.props.categories} label="Asset Category:" />
-        <Field name="currencyId" component={this.renderDropdown} data={this.props.currencies} label="Currency:" />
-        <Field name="amount" component={this.renderInput} label="Amount:" />
-        <Field name="maturityDate" component={this.renderDate} type="date" label="Maturity Date:" />
+        <Field name="instituteName" component={HtmlInput} label="Institute Name" />
+        <Field name="accountNo" component={HtmlInput} label="Account No.:" />
+        <Field name="accountHolder" component={HtmlInput} label="Account Holder:" />
+        <Field name="categoryId" component={HtmlSelect} data={this.props.categories} label="Asset Category:" />
+        <Field name="currencyId" component={HtmlSelect} data={this.props.currencies} label="Currency:" />
+        <Field name="amount" component={HtmlInput} label="Amount:" />
+        <Field name="maturityDate" component={HtmlInput} type="date" label="Maturity Date:" />
         <button className="ui button primary">Submit</button>
       </form>
     );

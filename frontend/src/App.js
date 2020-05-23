@@ -18,7 +18,12 @@ import DividendList from './dividend/components/DividendList'
 import ProfitList from './profit/components/ProfitList'
 import StockList from './stock/components/StockList'
 import TransactionList from './transaction/components/TransactionList'
+
 import PortfolioList from './portfolio/components/PortfolioList'
+import PortfolioCreate from './portfolio/components/PortfolioCreate'
+import PortfolioEdit from './portfolio/components/PortfolioEdit'
+import PortfolioDelete from './portfolio/components/PortfolioDelete'
+import PortfolioView from './portfolio/components/PortfolioView'
 
 class App extends React.Component {
     render() {
@@ -40,7 +45,12 @@ class App extends React.Component {
                             <Route path="/profits" exact component={ ProfitList } />
                             <Route path="/stocks" exact component={ StockList } />
                             <Route path="/transactions" exact component={ TransactionList } />
+
                             <Route path="/portfolios" exact component={ PortfolioList } />
+                            <Route path="/portfolios/new" exact component={PortfolioCreate} />
+                            <Route path="/portfolios/edit/:id" exact component={PortfolioEdit} />
+                            <Route path="/portfolios/delete/:id" exact component={PortfolioDelete} />
+                            <Route path="/portfolios/:id" exact component={PortfolioView} />
                         </Switch>
                     </div>
                     <AppFooter />

@@ -7,6 +7,7 @@ import { reducer as formReducer } from 'redux-form';
 
 import App from './App'
 import accountReducer from './account/reducers/accountReducer';
+import portfolioReducer from './portfolio/reducers/portfolioReducer';
 import configReducer from './common/reducers/configReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -14,6 +15,7 @@ const store = createStore(
     combineReducers({
         form: formReducer,
         accounts: accountReducer,
+        portfolios: portfolioReducer,
         config: configReducer
     }),
     composeEnhancers(applyMiddleware(reduxThunk))

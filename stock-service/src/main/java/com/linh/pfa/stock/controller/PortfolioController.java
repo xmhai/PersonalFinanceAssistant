@@ -1,7 +1,6 @@
-package com.linh.pfa.portfolio.controller;
+package com.linh.pfa.stock.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linh.pfa.portfolio.entity.Portfolio;
-import com.linh.pfa.portfolio.entity.PortfolioRepository;
+import com.linh.pfa.stock.entity.Portfolio;
+import com.linh.pfa.stock.entity.PortfolioRepository;
 
 @RestController
 @RequestMapping("/portfolios")

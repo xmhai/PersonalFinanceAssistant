@@ -9,3 +9,36 @@
 .chart {
     margin: auto;
 }
+
+.pfa-form {
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    grid-gap: 10px;
+}
+
+.pfa-form-title {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.pfa-label {
+    grid-column: 1 / 2;
+    font-weight: 600;
+    text-align: right;
+    padding-top : 6px;
+}
+
+.pfa-input {
+    grid-column: 2 / 3;
+}
+
+.pfa-form-button {
+    grid-column: 2 / 3;
+    width: 300px;
+}
+ 
+.pfa-form .error {
+    padding-top : 6px;
+    color: red;
+}
+ 

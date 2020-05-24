@@ -18,13 +18,7 @@ class AccountEdit extends React.Component {
     }
 
     return (
-      <div>
-        <h3>Edit Account</h3>
-        <AccountForm
-          initialValues={this.props.account}
-          onSubmit={this.onSubmit}
-        />
-      </div>
+      <AccountForm initialValues={this.props.account} onSubmit={this.onSubmit} title="Edit Account" />
     );
   }
 }

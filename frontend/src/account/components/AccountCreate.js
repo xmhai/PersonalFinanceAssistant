@@ -10,10 +10,7 @@ class AccountCreate extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>Create a Account</h3>
-        <AccountForm onSubmit={this.onSubmit} />
-      </div>
+      <AccountForm onSubmit={this.onSubmit} title="Create Account" />
     );
   }
 }

@@ -9,8 +9,8 @@ import { MuiTable } from '../../shared/components/MuiComponents';
 
 class AccountList extends React.Component {
     componentDidMount() {
-        this.props.fetchCurrencies();
-        this.props.fetchCategories();
+        if (_.isEmpty(this.props.categories)) this.props.fetchCategories();
+        if (_.isEmpty(this.props.currencies)) this.props.fetchCurrencies();
         this.props.fetchAccounts();
     }
 

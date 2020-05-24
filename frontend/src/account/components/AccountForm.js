@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
 import { fetchCategories } from '../../common/actions';
 import { fetchCurrencies } from '../../common/actions';
@@ -9,8 +10,8 @@ import { HtmlInput, HtmlSelect } from '../../shared/components/HtmlComponents';
 
 class AccountForm extends React.Component {
   componentDidMount() {
-    this.props.fetchCategories();
-    this.props.fetchCurrencies();
+    if (_.isEmpty(this.props.categories)) this.props.fetchCategories();
+    if (_.isEmpty(this.props.currencies)) this.props.fetchCurrencies();
   }
 
   onSubmit = formValues => {
@@ -20,7 +21,7 @@ class AccountForm extends React.Component {
   render() {
     return (
       <>
-        <div className="pfa-form-title"><h3>{this.props.title}</h3></div>
+        <div className="pfa-form-title">{this.props.title}</div>
         <div className="ui divider"></div>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error pfa-form" >
           <Field name="instituteName" component={HtmlInput} label="Institute Name:" />
@@ -57,6 +58,8 @@ const validate = formValues => {
 };
 
 const mapStateToProps = state => {
+  console.log("mapStateToProps() is called");
+  console.log(state.config.categories);
   return {
     categories: Object.values(state.config.categories),
     currencies: Object.values(state.config.currencies)

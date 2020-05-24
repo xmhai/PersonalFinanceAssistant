@@ -1,10 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { fetchAccounts } from '../actions';
 import { fetchCurrencies } from '../../common/actions';
 import { fetchCategories } from '../../common/actions';
+import { MuiTable } from '../../shared/components/MuiComponents';
 
 class AccountList extends React.Component {
     componentDidMount() {
@@ -13,54 +14,28 @@ class AccountList extends React.Component {
         this.props.fetchAccounts();
     }
 
-    renderAdmin(account) {
+    renderTable() {
         return (
-            <div className="right floated content">
-                <Link to={`/accounts/edit/${account.id}`} className="ui button primary">
-                    Edit
-                </Link>
-                <Link to={`/accounts/delete/${account.id}`} className="ui button negative" >
-                    Delete
-                </Link>
-            </div>
-        );
-    }
-
-    renderList() {
-        return this.props.accounts.map(account => {
-            return (
-                <div className="item" key={account.id}>
-                    {this.renderAdmin(account)}
-                    <i className="large middle aligned icon camera" />
-                    <div className="content">
-                        <Link to={`/accounts/${account.id}`} className="header">
-                            {account.instituteName}
-                        </Link>
-                        <div className="description">{account.accountNo}</div>
-                        <div className="description">{this.props.categories[account.categoryId].code}</div>
-                    </div>
-                </div>
-            );
-        });
-    }
-
-    renderCreate() {
-        return (
-            <div style={{ textAlign: 'right' }}>
-                <Link to="/accounts/new" className="ui button primary">
-                    Create Account
-                </Link>
-            </div>
+            <MuiTable
+                title="Account"
+                baseUrl="/accounts"
+                data={this.props.accounts}
+                columns={[
+                    { title: 'Institute Name', field: 'instituteName' },
+                    { title: 'Account No.', field: 'accountNo' },
+                    { title: 'Account Holder', field: 'accountHolder' },
+                    { title: 'Category', field: 'categoryId', lookup: this.props.categories },
+                    { title: 'Currency', field: 'currencyId', lookup: this.props.currencies },
+                    { title: 'Amount', field: 'amount', type: 'numeric' },
+                    { title: 'Maturity Date', field: 'maturityDate', type: 'date' },
+                ]}
+            />
         );
     }
 
     render() {
         return (
-            <div>
-                <h2>Accounts</h2>
-                {this.renderCreate()}
-                <div className="ui celled list">{this.renderList()}</div>
-            </div>
+            <div>{this.renderTable()}</div>
         );
     }
 }
@@ -68,8 +43,8 @@ class AccountList extends React.Component {
 const mapStateToProps = state => {
     return {
         accounts: Object.values(state.accounts),
-        currencies: state.config.currencies,
-        categories: state.config.categories
+        currencies: _.mapValues(_.keyBy(state.config.currencies, 'id'), 'code'),
+        categories: _.mapValues(_.keyBy(state.config.categories, 'id'), 'code')
     };
 };
 

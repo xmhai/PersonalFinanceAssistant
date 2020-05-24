@@ -1,11 +1,11 @@
 import React from 'react';
 
-export const HtmlInput = ({ input, type, label, meta }) => {
+export const HtmlInput = ({ props, type, label, meta }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
         <div className={className}>
             <label>{label}</label>
-            <input {...input} type={type} />
+            <input {...props} type={type} />
             {renderError(meta)}
         </div>
     );
@@ -21,7 +21,7 @@ const renderError = ({ error, touched }) => {
     }
 }
 
-export const HtmlSelect = ({ input, label, data }) => {
+export const HtmlSelect = ({ props, label, data }) => {
     if (data === undefined || data.length === 0) {
         return (
             <div className="field">
@@ -34,7 +34,7 @@ export const HtmlSelect = ({ input, label, data }) => {
     return (
         <div className="field">
             <label>{label}</label>
-            <select {...input}>
+            <select {...props}>
                 {data.map((elem, index) => <option key={elem.id} value={elem.id}>{elem.code}</option>)}
             </select>
         </div >

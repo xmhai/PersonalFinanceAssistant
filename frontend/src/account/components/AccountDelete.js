@@ -33,7 +33,7 @@ class AccountDelete extends React.Component {
       return 'Are you sure you want to delete this account?';
     }
 
-    return `Are you sure you want to delete this account: ${this.props.account.institudeName} ${this.props.account.accountNo}`;
+    return `Are you sure you want to delete this account: ${this.props.account.instituteName} ${this.props.account.accountNo}`;
   }
 
   render() {

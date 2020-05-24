@@ -1,13 +1,35 @@
 import React from 'react';
 
-export const HtmlInput = ({ props, type, label, meta }) => {
+export const HtmlInput = ({ input, label, meta, type }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
         <div className={className}>
             <label>{label}</label>
-            <input {...props} type={type} />
+            <input {...input} type={type} />
             {renderError(meta)}
         </div>
+    );
+};
+
+export const HtmlSelect = ({ input, label, meta, data }) => {
+    if (data === undefined || data.length === 0) {
+        return (
+            <div className="field">
+                <label>{label}</label>
+                <select></select>
+            </div >
+        );
+    }
+
+    return (
+        <div className="field">
+            <label>{label}</label>
+            <select {...input}>
+                <option value=''></option>
+                {data.map((elem, index) => <option key={elem.id} value={elem.id}>{elem.code}</option>)}
+            </select>
+            {renderError(meta)}
+        </div >
     );
 };
 
@@ -21,22 +43,3 @@ const renderError = ({ error, touched }) => {
     }
 }
 
-export const HtmlSelect = ({ props, label, data }) => {
-    if (data === undefined || data.length === 0) {
-        return (
-            <div className="field">
-                <label>{label}</label>
-                <select></select>
-            </div >
-        );
-    }
-
-    return (
-        <div className="field">
-            <label>{label}</label>
-            <select {...props}>
-                {data.map((elem, index) => <option key={elem.id} value={elem.id}>{elem.code}</option>)}
-            </select>
-        </div >
-    );
-};

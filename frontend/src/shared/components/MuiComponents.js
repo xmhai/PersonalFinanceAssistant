@@ -10,14 +10,12 @@ import history from '../../history';
 export const MuiTable = ({ ...props }) => {
   return (
     <MaterialTable
-      {...props}
       options={{
         search: true,
         paging: false,
         actionsColumnIndex: -1,
         exportButton: true,
         headerStyle: { fontWight: 900 }
-
       }}
       actions={[
         {
@@ -44,6 +42,7 @@ export const MuiTable = ({ ...props }) => {
           }
         }
       ]}
+      {...props}
     />
   );
 }

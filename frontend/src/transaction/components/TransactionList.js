@@ -6,6 +6,7 @@ import { fetchTransactions } from '../actions';
 import { fetchStocks } from '../../stock/actions';
 import { fetchActions } from '../../common/actions';
 import { MuiTable } from '../../shared/components/MuiComponents';
+import history from '../../history';
 
 class TransactionList extends React.Component {
     componentDidMount() {
@@ -26,6 +27,31 @@ class TransactionList extends React.Component {
                     { title: 'Action', field: 'actionId', lookup: this.props.actions },
                     { title: 'Price', field: 'price', type: 'numeric' },
                     { title: 'Quantity', field: 'quantity', type: 'numeric' },
+                ]}
+                actions={[
+                    {
+                        icon: 'add',
+                        tooltip: `Create Transaction`,
+                        isFreeAction: true,
+                        style: { "color": "green" },
+                        onClick: (event, rowData) => {
+                            history.push(`/transactions/new`);
+                        }
+                    },
+                    {
+                        icon: 'restore',
+                        tooltip: `Reverse Transaction`,
+                        onClick: (event, rowData) => {
+                            history.push(`/transactions/reverse/${rowData.id}`);
+                        }
+                    },
+                    {
+                        icon: 'delete',
+                        tooltip: `Delete Transaction`,
+                        onClick: (event, rowData) => {
+                            history.push(`/transactions/delete/${rowData.id}`);
+                        }
+                    }
                 ]}
             />
         );

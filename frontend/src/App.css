@@ -12,8 +12,9 @@
 
 .pfa-form {
     display: grid;
-    grid-template-columns: 20% 1fr;
-    grid-gap: 10px;
+    grid-template-columns: 20% 80%;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
 }
 
 .pfa-form-title {
@@ -21,23 +22,28 @@
 }
 
 .pfa-label {
-    grid-column: 1 / 2;
     font-weight: 600;
     text-align: right;
     padding-top : 6px;
 }
 
-.pfa-input {
-    grid-column: 2 / 3;
-}
-
 .pfa-form-button {
-    grid-column: 2 / 3;
-    width: 300px;
+    grid-column: 1 / -1;
+    text-align: right;
 }
  
-.pfa-form .error {
+.pfa-input-error {
     padding-top : 6px;
     color: red;
 }
  
+.pfa-form-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 15% 1fr);
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+.pfa-form-2 .colspan-2 {
+    grid-column: 2 / -1;
+}

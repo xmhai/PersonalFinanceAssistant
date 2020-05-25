@@ -23,14 +23,14 @@ class AccountForm extends React.Component {
       <>
         <div className="pfa-form-title">{this.props.title}</div>
         <div className="ui divider"></div>
-        <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error pfa-form" >
-          <Field name="instituteName" component={HtmlInput} label="Institute Name:" />
-          <Field name="accountNo" component={HtmlInput} label="Account Number:" />
-          <Field name="accountHolder" component={HtmlInput} label="Account Holder:" />
-          <Field name="categoryId" component={HtmlSelect} data={this.props.categories} label="Asset Category:" />
-          <Field name="currencyId" component={HtmlSelect} data={this.props.currencies} label="Currency:" />
-          <Field name="amount" component={HtmlInput} label="Amount:" />
-          <Field name="maturityDate" component={HtmlInput} type="date" label="Maturity Date:" />
+        <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error pfa-form-2" >
+          <Field name="instituteName" label="Institute Name:" colspan="2" component={HtmlInput} />
+          <Field name="accountNo" label="Account Number:" component={HtmlInput} />
+          <Field name="accountHolder" label="Account Holder:" component={HtmlInput} />
+          <Field name="categoryId" label="Asset Category:" component={HtmlSelect} data={this.props.categories} />
+          <Field name="currencyId" label="Currency:" component={HtmlSelect} data={this.props.currencies} />
+          <Field name="amount" label="Amount:" component={HtmlInput} />
+          <Field name="maturityDate" label="Maturity Date:" component={HtmlInput} type="date" />
           <div className="pfa-form-button">
             <button className="ui button primary">Submit</button>
             <Link to="/accounts" className="ui button">

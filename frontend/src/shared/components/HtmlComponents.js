@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const HtmlInput = ({ input, label, meta, type }) => {
+export const HtmlInput = ({ input, label, colspan, meta, type }) => {
     return (
         <>
             <div className="pfa-label">
                 <label>{label}</label>
             </div>
-            <div className="pfa-input">
+            <div className={`pfa-input colspan-${colspan}`}>
                 <input {...input} type={type} />
                 {renderError(meta)}
             </div>
@@ -43,7 +43,7 @@ export const HtmlSelect = ({ input, label, meta, data }) => {
 const renderError = ({ error, touched }) => {
     if (touched && error) {
         return (
-            <span className="error">{error}</span>
+            <span className="pfa-input-error">{error}</span>
         );
     }
 }

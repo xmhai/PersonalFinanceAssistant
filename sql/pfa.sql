@@ -163,7 +163,7 @@ CREATE TABLE stock (
   name varchar(60) NOT NULL,
   exchange_id int NOT NULL,
   currency_id int NOT NULL,
-  latest_price decimal(7,3) NOT NULL, -- yesterday price updated by scheduled job or current price by user-triggered manually refresh
+  latest_price decimal(7,3), -- yesterday price updated by scheduled job or current price by user-triggered manually refresh
   category_id int NOT NULL,
   created_by int NOT NULL DEFAULT 0,
   created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

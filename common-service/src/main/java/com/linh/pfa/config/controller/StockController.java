@@ -1,4 +1,4 @@
-package com.linh.pfa.stock.controller;
+package com.linh.pfa.config.controller;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linh.pfa.stock.entity.Stock;
-import com.linh.pfa.stock.entity.StockRepository;
+import com.linh.pfa.config.entity.Stock;
+import com.linh.pfa.config.entity.StockRepository;
 
 @RestController
 @RequestMapping("/stocks")

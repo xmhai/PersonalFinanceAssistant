@@ -3,7 +3,7 @@ import {
     FETCH_CURRENCIES,
     FETCH_CATEGORIES,
     FETCH_EXCHANGES,
-    FETCH_TRANSACTION_TYPES
+    FETCH_ACTIONS
 } from './types';
 
 export const fetchCurrencies = () => async dispatch => {
@@ -24,8 +24,8 @@ export const fetchExchanges = () => async dispatch => {
     dispatch({ type: FETCH_EXCHANGES, payload: response.data });
 };
 
-export const fetchTransactionTypes = () => async dispatch => {
-    const response = await commonService.get('/config/transactiontypes');
+export const fetchActions = () => async dispatch => {
+    const response = await commonService.get('/config/actions');
 
-    dispatch({type: FETCH_TRANSACTION_TYPES, payload: response.data });
+    dispatch({ type: FETCH_ACTIONS, payload: response.data });
 };

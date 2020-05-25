@@ -1,4 +1,4 @@
-package com.linh.pfa.stock.entity;
+package com.linh.pfa.config.entity;
 
 import java.math.BigDecimal;
 import javax.persistence.Entity;

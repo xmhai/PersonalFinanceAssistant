@@ -92,8 +92,8 @@ INSERT INTO currency (id, code, exchange_rate, created_by, created_date) VALUES(
 INSERT INTO currency (id, code, exchange_rate, created_by, created_date) VALUES(3, 'USD', 1.4, 0, CURRENT_DATE);
 INSERT INTO currency (id, code, exchange_rate, created_by, created_date) VALUES(4, 'HKD', 0.18, 0, CURRENT_DATE);
 
-DROP TABLE IF EXISTS transaction_type;
-CREATE TABLE transaction_type (
+DROP TABLE IF EXISTS action;
+CREATE TABLE action (
   id int NOT NULL AUTO_INCREMENT,
   code varchar(10) NOT NULL,
   created_by int NOT NULL DEFAULT 0,
@@ -104,8 +104,8 @@ CREATE TABLE transaction_type (
   PRIMARY KEY (id)
 );
 
-INSERT INTO transaction_type (id, code, created_by, created_date) VALUES(1, 'BUY', 0, CURRENT_DATE);
-INSERT INTO transaction_type (id, code, created_by, created_date) VALUES(2, 'SELL', 0, CURRENT_DATE);
+INSERT INTO action (id, code, created_by, created_date) VALUES(1, 'BUY', 0, CURRENT_DATE);
+INSERT INTO action (id, code, created_by, created_date) VALUES(2, 'SELL', 0, CURRENT_DATE);
 
 -- Asset Account (all asset must be in this table)
 DROP TABLE IF EXISTS account;
@@ -173,12 +173,12 @@ CREATE TABLE stock (
   PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS stock_transaction;
-CREATE TABLE stock_transaction (
+DROP TABLE IF EXISTS transaction;
+CREATE TABLE transaction (
   id int NOT NULL AUTO_INCREMENT,
   stock_id int NOT NULL,
   transaction_date datetime NOT NULL,
-  transaction_type_id int NOT NULL,
+  action_id int NOT NULL,
   price decimal(7,3) NOT NULL,
   quantity int DEFAULT NULL,
   created_by int NOT NULL DEFAULT 0,

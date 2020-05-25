@@ -3,7 +3,7 @@ import {
     FETCH_CURRENCIES,
     FETCH_CATEGORIES,
     FETCH_EXCHANGES,
-    FETCH_TRANSACTION_TYPES
+    FETCH_ACTIONS
 } from '../actions/types';
 
 export default (state = { "currencies": [], "categories": [], "exchanges": [], "transactionTypes":[] }, action) => {
@@ -14,8 +14,8 @@ export default (state = { "currencies": [], "categories": [], "exchanges": [], "
             return { ...state, "categories": _.mapKeys(action.payload, 'id') };
         case FETCH_EXCHANGES:
             return { ...state, "exchanges": { ..._.mapKeys(action.payload, 'id') } };
-        case FETCH_TRANSACTION_TYPES:
-            return { ...state, "transactionTypes": { ..._.mapKeys(action.payload, 'id') } };
+        case FETCH_ACTIONS:
+            return { ...state, "actions": { ..._.mapKeys(action.payload, 'id') } };
         default:
             return state;
     }

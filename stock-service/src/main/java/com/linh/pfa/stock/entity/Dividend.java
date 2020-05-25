@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Where;
 import lombok.Getter;
@@ -17,8 +16,7 @@ import com.linh.common.base.BaseEntity;
 @Where(clause = "is_deleted = 0")
 @Getter @Setter @NoArgsConstructor
 public class Dividend extends BaseEntity {
-	@OneToOne
-	private Stock stock;
+	private Long stockId;
 	private LocalDate payDate;
 	private BigDecimal amount;
 }

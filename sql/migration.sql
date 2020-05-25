@@ -94,12 +94,12 @@ SELECT `stock`.`ID`,
 FROM `asset`.`stock`;
 
 -- stock_transaction
-TRUNCATE TABLE stock_transaction;
-INSERT INTO stock_transaction (
+TRUNCATE TABLE transaction;
+INSERT INTO transaction (
   id,
   stock_id,
   transaction_date,
-  transaction_type_id,
+  action_id,
   price,
   quantity,
   created_by,

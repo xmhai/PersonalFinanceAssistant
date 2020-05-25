@@ -10,6 +10,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class TransactionType extends BaseEntity {
+public class Action extends BaseEntity {
 	private String code;
 }

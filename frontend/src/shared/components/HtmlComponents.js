@@ -14,7 +14,7 @@ export const HtmlInput = ({ input, label, colspan, meta, type }) => {
     );
 };
 
-export const HtmlSelect = ({ input, label, meta, data }) => {
+export const HtmlSelect = ({ input, label, meta, data, display }) => {
     if (data === undefined || data.length === 0) {
         return (
             <>
@@ -24,6 +24,7 @@ export const HtmlSelect = ({ input, label, meta, data }) => {
         );
     }
 
+    const displayCol = display ? display : "code"; // default to display "code" column
     return (
         <>
             <div className="pfa-label">
@@ -32,7 +33,7 @@ export const HtmlSelect = ({ input, label, meta, data }) => {
             <div className="pfa-input">
                 <select {...input}>
                     <option value=''></option>
-                    {data.map((elem, index) => <option key={elem.id} value={elem.id}>{elem.code}</option>)}
+                    {data.map((elem, index) => <option key={elem.id} value={elem.id}>{elem[displayCol]}</option>)}
                 </select>
                 {renderError(meta)}
             </div>

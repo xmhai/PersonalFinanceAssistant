@@ -10,6 +10,9 @@ import accountReducer from './account/reducers/accountReducer';
 import stockReducer from './stock/reducers/stockReducer';
 import portfolioReducer from './portfolio/reducers/portfolioReducer';
 import configReducer from './common/reducers/configReducer';
+import transactionReducer from './transaction/reducers/transactionReducer';
+import dividendReducer from './dividend/reducers/dividendReducer';
+import profitReducer from './profit/reducers/profitReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -18,7 +21,10 @@ const store = createStore(
         accounts: accountReducer,
         stocks: stockReducer,
         portfolios: portfolioReducer,
-        config: configReducer
+        config: configReducer,
+        transactions: transactionReducer,
+        dividends: dividendReducer,
+        profits: profitReducer,
     }),
     composeEnhancers(applyMiddleware(reduxThunk))
 );

@@ -20,6 +20,7 @@ class AppMenu extends React.Component {
                                 <Dropdown.Item text='Portfolio' as={Link} to='/portfolios' />
                                 <Dropdown.Item text='Transaction' as={Link} to='/transactions' />
                                 <Dropdown.Item text='Dividend' as={Link} to='/dividends' />
+                                <Dropdown.Item text='Profit' as={Link} to='/profits' />
                             </Dropdown.Menu>
                         </Dropdown>
 

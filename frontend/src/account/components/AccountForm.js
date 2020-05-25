@@ -58,8 +58,6 @@ const validate = formValues => {
 };
 
 const mapStateToProps = state => {
-  console.log("mapStateToProps() is called");
-  console.log(state.config.categories);
   return {
     categories: Object.values(state.config.categories),
     currencies: Object.values(state.config.currencies)

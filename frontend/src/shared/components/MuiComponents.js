@@ -22,7 +22,7 @@ export const MuiTable = ({ ...props }) => {
       actions={[
         {
           icon: 'add',
-          tooltip: 'Create Account',
+          tooltip: `Create ${props.title}`,
           isFreeAction: true,
           style: { "color": "green" },
           onClick: (event, rowData) => {
@@ -31,14 +31,14 @@ export const MuiTable = ({ ...props }) => {
         },
         {
           icon: 'edit',
-          tooltip: 'Edit Account',
+          tooltip: `Edit ${props.title}`,
           onClick: (event, rowData) => {
             history.push(`${props.baseUrl}/edit/${rowData.id}`);
           }
         },
         {
           icon: 'delete',
-          tooltip: 'Delete Account',
+          tooltip: `Delete ${props.title}`,
           onClick: (event, rowData) => {
             history.push(`${props.baseUrl}/delete/${rowData.id}`);
           }

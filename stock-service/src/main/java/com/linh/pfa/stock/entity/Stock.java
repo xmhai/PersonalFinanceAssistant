@@ -18,5 +18,5 @@ public class Stock extends BaseEntity {
 	private Long exchangeId;
 	private Long categoryId;
 	private Long currencyId;
-	private BigDecimal latest_price;
+	private BigDecimal latestPrice;
 }

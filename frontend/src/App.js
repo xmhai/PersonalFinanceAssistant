@@ -14,16 +14,21 @@ import AccountEdit from './account/components/AccountEdit'
 import AccountDelete from './account/components/AccountDelete'
 import AccountView from './account/components/AccountView'
 
-import DividendList from './dividend/components/DividendList'
-import ProfitList from './profit/components/ProfitList'
 import StockList from './stock/components/StockList'
-import TransactionList from './transaction/components/TransactionList'
+import StockCreate from './stock/components/StockCreate'
+import StockEdit from './stock/components/StockEdit'
+import StockDelete from './stock/components/StockDelete'
+import StockView from './stock/components/StockView'
 
 import PortfolioList from './portfolio/components/PortfolioList'
 import PortfolioCreate from './portfolio/components/PortfolioCreate'
 import PortfolioEdit from './portfolio/components/PortfolioEdit'
 import PortfolioDelete from './portfolio/components/PortfolioDelete'
 import PortfolioView from './portfolio/components/PortfolioView'
+
+import DividendList from './dividend/components/DividendList'
+import ProfitList from './profit/components/ProfitList'
+import TransactionList from './transaction/components/TransactionList'
 
 class App extends React.Component {
     render() {
@@ -41,9 +46,14 @@ class App extends React.Component {
                             <Route path="/accounts/delete/:id" exact component={AccountDelete} />
                             <Route path="/accounts/:id" exact component={AccountView} />
 
+                            <Route path="/stocks" exact component={StockList} />
+                            <Route path="/stocks/new" exact component={StockCreate} />
+                            <Route path="/stocks/edit/:id" exact component={StockEdit} />
+                            <Route path="/stocks/delete/:id" exact component={StockDelete} />
+                            <Route path="/stocks/:id" exact component={StockView} />
+
                             <Route path="/dividends" exact component={ DividendList } />
                             <Route path="/profits" exact component={ ProfitList } />
-                            <Route path="/stocks" exact component={ StockList } />
                             <Route path="/transactions" exact component={ TransactionList } />
 
                             <Route path="/portfolios" exact component={ PortfolioList } />

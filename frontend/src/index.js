@@ -7,6 +7,7 @@ import { reducer as formReducer } from 'redux-form';
 
 import App from './App'
 import accountReducer from './account/reducers/accountReducer';
+import stockReducer from './stock/reducers/stockReducer';
 import portfolioReducer from './portfolio/reducers/portfolioReducer';
 import configReducer from './common/reducers/configReducer';
 
@@ -15,6 +16,7 @@ const store = createStore(
     combineReducers({
         form: formReducer,
         accounts: accountReducer,
+        stocks: stockReducer,
         portfolios: portfolioReducer,
         config: configReducer
     }),

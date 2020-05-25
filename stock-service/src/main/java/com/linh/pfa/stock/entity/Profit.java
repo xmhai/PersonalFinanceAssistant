@@ -16,5 +16,12 @@ import com.linh.common.base.BaseEntity;
 @Getter @Setter @NoArgsConstructor
 public class Profit extends BaseEntity {
 	private Long stockId;
-	private BigDecimal amount;
+	private BigDecimal realized;
+	private BigDecimal dividend;
+
+	public Profit(Long stockId) {
+		this.stockId = stockId;
+		realized = new BigDecimal(0);
+		dividend = new BigDecimal(0);
+	}
 }

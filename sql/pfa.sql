@@ -207,7 +207,8 @@ DROP TABLE IF EXISTS profit;
 CREATE TABLE profit (
   id int NOT NULL AUTO_INCREMENT,
   Stock_id int NOT NULL,
-  amount decimal(8,2) NOT NULL,
+  realized decimal(8,2) NOT NULL DEFAULT 0,
+  dividend decimal(8,2) NOT NULL DEFAULT 0,
   created_by int NOT NULL DEFAULT 0,
   created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,

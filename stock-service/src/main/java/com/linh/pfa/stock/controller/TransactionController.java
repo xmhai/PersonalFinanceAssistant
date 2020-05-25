@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.linh.common.base.BusinessException;
 import com.linh.pfa.stock.entity.Transaction;
 import com.linh.pfa.stock.entity.TransactionRepository;
+import com.linh.pfa.stock.service.TransactionService;
 
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
+	@Autowired
+	private TransactionService transactionService;
 	@Autowired
 	private TransactionRepository transactionRespository;
 	
@@ -41,9 +45,8 @@ public class TransactionController {
 
 	@PostMapping("")
 	@Transactional
-	public ResponseEntity<Transaction> create(@RequestBody Transaction transaction) {
-		transaction.setCreatedBy(0L);
-		return ResponseEntity.ok(transactionRespository.saveAndFlush(transaction));
+	public ResponseEntity<Transaction> create(@RequestBody Transaction transaction) throws BusinessException {
+		return ResponseEntity.ok(transactionService.create(transaction));
 	}
 
     @PutMapping("/{id}")

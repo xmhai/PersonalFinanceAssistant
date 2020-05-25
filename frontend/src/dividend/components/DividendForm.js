@@ -52,10 +52,8 @@ const validate = formValues => {
 };
 
 const mapStateToProps = state => {
-  if (state.stocks) {
-    return {
-      stocks: Object.values(state.stocks),
-    };
+  return {
+    stocks: Object.values(state.stocks),
   }
 };
 

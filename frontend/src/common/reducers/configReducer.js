@@ -13,7 +13,6 @@ export default (state = { "currencies": [], "categories": [], "exchanges": [], "
         case FETCH_CATEGORIES:
             return { ...state, "categories": _.mapKeys(action.payload, 'id') };
         case FETCH_EXCHANGES:
-            console.log({ ..._.mapKeys(action.payload, 'id') });
             return { ...state, "exchanges": { ..._.mapKeys(action.payload, 'id') } };
         case FETCH_TRANSACTION_TYPES:
             return { ...state, "transactionTypes": { ..._.mapKeys(action.payload, 'id') } };

@@ -13,8 +13,8 @@
 .pfa-form {
     display: grid;
     grid-template-columns: 20% 80%;
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
+    column-gap: 10px;
+    row-gap: 10px;
 }
 
 .pfa-form-title {

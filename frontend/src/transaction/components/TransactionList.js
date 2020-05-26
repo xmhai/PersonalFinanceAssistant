@@ -59,7 +59,7 @@ class TransactionList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        transactions: Object.values(state.transactions),
+        transactions: _.orderBy(Object.values(state.transactions), ['transactionDate'], ['desc']),
         stocks: _.mapValues(_.keyBy(state.stocks, 'id'), 'name'),
         actions: _.mapValues(_.keyBy(state.config.actions, 'id'), 'code'),
     };

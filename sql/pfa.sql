@@ -181,6 +181,7 @@ CREATE TABLE transaction (
   action_id int NOT NULL,
   price decimal(7,3) NOT NULL,
   quantity int DEFAULT NULL,
+  is_reversed bit DEFAULT 0,
   created_by int NOT NULL DEFAULT 0,
   created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by int,

@@ -39,13 +39,6 @@ class TransactionList extends React.Component {
                         }
                     },
                     {
-                        icon: 'restore',
-                        tooltip: `Reverse Transaction`,
-                        onClick: (event, rowData) => {
-                            history.push(`/transactions/reverse/${rowData.id}`);
-                        }
-                    },
-                    {
                         icon: 'delete',
                         tooltip: `Delete Transaction`,
                         onClick: (event, rowData) => {

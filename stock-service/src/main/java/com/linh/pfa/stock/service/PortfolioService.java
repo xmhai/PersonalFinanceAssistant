@@ -73,6 +73,7 @@ public class PortfolioService {
     	profitRespository.save(profit);
 		
 		// delete this portfolio
+    	portfolio.setRealizedPrice(price);
 		portfolio.setIsDeleted(true);
 		return portfolio;
 	}

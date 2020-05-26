@@ -68,16 +68,8 @@ public class TransactionController {
 
     @DeleteMapping("/{id}")
 	@Transactional
-    public ResponseEntity delete(@PathVariable Long id) {
-    	Transaction transaction = transactionRespository.findById(id).orElse(null);
-        if (transaction == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        transaction.setUpdatedBy(0L);
-        transaction.setIsDeleted(true);
-        transactionRespository.saveAndFlush(transaction);
-        
+    public ResponseEntity delete(@PathVariable Long id) throws BusinessException {
+        transactionService.reverse(id);
         return ResponseEntity.ok().build();
     }
 }

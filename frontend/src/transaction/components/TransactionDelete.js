@@ -29,11 +29,7 @@ class TransactionDelete extends React.Component {
   }
 
   renderContent() {
-    if (!this.props.transaction) {
-      return 'Are you sure you want to delete this transaction?';
-    }
-
-    return `Are you sure you want to delete this transaction: ${this.props.transaction.name} ${this.props.transaction.code}`;
+    return 'Are you sure you want to reverse this transaction?';
   }
 
   render() {

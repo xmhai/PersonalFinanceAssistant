@@ -15,7 +15,8 @@ export const MuiTable = ({ ...props }) => {
         paging: false,
         actionsColumnIndex: -1,
         exportButton: true,
-        headerStyle: { fontWight: 900 }
+        headerStyle: { fontWight: 900, fontSize: "14px" },
+        cellStyle: { fontSize: "14px" },
       }}
       actions={[
         {

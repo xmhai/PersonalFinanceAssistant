@@ -3,7 +3,10 @@ package com.linh.pfa.stock.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 import lombok.Getter;
@@ -14,11 +17,29 @@ import com.linh.common.base.BaseEntity;
 
 @Entity
 @Where(clause = "is_deleted = 0")
+@Table(indexes = {
+		@Index(name = "idx_transaction_stock_id", columnList="stockId"),
+		@Index(name = "idx_transaction_portfolio_id", columnList="portfolioId")})
 @Getter @Setter @NoArgsConstructor
 public class Transaction extends BaseEntity {
+	@Column(nullable=false)
 	private Long stockId;
+	
+	@Column(nullable=false)
 	private LocalDate transactionDate;
-	private Long actionId; 
+	
+	@Column(nullable=false)
+	private Long actionId;
+	
+	@Column(nullable=false, precision=8, scale=3)
 	private BigDecimal price;
+	
+	@Column(nullable=false)
 	private Integer quantity;
+	
+	@Column(nullable=false)
+	private Long portfolioId;
+	
+	@Column
+	private Boolean isReversed = false;
 }

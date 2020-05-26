@@ -20,7 +20,10 @@ class ProfitList extends React.Component {
                 data={this.props.profits}
                 columns={[
                     { title: 'Stock', field: 'stockId', lookup: this.props.stocks },
-                    { title: 'Profit', field: 'amount', type: 'numeric' },
+                    { title: 'Realized', field: 'realized', type: 'numeric' },
+                    { title: 'Dividend', field: 'dividend', type: 'numeric' },
+                    { title: 'Unrealized', field: 'unrealized', type: 'numeric' },
+                    { title: 'Profit/Lost', field: 'amount', type: 'numeric' },
                 ]}
             />
         );

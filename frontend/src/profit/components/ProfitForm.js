@@ -23,7 +23,8 @@ class ProfitForm extends React.Component {
         <div className="ui divider"></div>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error pfa-form" >
           <Field name="stockId" label="Stock:" component={HtmlSelect} data={this.props.stocks} display="name" />
-          <Field name="amount" label="Profit:" component={HtmlInput} />
+          <Field name="realized" label="Realized:" component={HtmlInput} />
+          <Field name="dividend" label="Dividend:" component={HtmlInput} />
           <div className="pfa-form-button">
             <button className="ui button primary">Submit</button>
             <Link to="/profits" className="ui button">

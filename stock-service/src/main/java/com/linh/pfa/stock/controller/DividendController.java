@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.linh.pfa.stock.entity.Dividend;
 import com.linh.pfa.stock.entity.DividendRepository;
+import com.linh.pfa.stock.service.DividendService;
 
 @RestController
 @RequestMapping("/dividends")
 public class DividendController {
+	@Autowired
+	private DividendService dividendService;
 	@Autowired
 	private DividendRepository dividendRespository;
 	
@@ -42,25 +45,18 @@ public class DividendController {
 	@PostMapping("")
 	@Transactional
 	public ResponseEntity<Dividend> create(@RequestBody Dividend dividend) {
-		dividend.setCreatedBy(0L);
-		return ResponseEntity.ok(dividendRespository.saveAndFlush(dividend));
+		return ResponseEntity.ok(dividendService.create(dividend));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
     public ResponseEntity<Dividend> update(@PathVariable Long id, @RequestBody Dividend dividend) {
-    	Dividend dividendExisting = dividendRespository.findById(id).orElse(null);
-        if (!dividendRespository.findById(id).isPresent()) {
+    	Dividend dividendOld = dividendRespository.findById(id).orElse(null);
+        if (dividendOld == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // save original values 
-        dividend.setCreatedBy(dividendExisting.getCreatedBy());
-        dividend.setCreatedDate(dividendExisting.getCreatedDate());
-        dividend.setIsDeleted(false);
-        
-        dividend.setUpdatedBy(0L);
-        return ResponseEntity.ok(dividendRespository.saveAndFlush(dividend));
+        return ResponseEntity.ok(dividendService.update(dividendOld, dividend));
     }
 
     @DeleteMapping("/{id}")
@@ -71,10 +67,7 @@ public class DividendController {
             return ResponseEntity.badRequest().build();
         }
 
-        dividend.setUpdatedBy(0L);
-        dividend.setIsDeleted(true);
-        dividendRespository.saveAndFlush(dividend);
-        
+        dividendService.delete(dividend);
         return ResponseEntity.ok().build();
     }
 }

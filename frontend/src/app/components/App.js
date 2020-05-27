@@ -2,11 +2,14 @@ import './App.css';
 
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
 import history from './history';
+
 import AppMenu from './AppMenu'
 import AppFooter from './AppFooter'
+import Loader from './Loader'
+
 import Dashboard from '../../dashboard/components/Dashboard'
 
 import AccountList from '../../account/components/AccountList'
@@ -46,28 +49,10 @@ import ProfitDelete from '../../profit/components/ProfitDelete'
 import ProfitView from '../../profit/components/ProfitView'
 
 class App extends React.Component {
-    componentWillMount() {
-        const self = this;
-        axios.interceptors.request.use(function (config) {
-            // spinning start to show
-            self.props.loading(true)
-            return config
-        }, function (error) {
-            return Promise.reject(error);
-        });
-
-        axios.interceptors.response.use(function (response) {
-            // spinning hide
-            self.props.loading(false)
-            return response;
-        }, function (error) {
-            return Promise.reject(error);
-        });
-    }
-
     render() {
         return (
             <div className="ui container">
+                {this.props.loader.counter>0 ? <Loader /> : null}
                 <Router history={history}>
                     <AppMenu />
                     <div style={{ marginTop: '5em' }}>
@@ -118,4 +103,10 @@ class App extends React.Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        loader: state.loader
+    }
+}
+
+export default connect(mapStateToProps, { })(App);

@@ -13,6 +13,8 @@ import configReducer from './common/reducers/configReducer';
 import transactionReducer from './transaction/reducers/transactionReducer';
 import dividendReducer from './dividend/reducers/dividendReducer';
 import profitReducer from './profit/reducers/profitReducer';
+import setupAxiosInterceptors from './apis';
+import loaderReducer from './app/reducers/loaderReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -25,9 +27,12 @@ const store = createStore(
         transactions: transactionReducer,
         dividends: dividendReducer,
         profits: profitReducer,
+        loader: loaderReducer,
     }),
     composeEnhancers(applyMiddleware(reduxThunk))
 );
+
+setupAxiosInterceptors(store);
 
 ReactDOM.render(
     <Provider store={store}>

@@ -1,13 +1,50 @@
 import axios from 'axios';
 
-export const accountService = axios.create( {
-    baseURL: 'http://localhost:18080'
-});
+export const accountService = axios.create({ baseURL: 'http://localhost:18080' });
+export const stockService = axios.create({ baseURL: 'http://localhost:18081' });
+export const commonService = axios.create({ baseURL: 'http://localhost:18082' });
 
-export const stockService = axios.create({
-    baseURL: 'http://localhost:18081'
-});
+const setupAxiosInterceptors = (store) => {
+    const { dispatch } = store;
+    const onRequestSuccess = config => {
+        // show loading spinner
+        dispatch({ type: "SHOW_LOADER", data: true });
+        return config;
+    };
+    const onRequestFail = error => {
+        // hide loading spinner
+        dispatch({ type: "HIDE_LOADER", data: false });
+        return Promise.reject(error);
+    };
+    accountService.interceptors.request.use(onRequestSuccess, onRequestFail);
+    stockService.interceptors.request.use(onRequestSuccess, onRequestFail);
+    commonService.interceptors.request.use(onRequestSuccess, onRequestFail);
 
-export const commonService = axios.create({
-    baseURL: 'http://localhost:18082'
-});
+    const onResponseSuccess = response => {
+        // hide loading spinner
+        dispatch({ type: "HIDE_LOADER", data: false });
+        return response;
+    };
+    const onResponseFail = error => {
+        // show error message
+        if (!error.response) {
+            // network error
+            alert(error.message);
+        } else {
+            // http status code
+            //const code = error.response.status
+            // response data
+            //const response = error.response.data
+        }
+
+        // hide loading spinner
+        dispatch({ type: "HIDE_LOADER", data: false });
+
+        return Promise.reject(error);
+    };
+    accountService.interceptors.response.use(onResponseSuccess, onResponseFail);
+    stockService.interceptors.response.use(onResponseSuccess, onResponseFail);
+    commonService.interceptors.response.use(onResponseSuccess, onResponseFail);
+};
+
+export default setupAxiosInterceptors;

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
@@ -40,7 +39,6 @@ class PortfolioList extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
         portfolios: Object.values(state.portfolios),
         currencies: state.config.currencies,

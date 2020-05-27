@@ -45,7 +45,7 @@ public class TransactionService {
 
         // if this portfolio is closed, cannot reverse
         Portfolio portfolio = portfolioRepository.findById(transaction.getPortfolioId()).orElse(null);
-		if (portfolio.getQuantity() == 0) {
+		if (portfolio == null || portfolio.getQuantity() == 0) {
         	throw new BusinessException("Portfolio is closed, cannot reverse");
 		}
         

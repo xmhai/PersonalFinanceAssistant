@@ -6,7 +6,7 @@ import { fetchTransactions } from '../actions';
 import { fetchStocks } from '../../stock/actions';
 import { fetchActions } from '../../common/actions';
 import { MuiTable } from '../../shared/components/MuiComponents';
-import history from '../../history';
+import history from '../../app/components/history';
 
 class TransactionList extends React.Component {
     componentDidMount() {
@@ -25,7 +25,7 @@ class TransactionList extends React.Component {
                     { title: 'Stock', field: 'stockId', lookup: this.props.stocks },
                     { title: 'Transaction Date', field: 'transactionDate' },
                     { title: 'Action', field: 'actionId', lookup: this.props.actions },
-                    { title: 'Price', field: 'price', type: 'numeric' },
+                    { title: 'Price', field: 'price', type: 'currency' },
                     { title: 'Quantity', field: 'quantity', type: 'numeric' },
                 ]}
                 actions={[

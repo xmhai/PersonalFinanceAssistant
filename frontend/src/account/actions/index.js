@@ -1,5 +1,5 @@
 import { accountService } from '../../apis';
-import history from '../../history';
+import history from '../../app/components/history';
 import {
   CREATE_ACCOUNT,
   FETCH_ACCOUNTS,

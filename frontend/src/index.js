@@ -5,7 +5,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import reduxThunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
-import App from './App'
+import App from './app/components/App'
 import accountReducer from './account/reducers/accountReducer';
 import stockReducer from './stock/reducers/stockReducer';
 import portfolioReducer from './portfolio/reducers/portfolioReducer';

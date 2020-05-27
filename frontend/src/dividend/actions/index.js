@@ -1,5 +1,5 @@
 import { stockService } from '../../apis';
-import history from '../../history';
+import history from '../../app/components/history';
 import {
   CREATE_DIVIDEND,
   FETCH_DIVIDENDS,

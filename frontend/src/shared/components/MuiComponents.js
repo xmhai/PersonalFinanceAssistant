@@ -5,7 +5,7 @@ import MomentUtils from '@date-io/moment';
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import MaterialTable from 'material-table';
 
-import history from '../../history';
+import history from '../../app/components/history';
 
 export const MuiTable = ({ ...props }) => {
   return (

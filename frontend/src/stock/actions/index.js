@@ -1,5 +1,5 @@
 import { commonService } from '../../apis';
-import history from '../../history';
+import history from '../../app/components/history';
 import {
   CREATE_STOCK,
   FETCH_STOCKS,

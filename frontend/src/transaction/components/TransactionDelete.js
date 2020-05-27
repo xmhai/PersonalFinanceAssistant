@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Modal from '../../Modal';
-import history from '../../history';
+import Modal from '../../app/components/Modal';
+import history from '../../app/components/history';
 import { fetchTransaction, deleteTransaction } from '../actions';
 
 class TransactionDelete extends React.Component {

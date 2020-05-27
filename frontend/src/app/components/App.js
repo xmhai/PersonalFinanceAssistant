@@ -2,49 +2,69 @@ import './App.css';
 
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 
 import history from './history';
 import AppMenu from './AppMenu'
 import AppFooter from './AppFooter'
-import Dashboard from './dashboard/components/Dashboard'
+import Dashboard from '../../dashboard/components/Dashboard'
 
-import AccountList from './account/components/AccountList'
-import AccountCreate from './account/components/AccountCreate'
-import AccountEdit from './account/components/AccountEdit'
-import AccountDelete from './account/components/AccountDelete'
-import AccountView from './account/components/AccountView'
+import AccountList from '../../account/components/AccountList'
+import AccountCreate from '../../account/components/AccountCreate'
+import AccountEdit from '../../account/components/AccountEdit'
+import AccountDelete from '../../account/components/AccountDelete'
+import AccountView from '../../account/components/AccountView'
 
-import PortfolioList from './portfolio/components/PortfolioList'
-import PortfolioCreate from './portfolio/components/PortfolioCreate'
-import PortfolioEdit from './portfolio/components/PortfolioEdit'
-import PortfolioDelete from './portfolio/components/PortfolioDelete'
-import PortfolioView from './portfolio/components/PortfolioView'
+import PortfolioList from '../../portfolio/components/PortfolioList'
+import PortfolioCreate from '../../portfolio/components/PortfolioCreate'
+import PortfolioEdit from '../../portfolio/components/PortfolioEdit'
+import PortfolioDelete from '../../portfolio/components/PortfolioDelete'
+import PortfolioView from '../../portfolio/components/PortfolioView'
 
-import StockList from './stock/components/StockList'
-import StockCreate from './stock/components/StockCreate'
-import StockEdit from './stock/components/StockEdit'
-import StockDelete from './stock/components/StockDelete'
-import StockView from './stock/components/StockView'
+import StockList from '../../stock/components/StockList'
+import StockCreate from '../../stock/components/StockCreate'
+import StockEdit from '../../stock/components/StockEdit'
+import StockDelete from '../../stock/components/StockDelete'
+import StockView from '../../stock/components/StockView'
 
-import TransactionList from './transaction/components/TransactionList'
-import TransactionCreate from './transaction/components/TransactionCreate'
-import TransactionEdit from './transaction/components/TransactionEdit'
-import TransactionDelete from './transaction/components/TransactionDelete'
-import TransactionView from './transaction/components/TransactionView'
+import TransactionList from '../../transaction/components/TransactionList'
+import TransactionCreate from '../../transaction/components/TransactionCreate'
+import TransactionEdit from '../../transaction/components/TransactionEdit'
+import TransactionDelete from '../../transaction/components/TransactionDelete'
+import TransactionView from '../../transaction/components/TransactionView'
 
-import DividendList from './dividend/components/DividendList'
-import DividendCreate from './dividend/components/DividendCreate'
-import DividendEdit from './dividend/components/DividendEdit'
-import DividendDelete from './dividend/components/DividendDelete'
-import DividendView from './dividend/components/DividendView'
+import DividendList from '../../dividend/components/DividendList'
+import DividendCreate from '../../dividend/components/DividendCreate'
+import DividendEdit from '../../dividend/components/DividendEdit'
+import DividendDelete from '../../dividend/components/DividendDelete'
+import DividendView from '../../dividend/components/DividendView'
 
-import ProfitList from './profit/components/ProfitList'
-import ProfitCreate from './profit/components/ProfitCreate'
-import ProfitEdit from './profit/components/ProfitEdit'
-import ProfitDelete from './profit/components/ProfitDelete'
-import ProfitView from './profit/components/ProfitView'
+import ProfitList from '../../profit/components/ProfitList'
+import ProfitCreate from '../../profit/components/ProfitCreate'
+import ProfitEdit from '../../profit/components/ProfitEdit'
+import ProfitDelete from '../../profit/components/ProfitDelete'
+import ProfitView from '../../profit/components/ProfitView'
 
 class App extends React.Component {
+    componentWillMount() {
+        const self = this;
+        axios.interceptors.request.use(function (config) {
+            // spinning start to show
+            self.props.loading(true)
+            return config
+        }, function (error) {
+            return Promise.reject(error);
+        });
+
+        axios.interceptors.response.use(function (response) {
+            // spinning hide
+            self.props.loading(false)
+            return response;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+    }
+
     render() {
         return (
             <div className="ui container">

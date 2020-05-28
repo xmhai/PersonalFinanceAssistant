@@ -10,9 +10,6 @@ import { MuiTable } from '../../shared/components/MuiComponents';
 
 class StockList extends React.Component {
     componentDidMount() {
-        if (_.isEmpty(this.props.exchanges)) this.props.fetchExchanges();
-        if (_.isEmpty(this.props.categories)) this.props.fetchCategories();
-        if (_.isEmpty(this.props.currencies)) this.props.fetchCurrencies();
         this.props.fetchStocks();
     }
 
@@ -25,9 +22,9 @@ class StockList extends React.Component {
                 columns={[
                     { title: 'Stock Name', field: 'name' },
                     { title: 'Stock Code', field: 'code' },
-                    { title: 'Exchange', field: 'exchangeId', lookup: this.props.exchanges },
-                    { title: 'Category', field: 'categoryId', lookup: this.props.categories },
-                    { title: 'Currency', field: 'currencyId', lookup: this.props.currencies },
+                    { title: 'Exchange', field: 'exchange.code' },
+                    { title: 'Category', field: 'category.code' },
+                    { title: 'Currency', field: 'currency.code' },
                     { title: 'Latest Price', field: 'latestPrice', type: 'numeric' },
                 ]}
             />
@@ -44,10 +41,7 @@ class StockList extends React.Component {
 const mapStateToProps = state => {
     return {
         stocks: Object.values(state.stocks),
-        exchanges: _.mapValues(_.keyBy(state.config.exchanges, 'id'), 'code'),
-        currencies: _.mapValues(_.keyBy(state.config.currencies, 'id'), 'code'),
-        categories: _.mapValues(_.keyBy(state.config.categories, 'id'), 'code')
     };
 };
 
-export default connect(mapStateToProps, { fetchStocks, fetchExchanges, fetchCurrencies, fetchCategories })(StockList);
+export default connect(mapStateToProps, { fetchStocks })(StockList);

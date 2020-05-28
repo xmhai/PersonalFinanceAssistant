@@ -1,5 +1,6 @@
 package com.linh.pfa.config.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.linh.pfa.config.entity.Stock;
 import com.linh.pfa.config.entity.StockRepository;
+import com.linh.pfa.config.service.StockService;
 
 @RestController
 @RequestMapping("/stocks")
 public class StockController {
+	@Autowired
+	private StockService stockService;
 	@Autowired
 	private StockRepository stockRespository;
 	
@@ -42,7 +46,6 @@ public class StockController {
 	@PostMapping("")
 	@Transactional
 	public ResponseEntity<Stock> create(@RequestBody Stock stock) {
-		stock.setCreatedBy(0L);
 		return ResponseEntity.ok(stockRespository.saveAndFlush(stock));
 	}
 
@@ -71,10 +74,23 @@ public class StockController {
             return ResponseEntity.badRequest().build();
         }
 
-        stock.setUpdatedBy(0L);
         stock.setIsDeleted(true);
         stockRespository.saveAndFlush(stock);
         
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/refresh/{id}")
+	@Transactional
+    public ResponseEntity<Double> refreshPrice(@PathVariable Long id) {
+    	Stock stock = stockRespository.findById(id).orElse(null);
+        if (!stockRespository.findById(id).isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+        
+        // Get current price and update to stock table
+        stockService.refreshPrice(stock);
+
+        return ResponseEntity.ok(stock.getLatestPrice().doubleValue());
     }
 }

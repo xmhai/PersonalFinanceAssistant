@@ -13,6 +13,8 @@ import com.linh.pfa.stock.entity.Portfolio;
 import com.linh.pfa.stock.entity.PortfolioRepository;
 import com.linh.pfa.stock.entity.Profit;
 import com.linh.pfa.stock.entity.ProfitRepository;
+import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockRepository;
 
 @Service
 public class PortfolioService {
@@ -20,15 +22,20 @@ public class PortfolioService {
 	private PortfolioRepository portfolioRespository;
 	@Autowired
 	private ProfitRepository profitRespository;
+	@Autowired
+	private StockRepository stockRespository;
 
 	@Transactional
 	public Portfolio addPosition(Long stockId, Integer quantity, BigDecimal price) {
     	Portfolio portfolio = null;
     	List<Portfolio> portfolios = portfolioRespository.findByStockId(stockId);
+    	
+    	Stock stock = stockRespository.findById(stockId).orElse(null);
+    	
 		// BUY
     	if (portfolios.isEmpty()) {
     		// create new portfolio
-    		portfolio = new Portfolio(stockId, quantity, price);
+    		portfolio = new Portfolio(stock, quantity, price);
     	} else {
     		// update portfolio
     		portfolio = portfolios.get(0);

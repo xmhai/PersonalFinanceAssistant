@@ -29,9 +29,4 @@ public class CommonServiceApplication {
 			}
 		};
 	}
-
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
 }

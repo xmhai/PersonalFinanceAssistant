@@ -1,17 +1,16 @@
-package com.linh.pfa.config.service;
+package com.linh.pfa.stock.service;
 
 import java.math.BigDecimal;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.jayway.jsonpath.JsonPath;
-import com.linh.pfa.config.entity.Stock;
-import com.linh.pfa.config.entity.StockRepository;
+import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockRepository;
 
 @Service
 public class StockService {

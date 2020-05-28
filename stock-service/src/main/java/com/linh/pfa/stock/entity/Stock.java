@@ -1,4 +1,4 @@
-package com.linh.pfa.config.entity;
+package com.linh.pfa.stock.entity;
 
 import java.math.BigDecimal;
 
@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.linh.common.base.BaseEntity;
+import com.linh.pfa.config.entity.AssetCategory;
+import com.linh.pfa.config.entity.Currency;
+import com.linh.pfa.config.entity.Exchange;
 
 @Entity
 @Where(clause = "is_deleted = 0")

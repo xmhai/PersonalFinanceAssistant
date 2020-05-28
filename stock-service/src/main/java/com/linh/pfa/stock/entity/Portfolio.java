@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Where;
 import lombok.Getter;
@@ -17,8 +19,9 @@ import com.linh.common.base.BaseEntity;
 @Where(clause = "is_deleted = 0")
 @Getter @Setter @NoArgsConstructor
 public class Portfolio extends BaseEntity {
-	@Column(nullable=false)
-	private Long stockId;
+	@ManyToOne
+	@JoinColumn(name = "stock_id", foreignKey = @javax.persistence.ForeignKey(name = "none"))
+	private Stock stock;
 	
 	@Column(nullable=false)
 	private Integer quantity; // if quantity, means this portfolio is closed
@@ -30,8 +33,8 @@ public class Portfolio extends BaseEntity {
 	@Column(precision=8, scale=3)
 	private BigDecimal realizedPrice;
 	
-	public Portfolio(Long stockId, Integer quantity, BigDecimal cost) {
-		this.stockId = stockId; 
+	public Portfolio(Stock stock, Integer quantity, BigDecimal cost) {
+		this.stock = stock; 
 		this.quantity = quantity; 
 		this.cost = cost; 
 	}

@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.linh.pfa.config.entity.Action;
+import com.linh.pfa.config.entity.ActionRepository;
 import com.linh.pfa.config.entity.AssetCategory;
 import com.linh.pfa.config.entity.AssetCategoryRepository;
 import com.linh.pfa.config.entity.Currency;
 import com.linh.pfa.config.entity.CurrencyRepository;
 import com.linh.pfa.config.entity.Exchange;
 import com.linh.pfa.config.entity.ExchangeRepository;
-import com.linh.pfa.config.entity.Action;
-import com.linh.pfa.config.entity.ActionRepository;
 
 @RestController
 @RequestMapping("/config")

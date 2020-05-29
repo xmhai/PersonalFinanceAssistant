@@ -21,53 +21,35 @@ FROM `asset`.`cash`;
 
 ALTER TABLE account AUTO_INCREMENT = 20;
 
--- asset_history
-DROP VIEW IF EXISTS asset.vw_asset_history;
-CREATE VIEW asset.vw_asset_history (
-  id,
-  record_date,
-  category_id,
-  amount)
-AS 
-SELECT `assethistory`.`ID`,
-    `assethistory`.`RecordDate`,
-    1, -- STOCK
-    `assethistory`.`Stock`
-FROM `asset`.`assethistory`
-UNION
-SELECT `assethistory`.`ID`,
-    `assethistory`.`RecordDate`,
-    2, -- REIT
-    `assethistory`.`Reits`
-FROM `asset`.`assethistory`
-UNION
-SELECT `assethistory`.`ID`,
-    `assethistory`.`RecordDate`,
-    3, -- BOND
-    `assethistory`.`Bond`
-FROM `asset`.`assethistory`
-UNION
-SELECT `assethistory`.`ID`,
-    `assethistory`.`RecordDate`,
-    4, -- CASH
-    `assethistory`.`Cash`
-FROM `asset`.`assethistory`;
-
 TRUNCATE TABLE asset_history;
 INSERT INTO asset_history (
-  record_date,
-  category_id,
-  amount,
-  created_by,
-  created_date
+	record_date,
+	bonds,
+	cash,
+	cpf_medisave,
+	cpf_ordinary,
+	cpf_special,
+	reits,
+	stocks,
+	total,
+	created_by,
+	created_date,
+    is_deleted
 )
 SELECT
-  record_date,
-  category_id,
-  amount,
-  0,
-  record_date
-FROM asset.vw_asset_history;
+	recorddate,
+	bond,
+	cash,
+	cpfmedisave,
+	cpfordinary,
+	cpfspecial,
+	reits,
+	stock,
+	bond + cash + reits + stock,
+	0,
+	recorddate,
+    0
+FROM asset.assethistory;
 
 -- stock
 TRUNCATE TABLE stock;
@@ -102,8 +84,10 @@ INSERT INTO transaction (
   action_id,
   price,
   quantity,
+  portfolio_id,
   created_by,
-  created_date
+  created_date,
+  is_deleted
 )
 SELECT `transaction`.`ID`,
     `transaction`.`StockID`,
@@ -112,7 +96,9 @@ SELECT `transaction`.`ID`,
     `transaction`.`Price`,
     `transaction`.`Quantity`,
     0,
-    CURRENT_DATE
+    0,
+    CURRENT_DATE,
+    0
 FROM `asset`.`transaction`;
 
 -- portfolio
@@ -123,14 +109,16 @@ INSERT INTO portfolio (
   quantity,
   cost,
   created_by,
-  created_date
+  created_date,
+  is_deleted
 )
 SELECT `portfolio`.`ID`,
     `portfolio`.`StockID`,
     `portfolio`.`Quantity`,
     `portfolio`.`Cost`,
     0,
-    CURRENT_DATE
+    CURRENT_DATE,
+    0
 FROM `asset`.`portfolio`;
 
 -- dividend
@@ -141,14 +129,16 @@ INSERT INTO dividend (
   amount,
   pay_date,
   created_by,
-  created_date
+  created_date,
+  is_deleted
 )
 SELECT `divident`.`ID`,
     `divident`.`StockID`,
     `divident`.`Amount`,
     `divident`.`PayDate`,
     0,
-    CURRENT_DATE
+    CURRENT_DATE,
+    0
 FROM `asset`.`divident`;
 
 -- profit
@@ -158,12 +148,14 @@ INSERT INTO profit (
   Stock_id,
   amount,
   created_by,
-  created_date
+  created_date,
+  is_deleted
 )
 SELECT `profit`.`ID`,
     `profit`.`StockID`,
     `profit`.`Amount`,
     0,
-    CURRENT_DATE
+    CURRENT_DATE,
+    0
 FROM `asset`.`profit`;
 

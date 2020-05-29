@@ -3,7 +3,6 @@ package com.linh.pfa.account.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +20,7 @@ import com.linh.pfa.account.entity.AccountRepository;
 import com.linh.pfa.account.entity.AssetHistory;
 import com.linh.pfa.account.entity.AssetHistoryRepository;
 import com.linh.pfa.common.enums.Category;
+import com.linh.pfa.config.service.CurrencyService;
 
 @Service
 public class AssetService {
@@ -28,11 +28,15 @@ public class AssetService {
 	private AccountRepository accountRespository;
 	@Autowired
 	private RestTemplate restTemplate;
+	@Autowired
+	private CurrencyService currencyService;
 	
 	@Autowired
 	private AssetHistoryRepository assetHistoryRespository;
 
 	public List<Map<String, Object>> getAllocation() throws Exception {
+		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
+		
 		// get account allocation (except stocks)
 		List<Account> accounts = accountRespository.findAll();
 		double stockAmt = 0; 
@@ -40,15 +44,16 @@ public class AssetService {
 		double reitAmt = 0; 
 		double cashAmt = 0; 
 		for (Account account : accounts) {
-			double amt = account.getAmount().doubleValue(); 
+			Long currencyId = Long.valueOf(account.getCurrency().getValue());
+			double amtSGD = account.getAmount().doubleValue() * currencies.get(currencyId).doubleValue();
 			if (account.getCategory()==Category.STOCKS) {
-				stockAmt = stockAmt + amt;
+				stockAmt = stockAmt + amtSGD;
 			} else if (account.getCategory()==Category.BONDS) {
-				bondAmt = bondAmt + amt;
+				bondAmt = bondAmt + amtSGD;
 			} else if (account.getCategory()==Category.REITS) {
-				reitAmt = reitAmt + amt;
+				reitAmt = reitAmt + amtSGD;
 			} else if (account.getCategory()==Category.CASH) {
-				cashAmt = cashAmt + amt;
+				cashAmt = cashAmt + amtSGD;
 			}
 		}
 		

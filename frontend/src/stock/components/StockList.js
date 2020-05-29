@@ -20,6 +20,7 @@ class StockList extends React.Component {
     renderTable() {
         return (
             <MuiTable
+                style={{ width: "1000px", margin: "auto" }}
                 title="Stock"
                 baseUrl="/stocks"
                 data={this.props.stocks}

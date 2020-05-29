@@ -74,11 +74,11 @@ SELECT `stock`.`ID`,
     0,
     CURRENT_DATE
 FROM `asset`.`stock`;
+update stock set code = left(code, instr(code, '.')-1) where instr(code, '.')>0 and right(code, 2)<>'UN';
 
 -- stock_transaction
 TRUNCATE TABLE transaction;
 INSERT INTO transaction (
-  id,
   stock_id,
   transaction_date,
   action_id,
@@ -89,8 +89,7 @@ INSERT INTO transaction (
   created_date,
   is_deleted
 )
-SELECT `transaction`.`ID`,
-    `transaction`.`StockID`,
+SELECT `transaction`.`StockID`,
     `transaction`.`OrderDate`,
     `transaction`.`Action` + 1,
     `transaction`.`Price`,
@@ -104,7 +103,6 @@ FROM `asset`.`transaction`;
 -- portfolio
 TRUNCATE TABLE portfolio;
 INSERT INTO portfolio (
-  id,
   stock_id,
   quantity,
   cost,
@@ -112,8 +110,7 @@ INSERT INTO portfolio (
   created_date,
   is_deleted
 )
-SELECT `portfolio`.`ID`,
-    `portfolio`.`StockID`,
+SELECT `portfolio`.`StockID`,
     `portfolio`.`Quantity`,
     `portfolio`.`Cost`,
     0,
@@ -124,7 +121,6 @@ FROM `asset`.`portfolio`;
 -- dividend
 TRUNCATE TABLE dividend;
 INSERT INTO dividend (
-  id,
   stock_id,
   amount,
   pay_date,
@@ -132,8 +128,7 @@ INSERT INTO dividend (
   created_date,
   is_deleted
 )
-SELECT `divident`.`ID`,
-    `divident`.`StockID`,
+SELECT `divident`.`StockID`,
     `divident`.`Amount`,
     `divident`.`PayDate`,
     0,
@@ -144,18 +139,18 @@ FROM `asset`.`divident`;
 -- profit
 TRUNCATE TABLE profit;
 INSERT INTO profit (
-  id,
   Stock_id,
-  amount,
+  realized,
   created_by,
   created_date,
   is_deleted
 )
-SELECT `profit`.`ID`,
-    `profit`.`StockID`,
+SELECT `profit`.`StockID`,
     `profit`.`Amount`,
     0,
     CURRENT_DATE,
     0
 FROM `asset`.`profit`;
 
+update profit p set dividend = (select sum(amount) from dividend d where d.stock_id=p.stock_id);
+update profit set dividend = 0 where dividend is null;

@@ -80,7 +80,14 @@ public class StockController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/refresh/{id}")
+    @PutMapping("/refresh/price")
+	@Transactional
+    public ResponseEntity<Double> refreshPrice() {
+    	stockService.refreshPrice();
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/refresh/price/{id}")
 	@Transactional
     public ResponseEntity<Double> refreshPrice(@PathVariable Long id) {
     	Stock stock = stockRespository.findById(id).orElse(null);

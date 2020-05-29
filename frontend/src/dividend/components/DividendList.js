@@ -38,7 +38,7 @@ class DividendList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        dividends: Object.values(state.dividends),
+        dividends: _.orderBy(Object.values(state.dividends), ['payDate'], ['desc']),
         stocks: _.mapValues(_.keyBy(state.stocks, 'id'), 'name'),
     };
 };

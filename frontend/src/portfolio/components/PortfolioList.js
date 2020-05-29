@@ -18,7 +18,7 @@ class PortfolioList extends React.Component {
     renderTable() {
         return (
             <MuiTable
-                style={{ width: "1200px" }}
+                style={{ width: "100%" }}
                 title="Portfolio"
                 baseUrl="/portfolio"
                 data={this.props.portfolios}
@@ -51,7 +51,7 @@ const mapStateToProps = state => {
             portfolios: _.orderBy(Object.values(state.portfolios).map(el => ({ ...el, 
                 amount: el.stock.latestPrice * el.quantity, 
                 amountSGD: el.stock.latestPrice * el.quantity * state.config.currencies[el.stock.currency].exchangeRate, 
-                profit: (el.stock.latestPrice - el.cost) * el.quantity
+                profit: (el.stock.latestPrice - el.cost) * el.quantity * state.config.currencies[el.stock.currency].exchangeRate,
             })), ['amountSGD'], ['desc'] ),
             currencies: _.mapValues(_.keyBy(state.config.currencies, 'id'), 'code'),
             categories: _.mapValues(_.keyBy(state.config.categories, 'id'), 'code')

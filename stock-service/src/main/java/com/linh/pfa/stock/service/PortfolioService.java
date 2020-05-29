@@ -1,7 +1,9 @@
 package com.linh.pfa.stock.service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.linh.common.base.BusinessException;
+import com.linh.pfa.common.enums.Category;
+import com.linh.pfa.config.service.CurrencyService;
 import com.linh.pfa.stock.entity.Portfolio;
 import com.linh.pfa.stock.entity.PortfolioRepository;
 import com.linh.pfa.stock.entity.Profit;
@@ -24,6 +28,8 @@ public class PortfolioService {
 	private ProfitRepository profitRespository;
 	@Autowired
 	private StockRepository stockRespository;
+	@Autowired
+	private CurrencyService currencyService;
 
 	@Transactional
 	public Portfolio addPosition(Long stockId, Integer quantity, BigDecimal price) {
@@ -83,5 +89,32 @@ public class PortfolioService {
     	portfolio.setRealizedPrice(price);
 		portfolio.setIsDeleted(true);
 		return portfolio;
+	}
+
+	public Map<String, Double> getAllocation() {
+		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
+		
+		List<Portfolio> portfolios = portfolioRespository.findAll();
+		double stockAmt = 0; 
+		double bondAmt = 0; 
+		double reitAmt = 0; 
+		for (Portfolio portfolio : portfolios) {
+			BigDecimal amt = portfolio.getStock().getLatestPrice().multiply(new BigDecimal(portfolio.getQuantity()));
+			Long currencyId = Long.valueOf(portfolio.getStock().getCurrency().getValue());
+			double amtSGD = amt.doubleValue() * currencies.get(currencyId).doubleValue();
+			if (portfolio.getStock().getCategory()==Category.STOCKS) {
+				stockAmt = stockAmt + amtSGD;
+			} else if (portfolio.getStock().getCategory()==Category.BONDS) {
+				bondAmt = bondAmt + amtSGD;
+			} else if (portfolio.getStock().getCategory()==Category.REITS) {
+				reitAmt = reitAmt + amtSGD;
+			}
+		}
+		
+		Map<String, Double> allocation = new HashMap<String, Double>();
+		allocation.put(Category.STOCKS.name(), stockAmt);
+		allocation.put(Category.BONDS.name(), bondAmt);
+		allocation.put(Category.REITS.name(), reitAmt);
+		return allocation;
 	}
 }

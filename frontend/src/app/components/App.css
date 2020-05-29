@@ -1,3 +1,7 @@
+.ui.container {
+    width: 90%;
+}
+
 #menu .container {
     margin-left: 0 !important;
 }

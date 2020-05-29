@@ -9,7 +9,7 @@ class AssetAllocation extends React.Component {
     state = {allocation: null, sum: null};
 
     async componentDidMount() {
-        const response = await accountService.get('asset/allocation');
+        const response = await accountService.get('assets/allocation');
 
         const sum = response.data.reduce((a, b) => a + b.amount,0);
         const allocation = response.data.map(x => { return {...x, percentage: x.amount*100/sum }});

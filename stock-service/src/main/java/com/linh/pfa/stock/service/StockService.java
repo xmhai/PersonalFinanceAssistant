@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.jayway.jsonpath.JsonPath;
+import com.linh.pfa.common.enums.Exchange;
 import com.linh.pfa.stock.entity.Stock;
 import com.linh.pfa.stock.entity.StockRepository;
 
@@ -30,10 +31,12 @@ public class StockService {
 	private double getPriceFromAlphavantage(Stock stock) {
         // Format stock code 
 		String code = stock.getCode();
-		if ("SGX".equals(stock.getExchange().getCode())) {
-			code = code + ".SI";
-		} else if ("HKEX".equals(stock.getExchange().getCode())) {
-			code = code + ".SI";
+		if (code.indexOf('.')<0) {
+			if (stock.getExchange()==Exchange.SGX) {
+				code = code + ".SI";
+			} else if (stock.getExchange()==Exchange.HKEX) {
+				code = code + ".HK";
+			}
 		}
 		
 		String url = String.format("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=%s&apikey=J8M5Z01DE30ZSGAA", code);

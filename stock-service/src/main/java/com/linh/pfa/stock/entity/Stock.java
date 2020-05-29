@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Where;
 import lombok.Getter;
@@ -13,9 +11,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.linh.common.base.BaseEntity;
-import com.linh.pfa.config.entity.AssetCategory;
-import com.linh.pfa.config.entity.Currency;
-import com.linh.pfa.config.entity.Exchange;
+import com.linh.pfa.common.enums.Category;
+import com.linh.pfa.common.enums.Currency;
+import com.linh.pfa.common.enums.Exchange;
 
 @Entity
 @Where(clause = "is_deleted = 0")
@@ -27,16 +25,13 @@ public class Stock extends BaseEntity {
 	@Column(nullable=false, length=60)
 	private String name;
 
-	@ManyToOne
-	@JoinColumn(name = "exchange_id", foreignKey = @javax.persistence.ForeignKey(name = "none"))
+	@Column(name="exchange_id", nullable=false)
 	private Exchange exchange;
 	
-	@ManyToOne
-	@JoinColumn(name = "category_id", foreignKey = @javax.persistence.ForeignKey(name = "none"))
-	private AssetCategory category;
+	@Column(name="category_id", nullable=false)
+	private Category category;
 	
-	@ManyToOne
-	@JoinColumn(name = "currency_id", foreignKey = @javax.persistence.ForeignKey(name = "none"))
+	@Column(name="currency_id", nullable=false)
 	private Currency currency;
 	
 	@Column(precision=8, scale=3)

@@ -29,8 +29,8 @@ public class Transaction extends BaseEntity {
 	@Column(nullable=false)
 	private LocalDate transactionDate;
 	
-	@Column(nullable=false)
-	private Action actionId;
+	@Column(name="action_id", nullable=false)
+	private Action action;
 	
 	@Column(nullable=false, precision=8, scale=3)
 	private BigDecimal price;

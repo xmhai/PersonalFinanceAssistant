@@ -25,9 +25,9 @@ public class TransactionService {
 	public Transaction create(Transaction transaction) throws BusinessException {
 		// update portfolio
 		Portfolio portfolio = null;
-		if (transaction.getActionId()==Action.BUY) {
+		if (transaction.getAction()==Action.BUY) {
 			portfolio = portfolioService.addPosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
-		} else if (transaction.getActionId()==Action.SELL) {
+		} else if (transaction.getAction()==Action.SELL) {
 			portfolio = portfolioService.reducePosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
 		}
 		
@@ -49,9 +49,9 @@ public class TransactionService {
 		}
         
 		// reverse portfolio
-		if (transaction.getActionId()==Action.SELL) {
+		if (transaction.getAction()==Action.SELL) {
 			portfolioService.addPosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
-		} else if (transaction.getActionId()==Action.BUY) {
+		} else if (transaction.getAction()==Action.BUY) {
 			portfolioService.reducePosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
 		}
 

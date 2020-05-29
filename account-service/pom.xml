@@ -52,6 +52,11 @@
 			<artifactId>linh-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.linh.pfa</groupId>
+			<artifactId>pfa-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,29 +1,37 @@
 package com.linh.pfa.account.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.linh.pfa.account.service.AssetService;
+
 @RestController
+@RequestMapping("/assets")
 public class AssetController {
-	@GetMapping("/asset/allocation")
-	public List getAllocation() {
-		List result = new ArrayList<>();
-		addCategory(result, "CASH", (double) 50000);
-		addCategory(result, "BONDS", (double) 50000);
-		addCategory(result, "REITS", (double) 500000);
-		addCategory(result, "STOCKS", (double) 500000);
-		return result;
+	@Autowired
+	private AssetService assetService;
+	
+	@GetMapping("/allocation")
+	public List<Map<String, Object>> getAllocation() throws Exception {
+		return assetService.getAllocation();
 	}
 	
-	private void addCategory(List result, String category, double amt) {
-		Map<String, Object> cash = new HashMap<String, Object>();
-		cash.put("category", category);
-		cash.put("amount", amt);
-		result.add(cash);
+	@GetMapping("/history")
+	public List getHistories() throws Exception {
+		return assetService.getHistories();
+	}
+
+	@PostMapping("/history")
+	public ResponseEntity<Object> saveHistory() throws Exception {
+		assetService.saveHistory();
+        return ResponseEntity.ok().build();
 	}
 }

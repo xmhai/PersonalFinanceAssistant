@@ -44,7 +44,7 @@ public class AccountController {
 	@Transactional
 	public ResponseEntity<Account> create(@RequestBody Account account) {
 		account.setCreatedBy(0L);
-		return ResponseEntity.ok(accountRespository.saveAndFlush(account));
+		return ResponseEntity.ok(accountRespository.save(account));
 	}
 
     @PutMapping("/{id}")
@@ -59,9 +59,7 @@ public class AccountController {
         account.setCreatedBy(accountExisting.getCreatedBy());
         account.setCreatedDate(accountExisting.getCreatedDate());
         account.setIsDeleted(false);
-        
-        account.setUpdatedBy(0L);
-        return ResponseEntity.ok(accountRespository.saveAndFlush(account));
+        return ResponseEntity.ok(accountRespository.save(account));
     }
 
     @DeleteMapping("/{id}")
@@ -72,10 +70,7 @@ public class AccountController {
             return ResponseEntity.badRequest().build();
         }
 
-        account.setUpdatedBy(0L);
-        account.setIsDeleted(true);
-        accountRespository.saveAndFlush(account);
-        
+        accountRespository.delete(account);
         return ResponseEntity.ok().build();
     }
 }

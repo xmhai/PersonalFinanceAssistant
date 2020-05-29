@@ -2,17 +2,17 @@ package com.linh.pfa.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Action {
-	BUY(1), SELL(2);
+public enum Currency {
+	SGD(1), RMB(2), USD(3), HKD(4);
 
 	private int value;
-	Action(int intValue) { this.value = intValue; }
+	Currency(int intValue) { this.value = intValue; }
 	
 	@JsonValue
 	public int getValue() { return value; }
 
-    public static Action fromValue(int value) {
-        for (Action e : Action.values()) {
+    public static Currency fromValue(int value) {
+        for (Currency e : Currency.values()) {
             if(e.getValue() == value) return e;
         }
         

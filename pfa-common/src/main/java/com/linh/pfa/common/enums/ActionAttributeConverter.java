@@ -7,12 +7,12 @@ import javax.persistence.Converter;
 public class ActionAttributeConverter implements AttributeConverter<Action, Integer> {
  
     @Override
-    public Integer convertToDatabaseColumn(Action action) {
-        return action!=null ? action.getValue() : null;
+    public Integer convertToDatabaseColumn(Action attribute) {
+        return attribute!=null ? attribute.getValue() : null;
     }
  
     @Override
-    public Action convertToEntityAttribute(Integer value) {
-        return value!=null ? Action.fromValue(value) : null;
+    public Action convertToEntityAttribute(Integer dbData) {
+        return dbData!=null ? Action.fromValue(dbData) : null;
     }
 }

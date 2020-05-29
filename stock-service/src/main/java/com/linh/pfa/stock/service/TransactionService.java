@@ -3,11 +3,10 @@ package com.linh.pfa.stock.service;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.linh.common.base.BusinessException;
-import com.linh.pfa.common.Action;
+import com.linh.pfa.common.enums.Action;
 import com.linh.pfa.stock.entity.Portfolio;
 import com.linh.pfa.stock.entity.PortfolioRepository;
 import com.linh.pfa.stock.entity.Transaction;
@@ -26,9 +25,9 @@ public class TransactionService {
 	public Transaction create(Transaction transaction) throws BusinessException {
 		// update portfolio
 		Portfolio portfolio = null;
-		if (transaction.getActionId()==Action.BUY.getValue()) {
+		if (transaction.getActionId()==Action.BUY) {
 			portfolio = portfolioService.addPosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
-		} else if (transaction.getActionId()==Action.SELL.getValue()) {
+		} else if (transaction.getActionId()==Action.SELL) {
 			portfolio = portfolioService.reducePosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
 		}
 		
@@ -50,9 +49,9 @@ public class TransactionService {
 		}
         
 		// reverse portfolio
-		if (transaction.getActionId()==Action.SELL.getValue()) {
+		if (transaction.getActionId()==Action.SELL) {
 			portfolioService.addPosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
-		} else if (transaction.getActionId()==Action.BUY.getValue()) {
+		} else if (transaction.getActionId()==Action.BUY) {
 			portfolioService.reducePosition(transaction.getStockId(), transaction.getQuantity(), transaction.getPrice());
 		}
 

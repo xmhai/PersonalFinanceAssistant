@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.linh.common.base.BaseEntity;
+import com.linh.pfa.common.enums.Action;
 
 @Entity
 @Where(clause = "is_deleted = 0")
@@ -29,7 +30,7 @@ public class Transaction extends BaseEntity {
 	private LocalDate transactionDate;
 	
 	@Column(nullable=false)
-	private Long actionId;
+	private Action actionId;
 	
 	@Column(nullable=false, precision=8, scale=3)
 	private BigDecimal price;

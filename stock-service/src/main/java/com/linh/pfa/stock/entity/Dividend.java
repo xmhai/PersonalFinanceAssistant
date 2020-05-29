@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import com.linh.common.base.BaseEntity;
 
 @Entity
 @Where(clause = "is_deleted = 0")
+@SQLDelete(sql = "UPDATE dividend SET is_deleted = 0 WHERE id = ?")
 @Getter @Setter @NoArgsConstructor
 public class Dividend extends BaseEntity {
 	@Column(nullable=false)

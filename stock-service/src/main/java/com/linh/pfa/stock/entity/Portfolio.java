@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linh.common.base.BaseEntity;
 
 @Entity
+@SQLDelete(sql = "UPDATE portfolio SET is_deleted = 0 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @Getter @Setter @NoArgsConstructor
 public class Portfolio extends BaseEntity {
@@ -50,6 +52,6 @@ public class Portfolio extends BaseEntity {
 		int newPosition = quantity - qty;
 		BigDecimal newTotalCost = cost.multiply(new BigDecimal(quantity)).subtract(price.multiply(new BigDecimal(qty)));   
 		quantity = newPosition;
-		cost =  newTotalCost.divide(new BigDecimal(newPosition)); 
+		cost =  newTotalCost.divide(new BigDecimal(newPosition), 8, BigDecimal.ROUND_UP); 
 	}
 }

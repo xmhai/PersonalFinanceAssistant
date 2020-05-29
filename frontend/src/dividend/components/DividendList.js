@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { fetchDividends } from '../actions';
 import { fetchStocks } from '../../stock/actions';
 import { MuiTable } from '../../shared/components/MuiComponents';
+import { Number } from '../../shared/components';
 
 class DividendList extends React.Component {
     componentDidMount() {
@@ -15,13 +16,14 @@ class DividendList extends React.Component {
     renderTable() {
         return (
             <MuiTable
+                style={{ maxWidth: "700px", margin: "auto" }}
                 title="Dividend"
                 baseUrl="/dividends"
                 data={this.props.dividends}
                 columns={[
                     { title: 'Stock', field: 'stockId', lookup: this.props.stocks },
                     { title: 'Pay Date', field: 'payDate' },
-                    { title: 'Amount', field: 'amount', type: 'numeric' },
+                    { title: 'Amount', field: 'amount', type: 'numeric', render: r => <Number value={r.amount} /> },
                 ]}
             />
         );

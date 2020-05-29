@@ -7,6 +7,7 @@ import { fetchStocks } from '../../stock/actions';
 import { fetchActions } from '../../common/actions';
 import { MuiTable } from '../../shared/components/MuiComponents';
 import history from '../../app/components/history';
+import { Number } from '../../shared/components';
 
 class TransactionList extends React.Component {
     componentDidMount() {
@@ -18,14 +19,15 @@ class TransactionList extends React.Component {
     renderTable() {
         return (
             <MuiTable
+                style={{ maxWidth: "700px", margin: "auto" }}
                 title="Transaction"
                 baseUrl="/transactions"
                 data={this.props.transactions}
                 columns={[
                     { title: 'Stock', field: 'stockId', lookup: this.props.stocks },
                     { title: 'Transaction Date', field: 'transactionDate' },
-                    { title: 'Action', field: 'actionId', lookup: this.props.actions },
-                    { title: 'Price', field: 'price', type: 'currency' },
+                    { title: 'Action', field: 'action', lookup: this.props.actions },
+                    { title: 'Price', field: 'price', type: 'numeric', render: r => <Number value={r.price} /> },
                     { title: 'Quantity', field: 'quantity', type: 'numeric' },
                 ]}
                 actions={[

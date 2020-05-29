@@ -28,9 +28,9 @@ class StockForm extends React.Component {
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error pfa-form-2" >
           <Field name="name" label="Stock Name:" component={HtmlInput} />
           <Field name="code" label="Stock Code:" component={HtmlInput} />
-          <Field name="exchange.id" label="Exchange:" component={HtmlSelect} data={this.props.exchanges} />
-          <Field name="category.id" label="Asset Category:" component={HtmlSelect} data={this.props.categories} />
-          <Field name="currency.id" label="Currency:" component={HtmlSelect} data={this.props.currencies} />
+          <Field name="exchange" label="Exchange:" component={HtmlSelect} data={this.props.exchanges} />
+          <Field name="category" label="Asset Category:" component={HtmlSelect} data={this.props.categories} />
+          <Field name="currency" label="Currency:" component={HtmlSelect} data={this.props.currencies} />
           <Field name="latestPrice" label="Latest Price:" component={HtmlInput} />
           <div className="pfa-form-button">
             <button className="ui button primary">Submit</button>

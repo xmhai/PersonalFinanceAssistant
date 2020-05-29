@@ -6,6 +6,7 @@ import { fetchAccounts } from '../actions';
 import { fetchCurrencies } from '../../common/actions';
 import { fetchCategories } from '../../common/actions';
 import { MuiTable } from '../../shared/components/MuiComponents';
+import { Number } from '../../shared/components';
 
 class AccountList extends React.Component {
     componentDidMount() {
@@ -24,9 +25,10 @@ class AccountList extends React.Component {
                     { title: 'Institute Name', field: 'instituteName' },
                     { title: 'Account No.', field: 'accountNo' },
                     { title: 'Account Holder', field: 'accountHolder' },
-                    { title: 'Category', field: 'categoryId', lookup: this.props.categories },
-                    { title: 'Currency', field: 'currencyId', lookup: this.props.currencies },
-                    { title: 'Amount', field: 'amount', type: 'numeric' },
+                    { title: 'Category', field: 'category', lookup: this.props.categories },
+                    { title: 'Currency', field: 'currency', lookup: this.props.currencies },
+                    { title: 'Amount', field: 'amount', type: 'numeric', render: r => <Number value={r.amount} /> },
+                    { title: 'Amount (SGD)', field: 'amountSGD', type: 'numeric', render: r => <Number value={r.amountSGD} /> },
                     { title: 'Maturity Date', field: 'maturityDate', type: 'date' },
                 ]}
             />
@@ -41,11 +43,18 @@ class AccountList extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        accounts: Object.values(state.accounts),
-        currencies: _.mapValues(_.keyBy(state.config.currencies, 'id'), 'code'),
-        categories: _.mapValues(_.keyBy(state.config.categories, 'id'), 'code')
-    };
+    if (!_.isEmpty(state.config.currencies) && !_.isEmpty(state.config.categories)) {
+        return {
+            accounts: _.orderBy(Object.values(state.accounts).map(e => ({
+                ...e,
+                amountSGD: e.amount * state.config.currencies[e.currency].exchangeRate,
+            })), ['accountHolder'], ['asc'] ),
+            currencies: _.mapValues(_.keyBy(state.config.currencies, 'id'), 'code'),
+            categories: _.mapValues(_.keyBy(state.config.categories, 'id'), 'code')
+        };
+    }
+
+    return {};
 };
 
 export default connect(mapStateToProps, { fetchAccounts, fetchCurrencies, fetchCategories })(AccountList);

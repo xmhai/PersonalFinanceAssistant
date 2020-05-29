@@ -1,6 +1,9 @@
 package com.linh.pfa.stock.controller;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.linh.pfa.common.enums.Category;
 import com.linh.pfa.stock.entity.Portfolio;
 import com.linh.pfa.stock.entity.PortfolioRepository;
 
@@ -42,7 +46,6 @@ public class PortfolioController {
 	@PostMapping("")
 	@Transactional
 	public ResponseEntity<Portfolio> create(@RequestBody Portfolio portfolio) {
-		portfolio.setCreatedBy(0L);
 		return ResponseEntity.ok(portfolioRespository.saveAndFlush(portfolio));
 	}
 
@@ -59,7 +62,6 @@ public class PortfolioController {
         portfolio.setCreatedDate(portfolioExisting.getCreatedDate());
         portfolio.setIsDeleted(false);
         
-        portfolio.setUpdatedBy(0L);
         return ResponseEntity.ok(portfolioRespository.saveAndFlush(portfolio));
     }
 
@@ -71,10 +73,32 @@ public class PortfolioController {
             return ResponseEntity.badRequest().build();
         }
 
-        portfolio.setUpdatedBy(0L);
-        portfolio.setIsDeleted(true);
-        portfolioRespository.saveAndFlush(portfolio);
-        
+        portfolioRespository.save(portfolio);
         return ResponseEntity.ok().build();
     }
+
+	@GetMapping("/allocation")
+	public ResponseEntity<Map<String, BigDecimal>> getAllocation() {
+		List<Portfolio> portfolios = portfolioRespository.findAll();
+		BigDecimal stockAmt = new BigDecimal(0); 
+		BigDecimal bondAmt = new BigDecimal(0); 
+		BigDecimal reitAmt = new BigDecimal(0); 
+		for (Portfolio portfolio : portfolios) {
+			BigDecimal amt = portfolio.getStock().getLatestPrice().multiply(new BigDecimal(portfolio.getQuantity()));
+			if (portfolio.getStock().getCategory()==Category.STOCKS) {
+				stockAmt = stockAmt.add(amt);
+			} else if (portfolio.getStock().getCategory()==Category.BONDS) {
+				bondAmt = bondAmt.add(amt);
+			} else if (portfolio.getStock().getCategory()==Category.REITS) {
+				reitAmt = reitAmt.add(amt);
+			}
+		}
+		
+		Map<String, BigDecimal> allocation = new HashMap<String, BigDecimal>();
+		allocation.put(Category.STOCKS.name(), stockAmt);
+		allocation.put(Category.BONDS.name(), bondAmt);
+		allocation.put(Category.REITS.name(), reitAmt);
+		return ResponseEntity.ok(allocation);
+	}
+
 }

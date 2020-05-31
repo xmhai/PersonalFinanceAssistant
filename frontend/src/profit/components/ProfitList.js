@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { fetchProfits } from '../actions';
 import { fetchStocks } from '../../stock/actions';
 import { MuiTable } from '../../shared/components/MuiComponents';
+import { ColorNumber } from '../../shared/components';
 
 class ProfitList extends React.Component {
     componentDidMount() {
@@ -15,15 +16,16 @@ class ProfitList extends React.Component {
     renderTable() {
         return (
             <MuiTable
+                style={{ maxWidth: "1120px", margin:"auto" }}
                 title="Profit"
                 baseUrl="/profits"
                 data={this.props.profits}
                 columns={[
-                    { title: 'Stock', field: 'stockId', lookup: this.props.stocks },
-                    { title: 'Realized', field: 'realized', type: 'numeric' },
-                    { title: 'Dividend', field: 'dividend', type: 'numeric' },
-                    { title: 'Unrealized', field: 'unrealized', type: 'numeric' },
-                    { title: 'Profit/Lost', field: 'amount', type: 'numeric' },
+                    { title: 'Stock', field: 'stock.name' },
+                    { title: 'Dividend', field: 'dividend', type: 'numeric', render: r => <ColorNumber value={r.dividend} /> },
+                    { title: 'Realized', field: 'realized', type: 'numeric', render: r => <ColorNumber value={r.realized} /> },
+                    { title: 'Unrealized', field: 'unrealized', type: 'numeric', render: r => <ColorNumber value={r.unrealized} /> },
+                    { title: 'Profit/Lost', field: 'profit', type: 'numeric', render: r => <ColorNumber value={r.profit} /> },
                 ]}
             />
         );
@@ -37,10 +39,14 @@ class ProfitList extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        profits: Object.values(state.profits),
-        stocks: _.mapValues(_.keyBy(state.stocks, 'id'), 'name'),
-    };
+    if (state.profits) {
+        console.log(state.profits);
+        return {
+            profits: _.orderBy(Object.values(state.profits), [p => p.stock.name.toLowerCase()], ['asc']),
+            stocks: _.mapValues(_.keyBy(state.stocks, 'id'), 'name'),
+        };
+    }
+    return {};
 };
 
 export default connect(mapStateToProps, { fetchProfits, fetchStocks })(ProfitList);

@@ -1,6 +1,7 @@
 package com.linh.pfa.stock.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -17,16 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.linh.pfa.stock.entity.Profit;
 import com.linh.pfa.stock.entity.ProfitRepository;
+import com.linh.pfa.stock.service.ProfitService;
 
 @RestController
 @RequestMapping("/profits")
 public class ProfitController {
 	@Autowired
+	private ProfitService profitService;
+	@Autowired
 	private ProfitRepository profitRespository;
 	
 	@GetMapping("")
-	public ResponseEntity<List<Profit>> getProfits() {
-		return ResponseEntity.ok(profitRespository.findAll());
+	public List<Map<String, Object>> getProfits() {
+		return profitService.getProfits();
 	}
 
     @GetMapping("/{id}")
@@ -48,18 +52,15 @@ public class ProfitController {
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Profit> update(@PathVariable Long id, @RequestBody Profit profit) {
-    	Profit profitExisting = profitRespository.findById(id).orElse(null);
-        if (!profitRespository.findById(id).isPresent()) {
+    public ResponseEntity<Profit> update(@PathVariable Long id, @RequestBody Profit p) {
+    	Profit profit = profitRespository.findById(id).orElse(null);
+        if (profit == null) {
             return ResponseEntity.badRequest().build();
         }
 
         // save original values 
-        profit.setCreatedBy(profitExisting.getCreatedBy());
-        profit.setCreatedDate(profitExisting.getCreatedDate());
-        profit.setIsDeleted(false);
-        
-        profit.setUpdatedBy(0L);
+        profit.setRealized(p.getRealized());;
+        profit.setDividend(p.getDividend());;
         return ResponseEntity.ok(profitRespository.saveAndFlush(profit));
     }
 
@@ -71,10 +72,7 @@ public class ProfitController {
             return ResponseEntity.badRequest().build();
         }
 
-        profit.setUpdatedBy(0L);
-        profit.setIsDeleted(true);
-        profitRespository.saveAndFlush(profit);
-        
+        profitRespository.delete(profit);
         return ResponseEntity.ok().build();
     }
 }

@@ -25,13 +25,7 @@ public class DividendService {
 		// update profit
     	Profit profit = null;
     	List<Profit> profits = profitRespository.findByStockId(dividend.getStockId());
-    	if (profits.isEmpty()) {
-    		// create new portfolio
-    		profit = new Profit(dividend.getStockId());
-    	} else {
-    		// update portfolio
-    		profit = profits.get(0);
-    	}
+		profit = profits.get(0);
 		profit.setDividend(profit.getDividend().add(dividend.getAmount()));
     	profitRespository.save(profit);
 		

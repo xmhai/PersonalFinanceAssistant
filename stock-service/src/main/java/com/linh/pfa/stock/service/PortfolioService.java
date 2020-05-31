@@ -76,7 +76,8 @@ public class PortfolioService {
     	List<Profit> profits = profitRespository.findByStockId(stockId);
     	if (profits.isEmpty()) {
     		// create new portfolio
-    		profit = new Profit(stockId);
+        	Stock stock = stockRespository.findById(stockId).orElse(null);
+    		profit = new Profit(stock);
     	} else {
     		// update portfolio
     		profit = profits.get(0);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 
+	@Query(value="SELECT * FROM portfolio where quantity > 0 and stock_id = ?1", nativeQuery = true) 
 	List<Portfolio> findByStockId(Long stockId);
 	
 	@Query("SELECT t FROM Portfolio t where t.quantity > 0") 

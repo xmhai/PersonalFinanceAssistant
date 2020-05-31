@@ -12,11 +12,14 @@ export const MuiTable = ({ ...props }) => {
     <MaterialTable
       options={{
         search: true,
-        paging: false,
+        paging: true,
+        pageSize: 10,
+        pageSizeOptions: [10, 50, 100],
         actionsColumnIndex: -1,
         exportButton: true,
         headerStyle: { fontWight: 900, fontSize: "14px" },
         cellStyle: { fontSize: "14px" },
+        tableLayout: "fixed",
       }}
       actions={[
         {

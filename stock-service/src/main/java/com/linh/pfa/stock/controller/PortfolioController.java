@@ -33,7 +33,7 @@ public class PortfolioController {
 	
 	@GetMapping("")
 	public ResponseEntity<List<Portfolio>> getPortfolios() {
-		return ResponseEntity.ok(portfolioRespository.findAll());
+		return ResponseEntity.ok(portfolioRespository.findActivePortfolio());
 	}
 
     @GetMapping("/{id}")

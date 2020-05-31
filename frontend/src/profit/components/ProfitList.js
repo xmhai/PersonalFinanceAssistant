@@ -15,19 +15,22 @@ class ProfitList extends React.Component {
 
     renderTable() {
         return (
-            <MuiTable
-                style={{ maxWidth: "1120px", margin:"auto" }}
-                title="Profit"
-                baseUrl="/profits"
-                data={this.props.profits}
-                columns={[
-                    { title: 'Stock', field: 'stock.name' },
-                    { title: 'Dividend', field: 'dividend', type: 'numeric', render: r => <ColorNumber value={r.dividend} /> },
-                    { title: 'Realized', field: 'realized', type: 'numeric', render: r => <ColorNumber value={r.realized} /> },
-                    { title: 'Unrealized', field: 'unrealized', type: 'numeric', render: r => <ColorNumber value={r.unrealized} /> },
-                    { title: 'Profit/Lost', field: 'profit', type: 'numeric', render: r => <ColorNumber value={r.profit} /> },
-                ]}
-            />
+            <>
+                <MuiTable
+                    style={{ maxWidth: "1120px", margin:"auto" }}
+                    title="Profit"
+                    baseUrl="/profits"
+                    data={this.props.profits}
+                    columns={[
+                        { title: 'Stock', field: 'stock.name' },
+                        { title: 'Dividend', field: 'dividend', type: 'numeric', render: r => <ColorNumber value={r.dividend} /> },
+                        { title: 'Realized', field: 'realized', type: 'numeric', render: r => <ColorNumber value={r.realized} /> },
+                        { title: 'Unrealized', field: 'unrealized', type: 'numeric', render: r => <ColorNumber value={r.unrealized} /> },
+                        { title: 'Profit/Lost', field: 'profit', type: 'numeric', render: r => <ColorNumber value={r.profit} /> },
+                    ]}
+                />
+                <div><b>Total Profit: {this.props.totalProft}</b></div>
+            </>
         );
     }
 
@@ -40,8 +43,8 @@ class ProfitList extends React.Component {
 
 const mapStateToProps = state => {
     if (state.profits) {
-        console.log(state.profits);
         return {
+            totalProft: Object.values(state.profits).reduce((a, b) => a + b.profit, 0),
             profits: _.orderBy(Object.values(state.profits), [p => p.stock.name.toLowerCase()], ['asc']),
             stocks: _.mapValues(_.keyBy(state.stocks, 'id'), 'name'),
         };

@@ -25,6 +25,7 @@ public class Dividend extends BaseEntity {
 	@Column(nullable=false)
 	private LocalDate payDate;
 	
+	// in SGD as the value is from Bank Statement
 	@Column(precision=8, scale=2)
 	private BigDecimal amount;
 }

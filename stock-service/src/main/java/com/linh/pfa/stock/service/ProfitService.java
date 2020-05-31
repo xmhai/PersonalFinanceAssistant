@@ -15,7 +15,6 @@ import com.linh.pfa.stock.entity.PortfolioRepository;
 import com.linh.pfa.stock.entity.Profit;
 import com.linh.pfa.stock.entity.ProfitRepository;
 import com.linh.pfa.stock.entity.Stock;
-import com.linh.pfa.stock.entity.StockRepository;
 
 @Service
 public class ProfitService {
@@ -23,8 +22,6 @@ public class ProfitService {
 	private ProfitRepository profitRespository;
 	@Autowired
 	private PortfolioRepository portfolioRespository;
-	@Autowired
-	private StockRepository stockRepository;
 	@Autowired
 	private CurrencyService currencyService;
 	
@@ -41,8 +38,7 @@ public class ProfitService {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", profit.getId());
 			map.put("stock", stock);
-			BigDecimal realizedSGD = profit.getRealized().multiply(currencies.get(currencyId)); // realized is in the stock currency
-			map.put("realized", realizedSGD); 
+			map.put("realized", profit.getRealized()); 
 			map.put("dividend", profit.getDividend());
 			
 			// get unrealized
@@ -55,7 +51,7 @@ public class ProfitService {
 			map.put("unrealized", unrealizedSGD);
 			
 	    	// get total
-			map.put("profit", profit.getDividend().add(realizedSGD).add(unrealizedSGD));
+			map.put("profit", profit.getDividend().add(profit.getRealized()).add(unrealizedSGD));
 	    	
 			result.add(map);
 		}

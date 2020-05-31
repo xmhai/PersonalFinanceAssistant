@@ -26,7 +26,7 @@ class TransactionForm extends React.Component {
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error pfa-form" >
           <Field name="stockId" label="Stock:" component={HtmlSelect} data={this.props.stocks} display="name" />
           <Field name="transactionDate" label="Transaction Date:" component={HtmlInput} type="date" />
-          <Field name="actionId" label="Action:" component={HtmlSelect} data={this.props.actions} />
+          <Field name="action" label="Action:" component={HtmlSelect} data={this.props.actions} />
           <Field name="price" label="Price:" component={HtmlInput} />
           <Field name="quantity" label="Quantity:" component={HtmlInput} />
           <div className="pfa-form-button">
@@ -56,9 +56,11 @@ const validate = formValues => {
 };
 
 const mapStateToProps = state => {
-  return {
-    stocks: Object.values(state.stocks),
-    actions: Object.values(state.config.actions),
+  if (state.stocks && state.config.actions) {
+    return {
+      stocks: Object.values(state.stocks),
+      actions: Object.values(state.config.actions),
+    }
   }
 };
 

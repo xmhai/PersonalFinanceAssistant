@@ -54,4 +54,8 @@ public class Portfolio extends BaseEntity {
 		quantity = newPosition;
 		cost =  newTotalCost.divide(new BigDecimal(newPosition), 8, BigDecimal.ROUND_UP); 
 	}
+
+	public void close(BigDecimal price) {
+		realizedPrice = price;
+	}
 }

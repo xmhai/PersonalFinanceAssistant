@@ -67,28 +67,31 @@ public class PortfolioService {
 	    		portfolio.reduce(quantity, price);
     		}
     	}
+    	portfolio.setQuantity(portfolio.getQuantity() - quantity);
 		return portfolioRespository.save(portfolio);
 	}
 	
 	private Portfolio closePosition(Portfolio portfolio, Long stockId, Integer quantity, BigDecimal price) {
+		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
+    	Stock stock = stockRespository.findById(stockId).orElse(null);
+		
 		// update realized profit
     	Profit profit = null;
     	List<Profit> profits = profitRespository.findByStockId(stockId);
     	if (profits.isEmpty()) {
     		// create new portfolio
-        	Stock stock = stockRespository.findById(stockId).orElse(null);
     		profit = new Profit(stock);
     	} else {
     		// update portfolio
     		profit = profits.get(0);
     	}
-		BigDecimal realized = price.subtract(portfolio.getCost()).multiply(new BigDecimal(quantity));
+		Long currencyId = Long.valueOf(stock.getCurrency().getValue());
+		BigDecimal realized = price.subtract(portfolio.getCost()).multiply(new BigDecimal(quantity)).multiply(currencies.get(currencyId));
 		profit.setRealized(profit.getRealized().add(realized));
     	profitRespository.save(profit);
 		
-		// delete this portfolio
-    	portfolio.setRealizedPrice(price);
-		portfolio.setIsDeleted(true);
+		// close portfolio
+    	portfolio.close(price);
 		return portfolio;
 	}
 
@@ -100,8 +103,9 @@ public class PortfolioService {
 		double bondAmt = 0; 
 		double reitAmt = 0; 
 		for (Portfolio portfolio : portfolios) {
-			BigDecimal amt = portfolio.getStock().getLatestPrice().multiply(new BigDecimal(portfolio.getQuantity()));
-			Long currencyId = Long.valueOf(portfolio.getStock().getCurrency().getValue());
+			Stock stock = portfolio.getStock();
+			BigDecimal amt = stock.getLatestPrice().multiply(new BigDecimal(portfolio.getQuantity()));
+			Long currencyId = Long.valueOf(stock.getCurrency().getValue());
 			double amtSGD = amt.doubleValue() * currencies.get(currencyId).doubleValue();
 			if (portfolio.getStock().getCategory()==Category.STOCKS) {
 				stockAmt = stockAmt + amtSGD;

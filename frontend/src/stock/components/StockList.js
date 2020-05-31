@@ -25,7 +25,10 @@ class StockList extends React.Component {
                 baseUrl="/stocks"
                 data={this.props.stocks}
                 columns={[
-                    { title: 'Stock Name', field: 'name' },
+                    { title: 'Stock Name', field: 'name', cellStyle: {
+                            width: 200,
+                            maxWidth: 200
+                        }, },
                     { title: 'Stock Code', field: 'code' },
                     { title: 'Exchange', field: 'exchange', lookup: this.props.exchanges },
                     { title: 'Category', field: 'category', lookup: this.props.categories },
@@ -79,7 +82,7 @@ class StockList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        stocks: Object.values(state.stocks),
+        stocks: _.orderBy(Object.values(state.stocks), ['name'], ['asc']),
         exchanges: _.mapValues(_.keyBy(state.config.exchanges, 'id'), 'code'),
         currencies: _.mapValues(_.keyBy(state.config.currencies, 'id'), 'code'),
         categories: _.mapValues(_.keyBy(state.config.categories, 'id'), 'code')

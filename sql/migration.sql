@@ -145,10 +145,18 @@ SELECT divident.StockID,
     0
 FROM asset.divident;
 
+-- change amount to SGD
+drop view if exists vw_stock_exchange_rate;
+create view vw_stock_exchange_rate (stock_id, exchange_rate)
+as
+select s.id, exchange_rate from stock s, currency c where s.currency_id = c.id;
+
+update dividend set amount = amount * (select exchange_rate from vw_stock_exchange_rate where stock_id = dividend.stock_id);
+
 -- profit
 TRUNCATE TABLE profit;
 INSERT INTO profit (
-  Stock_id,
+  stock_id,
   realized,
   dividend,
   created_by,
@@ -162,6 +170,8 @@ SELECT profit.StockID,
     CURRENT_DATE,
     0
 FROM asset.profit;
+
+update profit set realized = realized * (select exchange_rate from vw_stock_exchange_rate where stock_id = profit.stock_id);
 
 -- insert records from dividend table
 update profit p set dividend = (select sum(amount) from dividend d where d.stock_id=p.stock_id);

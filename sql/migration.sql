@@ -150,6 +150,7 @@ TRUNCATE TABLE profit;
 INSERT INTO profit (
   Stock_id,
   realized,
+  dividend,
   created_by,
   created_date,
   is_deleted
@@ -157,9 +158,42 @@ INSERT INTO profit (
 SELECT profit.StockID,
     profit.Amount,
     0,
+    0,
     CURRENT_DATE,
     0
 FROM asset.profit;
 
+-- insert records from dividend table
 update profit p set dividend = (select sum(amount) from dividend d where d.stock_id=p.stock_id);
 update profit set dividend = 0 where dividend is null;
+INSERT INTO profit (
+  Stock_id,
+  realized,
+  dividend,
+  created_by,
+  created_date,
+  is_deleted
+)
+select stock_id,
+	0,
+	sum(amount),
+    0,
+    CURRENT_DATE,
+    0
+  from dividend where stock_id not in (select stock_id from profit) group by stock_id;
+-- insert records from portfolio table
+INSERT INTO profit (
+  Stock_id,
+  realized,
+  dividend,
+  created_by,
+  created_date,
+  is_deleted
+)
+select stock_id,
+	0,
+	0,
+    0,
+    CURRENT_DATE,
+    0
+  from portfolio where stock_id not in (select stock_id from profit) group by stock_id;

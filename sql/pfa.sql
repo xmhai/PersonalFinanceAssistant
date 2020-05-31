@@ -29,9 +29,9 @@ CREATE TABLE code_table (
   PRIMARY KEY (id)
 );
 -- insert testing data
-INSERT INTO code_type (id, code_type_name, created_by, created_date) VALUES(1, 'Transaction Type', 0, CURRENT_DATE);
-INSERT INTO code_table (code_type_id, code_name, code_value, created_by, created_date) VALUES(1, 'BUY', 'Buy', 0, CURRENT_DATE);
-INSERT INTO code_table (code_type_id, code_name, code_value, created_by, created_date) VALUES(1, 'SELL', 'Sell', 0, CURRENT_DATE);
+INSERT INTO code_type (id, code_type_name, created_by, created_date, is_deleted) VALUES(1, 'Transaction Type', 0, CURRENT_DATE, 0);
+INSERT INTO code_table (code_type_id, code_name, code_value, created_by, created_date, is_deleted) VALUES(1, 'BUY', 'Buy', 0, CURRENT_DATE, 0);
+INSERT INTO code_table (code_type_id, code_name, code_value, created_by, created_date, is_deleted) VALUES(1, 'SELL', 'Sell', 0, CURRENT_DATE, 0);
 
 -- Asset category configuration table
 DROP TABLE IF EXISTS asset_category;
@@ -46,13 +46,13 @@ CREATE TABLE asset_category (
   PRIMARY KEY (id)
 );
 
-INSERT INTO asset_category (id, code, created_by, created_date) VALUES(1, 'STOCK', 0, CURRENT_DATE);
-INSERT INTO asset_category (id, code, created_by, created_date) VALUES(2, 'REIT', 0, CURRENT_DATE);
-INSERT INTO asset_category (id, code, created_by, created_date) VALUES(3, 'BOND', 0, CURRENT_DATE);
-INSERT INTO asset_category (id, code, created_by, created_date) VALUES(4, 'CASH', 0, CURRENT_DATE);
-INSERT INTO asset_category (id, code, created_by, created_date) VALUES(5, 'CPF_ORDINARY', 0, CURRENT_DATE);
-INSERT INTO asset_category (id, code, created_by, created_date) VALUES(6, 'CPF_MEDISAVE', 0, CURRENT_DATE);
-INSERT INTO asset_category (id, code, created_by, created_date) VALUES(7, 'CPF_SPECIAL', 0, CURRENT_DATE);
+INSERT INTO asset_category (id, code, created_by, created_date, is_deleted) VALUES(1, 'STOCK', 0, CURRENT_DATE, 0);
+INSERT INTO asset_category (id, code, created_by, created_date, is_deleted) VALUES(2, 'REIT', 0, CURRENT_DATE, 0);
+INSERT INTO asset_category (id, code, created_by, created_date, is_deleted) VALUES(3, 'BOND', 0, CURRENT_DATE, 0);
+INSERT INTO asset_category (id, code, created_by, created_date, is_deleted) VALUES(4, 'CASH', 0, CURRENT_DATE, 0);
+INSERT INTO asset_category (id, code, created_by, created_date, is_deleted) VALUES(5, 'CPF_ORDINARY', 0, CURRENT_DATE, 0);
+INSERT INTO asset_category (id, code, created_by, created_date, is_deleted) VALUES(6, 'CPF_MEDISAVE', 0, CURRENT_DATE, 0);
+INSERT INTO asset_category (id, code, created_by, created_date, is_deleted) VALUES(7, 'CPF_SPECIAL', 0, CURRENT_DATE, 0);
 
 -- Exchange configuration table
 DROP TABLE IF EXISTS exchange;
@@ -67,11 +67,11 @@ CREATE TABLE exchange (
   PRIMARY KEY (id)
 );
 
-INSERT INTO exchange (id, code, created_by, created_date) VALUES(1, 'SGX', 0, CURRENT_DATE);
-INSERT INTO exchange (id, code, created_by, created_date) VALUES(2, 'CN', 0, CURRENT_DATE);
-INSERT INTO exchange (id, code, created_by, created_date) VALUES(3, 'NYSE', 0, CURRENT_DATE);
-INSERT INTO exchange (id, code, created_by, created_date) VALUES(4, 'HKEX', 0, CURRENT_DATE);
-INSERT INTO exchange (id, code, created_by, created_date) VALUES(5, 'NASDAQ', 0, CURRENT_DATE);
+INSERT INTO exchange (id, code, created_by, created_date, is_deleted) VALUES(1, 'SGX', 0, CURRENT_DATE, 0);
+INSERT INTO exchange (id, code, created_by, created_date, is_deleted) VALUES(2, 'CN', 0, CURRENT_DATE, 0);
+INSERT INTO exchange (id, code, created_by, created_date, is_deleted) VALUES(3, 'NYSE', 0, CURRENT_DATE, 0);
+INSERT INTO exchange (id, code, created_by, created_date, is_deleted) VALUES(4, 'HKEX', 0, CURRENT_DATE, 0);
+INSERT INTO exchange (id, code, created_by, created_date, is_deleted) VALUES(5, 'NASDAQ', 0, CURRENT_DATE, 0);
 
 -- Currency configuration table
 DROP TABLE IF EXISTS currency;
@@ -87,10 +87,10 @@ CREATE TABLE currency (
   PRIMARY KEY (id)
 );
 
-INSERT INTO currency (id, code, exchange_rate, created_by, created_date) VALUES(1, 'SGD', 1, 0, CURRENT_DATE);
-INSERT INTO currency (id, code, exchange_rate, created_by, created_date) VALUES(2, 'RMB', 0.2, 0, CURRENT_DATE);
-INSERT INTO currency (id, code, exchange_rate, created_by, created_date) VALUES(3, 'USD', 1.4, 0, CURRENT_DATE);
-INSERT INTO currency (id, code, exchange_rate, created_by, created_date) VALUES(4, 'HKD', 0.18, 0, CURRENT_DATE);
+INSERT INTO currency (id, code, exchange_rate, created_by, created_date, is_deleted) VALUES(1, 'SGD', 1, 0, CURRENT_DATE, 0);
+INSERT INTO currency (id, code, exchange_rate, created_by, created_date, is_deleted) VALUES(2, 'RMB', 0.2, 0, CURRENT_DATE, 0);
+INSERT INTO currency (id, code, exchange_rate, created_by, created_date, is_deleted) VALUES(3, 'USD', 1.4, 0, CURRENT_DATE, 0);
+INSERT INTO currency (id, code, exchange_rate, created_by, created_date, is_deleted) VALUES(4, 'HKD', 0.18, 0, CURRENT_DATE, 0);
 
 DROP TABLE IF EXISTS action;
 CREATE TABLE action (
@@ -104,8 +104,8 @@ CREATE TABLE action (
   PRIMARY KEY (id)
 );
 
-INSERT INTO action (id, code, created_by, created_date) VALUES(1, 'BUY', 0, CURRENT_DATE);
-INSERT INTO action (id, code, created_by, created_date) VALUES(2, 'SELL', 0, CURRENT_DATE);
+INSERT INTO action (id, code, created_by, created_date, is_deleted) VALUES(1, 'BUY', 0, CURRENT_DATE, 0);
+INSERT INTO action (id, code, created_by, created_date, is_deleted) VALUES(2, 'SELL', 0, CURRENT_DATE, 0);
 
 -- Asset Account (all asset must be in this table)
 DROP TABLE IF EXISTS account;

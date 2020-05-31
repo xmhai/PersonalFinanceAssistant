@@ -46,49 +46,39 @@ public class StockController {
 	@PostMapping("")
 	@Transactional
 	public ResponseEntity<Stock> create(@RequestBody Stock stock) {
-		return ResponseEntity.ok(stockRespository.saveAndFlush(stock));
+		return ResponseEntity.ok(stockService.create(stock));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Stock> update(@PathVariable Long id, @RequestBody Stock stock) {
-    	Stock stockExisting = stockRespository.findById(id).orElse(null);
+    public ResponseEntity<Stock> update(@PathVariable Long id, @RequestBody Stock s) {
+    	Stock stock = stockRespository.findById(id).orElse(null);
         if (!stockRespository.findById(id).isPresent()) {
             return ResponseEntity.badRequest().build();
         }
 
-        // save original values 
-        stock.setCreatedBy(stockExisting.getCreatedBy());
-        stock.setCreatedDate(stockExisting.getCreatedDate());
-        stock.setIsDeleted(false);
-        
-        stock.setUpdatedBy(0L);
-        return ResponseEntity.ok(stockRespository.saveAndFlush(stock));
+        return ResponseEntity.ok(stockService.update(stock, s));
     }
 
     @DeleteMapping("/{id}")
-	@Transactional
     public ResponseEntity delete(@PathVariable Long id) {
     	Stock stock = stockRespository.findById(id).orElse(null);
         if (stock == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        stock.setIsDeleted(true);
-        stockRespository.saveAndFlush(stock);
+        stockRespository.delete(stock);
         
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/refresh/price")
-	@Transactional
     public ResponseEntity<Double> refreshPrice() {
     	stockService.refreshPrice();
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/refresh/price/{id}")
-	@Transactional
     public ResponseEntity<Double> refreshPrice(@PathVariable Long id) {
     	Stock stock = stockRespository.findById(id).orElse(null);
         if (!stockRespository.findById(id).isPresent()) {

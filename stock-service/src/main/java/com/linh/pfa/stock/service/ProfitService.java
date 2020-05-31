@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linh.pfa.config.service.CurrencyService;
 import com.linh.pfa.stock.entity.Portfolio;
@@ -25,6 +26,20 @@ public class ProfitService {
 	@Autowired
 	private CurrencyService currencyService;
 	
+	@Transactional
+	public void addRealized(Stock stock, BigDecimal realized) {
+    	Profit profit = null;
+    	List<Profit> profits = profitRespository.findByStockId(stock.getId());
+    	if (profits.isEmpty()) {
+    		// create new portfolio
+    		profit = new Profit(stock);
+    	} else {
+    		// update portfolio
+    		profit = profits.get(0);
+    	}
+		profit.setRealized(profit.getRealized().add(realized));
+    	profitRespository.save(profit);
+	}
 	
 	public List<Map<String, Object>> getProfits() {
 		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
@@ -56,5 +71,15 @@ public class ProfitService {
 			result.add(map);
 		}
 		return result;
+	}
+
+	@Transactional
+	public void addStock(Stock stock) {
+    	List<Profit> profits = profitRespository.findByStockId(stock.getId());
+    	if (profits.isEmpty()) {
+    		// create new portfolio
+    		Profit profit = new Profit(stock);
+        	profitRespository.save(profit);
+    	}
 	}
 }

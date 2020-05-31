@@ -25,6 +25,30 @@ public class StockService {
 	private StockPriceRetrieverChain stockPriceRetrieverChain;
 
 	@Transactional
+	public Stock create(Stock stock) {
+		stock = stockRespository.saveAndFlush(stock);
+		stock = refreshPrice(stock);
+		return stock;
+	}
+	
+	@Transactional
+	public Stock update(Stock stock, Stock s) {
+		boolean codeChanged = !stock.getCode().equals(s.getCode()); 
+		
+        stock.setCategory(s.getCategory());;
+        stock.setCode(s.getCode());
+        stock.setName(s.getName());
+        stock.setCurrency(s.getCurrency());
+        stock.setExchange(s.getExchange());
+        stock = stockRespository.save(stock); 
+
+		if (codeChanged) {
+			refreshPrice(stock);
+		}
+		return stock;
+	}
+	
+	@Transactional
     public void refreshPrice() {
 		// refresh active portfolio stock price
 		List<Portfolio> portfolios = portfolioRespository.findActivePortfolio();
@@ -34,22 +58,24 @@ public class StockService {
 	}
 	
 	@Transactional
-    public void refreshPrice(Stock stock) {
+    public Stock refreshPrice(Stock stock) {
 		if (stock.getCode()==null || stock.getCode().endsWith(".UN")) {
-			return;
+			return stock;
 		}
 		
 		if (stock.getLatestPrice() != null && stock.getLatestPrice().doubleValue()>0
 				&& Duration.between(stock.getUpdatedDate(), LocalDateTime.now()).toMinutes()<30) {
 			// don't refresh if just refreshed
-			return;
+			return stock;
 		}
 		
         // Get current price and update to stock table
-		double price = stockPriceRetrieverChain.build().getPrice(stock);
+		double price = stockPriceRetrieverChain.getPrice(stock);
 		if (price > 0) {
 			stock.setLatestPrice(new BigDecimal(price));
 	        stockRespository.save(stock);
 		}
+		
+		return stock;
     }
 }

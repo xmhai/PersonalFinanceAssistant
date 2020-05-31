@@ -25,7 +25,7 @@ public class PortfolioService {
 	@Autowired
 	private PortfolioRepository portfolioRespository;
 	@Autowired
-	private ProfitRepository profitRespository;
+	private ProfitService profitService;
 	@Autowired
 	private StockRepository stockRespository;
 	@Autowired
@@ -37,6 +37,9 @@ public class PortfolioService {
     	List<Portfolio> portfolios = portfolioRespository.findByStockId(stockId);
     	
     	Stock stock = stockRespository.findById(stockId).orElse(null);
+    	
+    	// create new profit item if not exists
+    	profitService.addStock(stock);
     	
 		// BUY
     	if (portfolios.isEmpty()) {
@@ -75,20 +78,12 @@ public class PortfolioService {
 		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
     	Stock stock = stockRespository.findById(stockId).orElse(null);
 		
-		// update realized profit
-    	Profit profit = null;
-    	List<Profit> profits = profitRespository.findByStockId(stockId);
-    	if (profits.isEmpty()) {
-    		// create new portfolio
-    		profit = new Profit(stock);
-    	} else {
-    		// update portfolio
-    		profit = profits.get(0);
-    	}
+    	// calculate profit
 		Long currencyId = Long.valueOf(stock.getCurrency().getValue());
 		BigDecimal realized = price.subtract(portfolio.getCost()).multiply(new BigDecimal(quantity)).multiply(currencies.get(currencyId));
-		profit.setRealized(profit.getRealized().add(realized));
-    	profitRespository.save(profit);
+    	
+		// update realized profit
+		profitService.addRealized(stock, realized);
 		
 		// close portfolio
     	portfolio.close(price);

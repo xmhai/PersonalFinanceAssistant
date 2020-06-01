@@ -70,7 +70,6 @@ public class PortfolioService {
 	    		portfolio.reduce(quantity, price);
     		}
     	}
-    	portfolio.setQuantity(portfolio.getQuantity() - quantity);
 		return portfolioRespository.save(portfolio);
 	}
 	

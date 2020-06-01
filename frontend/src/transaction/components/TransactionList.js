@@ -19,7 +19,7 @@ class TransactionList extends React.Component {
     renderTable() {
         return (
             <MuiTable
-                style={{ maxWidth: "700px", margin: "auto" }}
+                style={{ maxWidth: "800px", margin: "auto" }}
                 title="Transaction"
                 baseUrl="/transactions"
                 data={this.props.transactions}

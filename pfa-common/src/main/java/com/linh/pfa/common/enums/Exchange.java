@@ -1,5 +1,6 @@
 package com.linh.pfa.common.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 // Exchange is used for stock code generation for different API provider
@@ -12,6 +13,7 @@ public enum Exchange {
 	@JsonValue
 	public int getValue() { return value; }
 
+	@JsonCreator
     public static Exchange fromValue(int value) {
         for (Exchange e : Exchange.values()) {
             if(e.getValue() == value) return e;

@@ -1,5 +1,6 @@
 package com.linh.pfa.common.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Category {
@@ -11,6 +12,7 @@ public enum Category {
 	@JsonValue
 	public int getValue() { return value; }
 
+	@JsonCreator
     public static Category fromValue(int value) {
         for (Category e : Category.values()) {
             if(e.getValue() == value) return e;

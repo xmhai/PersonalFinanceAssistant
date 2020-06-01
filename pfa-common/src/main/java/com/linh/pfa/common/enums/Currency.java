@@ -1,5 +1,6 @@
 package com.linh.pfa.common.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Currency {
@@ -11,6 +12,7 @@ public enum Currency {
 	@JsonValue
 	public int getValue() { return value; }
 
+	@JsonCreator
     public static Currency fromValue(int value) {
         for (Currency e : Currency.values()) {
             if(e.getValue() == value) return e;

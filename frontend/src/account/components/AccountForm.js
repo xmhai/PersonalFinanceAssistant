@@ -27,8 +27,8 @@ class AccountForm extends React.Component {
           <Field name="instituteName" label="Institute Name:" colspan="2" component={HtmlInput} />
           <Field name="accountNo" label="Account Number:" component={HtmlInput} />
           <Field name="accountHolder" label="Account Holder:" component={HtmlInput} />
-          <Field name="categoryId" label="Asset Category:" component={HtmlSelect} data={this.props.categories} />
-          <Field name="currencyId" label="Currency:" component={HtmlSelect} data={this.props.currencies} />
+          <Field name="category" label="Asset Category:" component={HtmlSelect} data={this.props.categories} />
+          <Field name="currency" label="Currency:" component={HtmlSelect} data={this.props.currencies} />
           <Field name="amount" label="Amount:" component={HtmlInput} />
           <Field name="maturityDate" label="Maturity Date:" component={HtmlInput} type="date" />
           <div className="pfa-form-button">

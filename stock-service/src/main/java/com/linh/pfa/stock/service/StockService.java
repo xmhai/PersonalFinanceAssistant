@@ -40,6 +40,7 @@ public class StockService {
         stock.setName(s.getName());
         stock.setCurrency(s.getCurrency());
         stock.setExchange(s.getExchange());
+        stock.setLatestPrice(s.getLatestPrice());
         stock = stockRespository.save(stock); 
 
 		if (codeChanged) {

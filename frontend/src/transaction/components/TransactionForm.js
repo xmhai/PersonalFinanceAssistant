@@ -27,8 +27,8 @@ class TransactionForm extends React.Component {
           <Field name="stockId" label="Stock:" component={HtmlSelect} data={this.props.stocks} display="name" />
           <Field name="transactionDate" label="Transaction Date:" component={HtmlInput} type="date" />
           <Field name="action" label="Action:" component={HtmlSelect} data={this.props.actions} />
-          <Field name="price" label="Price:" component={HtmlInput} />
-          <Field name="quantity" label="Quantity:" component={HtmlInput} />
+          <Field name="price" label="Price:" component={HtmlInput} autoComplete="off" />
+          <Field name="quantity" label="Quantity:" component={HtmlInput} autoComplete="off" />
           <div className="pfa-form-button">
             <button className="ui button primary">Submit</button>
             <Link to="/transactions" className="ui button">
@@ -58,10 +58,12 @@ const validate = formValues => {
 const mapStateToProps = state => {
   if (state.stocks && state.config.actions) {
     return {
-      stocks: Object.values(state.stocks),
+      stocks: _.orderBy(Object.values(state.stocks), ['name'], ['asc']),
       actions: Object.values(state.config.actions),
-    }
+    };
   }
+
+  return {};
 };
 
 TransactionForm = connect(mapStateToProps, { fetchStocks, fetchActions } )(TransactionForm);

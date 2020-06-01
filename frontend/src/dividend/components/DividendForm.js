@@ -24,7 +24,7 @@ class DividendForm extends React.Component {
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error pfa-form" >
           <Field name="stockId" label="Stock:" component={HtmlSelect} data={this.props.stocks} display="name" />
           <Field name="payDate" label="Pay Date:" component={HtmlInput} type="date" />
-          <Field name="amount" label="Amount:" component={HtmlInput} />
+          <Field name="amount" label="Amount:" component={HtmlInput} autoComplete="off" />
           <div className="pfa-form-button">
             <button className="ui button primary">Submit</button>
             <Link to="/dividends" className="ui button">
@@ -53,7 +53,7 @@ const validate = formValues => {
 
 const mapStateToProps = state => {
   return {
-    stocks: Object.values(state.stocks),
+    stocks: _.orderBy(Object.values(state.stocks), ['name'], ['asc']),
   }
 };
 

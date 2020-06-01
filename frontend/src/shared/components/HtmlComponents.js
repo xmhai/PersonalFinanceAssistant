@@ -1,13 +1,13 @@
 import React from 'react';
 
-export const HtmlInput = ({ input, label, colspan, meta, type }) => {
+export const HtmlInput = ({ input, label, colspan, meta, type, autoComplete }) => {
     return (
         <>
             <div className="pfa-label">
                 <label>{label}</label>
             </div>
             <div className={`pfa-input colspan-${colspan}`}>
-                <input {...input} type={type} />
+                <input {...input} type={type} autoComplete={autoComplete} />
                 {renderError(meta)}
             </div>
         </>

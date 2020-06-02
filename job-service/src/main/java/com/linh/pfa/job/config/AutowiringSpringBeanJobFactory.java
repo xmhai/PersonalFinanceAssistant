@@ -1,4 +1,4 @@
-package com.linh.pfa.job;
+package com.linh.pfa.job.config;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;

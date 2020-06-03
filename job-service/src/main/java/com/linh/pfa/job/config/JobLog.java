@@ -16,7 +16,7 @@ import lombok.Setter;
 
 @Entity
 @Where(clause = "is_deleted = 0")
-@SQLDelete(sql = "UPDATE job_log SET is_deleted = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE job_log SET is_deleted = 1 WHERE id = ?")
 @Getter @Setter @NoArgsConstructor
 public class JobLog extends BaseEntity {
 	@Column(nullable=false)

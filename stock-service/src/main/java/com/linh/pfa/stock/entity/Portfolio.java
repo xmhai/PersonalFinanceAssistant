@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linh.common.base.BaseEntity;
 
 @Entity
-@SQLDelete(sql = "UPDATE portfolio SET is_deleted = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE portfolio SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @Getter @Setter @NoArgsConstructor
 public class Portfolio extends BaseEntity {

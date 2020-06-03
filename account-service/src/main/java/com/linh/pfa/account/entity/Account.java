@@ -18,7 +18,7 @@ import com.linh.pfa.common.enums.Currency;
 
 @Entity
 @Where(clause = "is_deleted = 0")
-@SQLDelete(sql = "UPDATE account SET is_deleted = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE account SET is_deleted = 1 WHERE id = ?")
 @Getter @Setter @NoArgsConstructor
 public class Account extends BaseEntity {
 	@Column(nullable=false, length=60)

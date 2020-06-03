@@ -29,8 +29,8 @@ public class JobLog extends BaseEntity {
 	private String jobName;
 	
 	@Column(length=200)
-	private String messge;
+	private String message;
 	
 	@Column(nullable = false)
-	private Boolean isComplete = false;
+	private Boolean isCompleted = false;
 }

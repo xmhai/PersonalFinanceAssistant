@@ -29,11 +29,11 @@ public class PriceUpdateJob implements Job {
 		jobLog.setJobName(context.getJobDetail().getKey().getName());
 		jobLog = jobLogRepository.save(jobLog);
 		
-		//priceUpdateService.execute(); // 0 18 * * MON-FRI
+		priceUpdateService.execute(); // 0 0 18 ? * MON-FRI === Mon to Fri 6pm
 
 		jobLog.setEndTime(LocalDateTime.now());
-		jobLog.setIsComplete(true);
-		jobLog.setMessge("success");
+		jobLog.setIsCompleted(true);
+		jobLog.setMessage("success");
 		jobLog = jobLogRepository.save(jobLog);
 		
 		System.out.println("PriceUpdateJob is completed");

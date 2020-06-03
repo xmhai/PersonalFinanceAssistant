@@ -48,6 +48,9 @@ import ProfitEdit from '../../profit/components/ProfitEdit'
 import ProfitDelete from '../../profit/components/ProfitDelete'
 import ProfitView from '../../profit/components/ProfitView'
 
+import JobConfigList from '../../job/components/JobConfigList'
+import JobLogList from '../../job/components/JobLogList'
+
 class App extends React.Component {
     render() {
         return (
@@ -94,6 +97,9 @@ class App extends React.Component {
                             <Route path="/profits/edit/:id" exact component={ProfitEdit} />
                             <Route path="/profits/delete/:id" exact component={ProfitDelete} />
                             <Route path="/profits/:id" exact component={ProfitView} />
+
+                            <Route path="/job/configs" exact component={JobConfigList} />
+                            <Route path="/job/logs" exact component={JobLogList} />
                         </Switch>
                     </div>
                     <AppFooter />

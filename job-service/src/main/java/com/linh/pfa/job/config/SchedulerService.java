@@ -3,7 +3,6 @@ package com.linh.pfa.job.config;
 import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,9 +13,6 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleTrigger;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,15 +32,12 @@ public class SchedulerService
     	List<JobConfig> jobConfigs = jobConfigRepository.findAll();
         for (JobConfig config : jobConfigs) {
         	Class clazz = Class.forName(config.getJobClassName());
-        	String jobKey = "JobDetail-" + config.getName();
+        	String jobKey = config.getName();
         	JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(jobKey).storeDurably().build();
 
         	CronTrigger trigger = newTrigger()
-        		    .withIdentity("Trigger-"+config.getName())
+        		    .withIdentity("trigger-"+config.getName())
         		    .withSchedule(cronSchedule(config.getCronExpression()))
-//        		    .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-//        		              .withIntervalInSeconds(5)
-//        		              .repeatForever())	        		    
         		    .forJob(jobDetail)
         		    .build();
 

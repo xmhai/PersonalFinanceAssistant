@@ -27,6 +27,8 @@ class AppMenu extends React.Component {
                         <Dropdown item text='Config'>
                             <Dropdown.Menu>
                                 <Dropdown.Item text='Stock' as={Link} to='/stocks' />
+                                <Dropdown.Item text='Job Configuration' as={Link} to='/job/configs' />
+                                <Dropdown.Item text='Job Log' as={Link} to='/job/logs' />
                             </Dropdown.Menu>
                         </Dropdown>
                     </Container>

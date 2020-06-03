@@ -3,6 +3,7 @@ import axios from 'axios';
 export const commonService = axios.create({ baseURL: 'http://localhost:10080' });
 export const accountService = axios.create({ baseURL: 'http://localhost:10081' });
 export const stockService = axios.create({ baseURL: 'http://localhost:10082' });
+export const jobService = axios.create({ baseURL: 'http://localhost:10083' });
 
 const setupAxiosInterceptors = (store) => {
     const { dispatch } = store;
@@ -19,6 +20,7 @@ const setupAxiosInterceptors = (store) => {
     accountService.interceptors.request.use(onRequestSuccess, onRequestFail);
     stockService.interceptors.request.use(onRequestSuccess, onRequestFail);
     commonService.interceptors.request.use(onRequestSuccess, onRequestFail);
+    jobService.interceptors.request.use(onRequestSuccess, onRequestFail);
 
     const onResponseSuccess = response => {
         // hide loading spinner
@@ -45,6 +47,7 @@ const setupAxiosInterceptors = (store) => {
     accountService.interceptors.response.use(onResponseSuccess, onResponseFail);
     stockService.interceptors.response.use(onResponseSuccess, onResponseFail);
     commonService.interceptors.response.use(onResponseSuccess, onResponseFail);
+    jobService.interceptors.response.use(onResponseSuccess, onResponseFail);
 };
 
 export default setupAxiosInterceptors;

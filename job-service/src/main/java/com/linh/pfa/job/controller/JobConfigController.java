@@ -32,22 +32,16 @@ public class JobConfigController {
 	@PostMapping("")
 	@Transactional
 	public ResponseEntity<JobConfig> create(@RequestBody JobConfig jobConfig) {
-		jobConfig.setCreatedBy(0L);
 		return ResponseEntity.ok(jobConfigRespository.save(jobConfig));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
     public ResponseEntity<JobConfig> update(@PathVariable Long id, @RequestBody JobConfig jobConfig) {
-    	JobConfig jobConfigExisting = jobConfigRespository.findById(id).orElse(null);
         if (!jobConfigRespository.findById(id).isPresent()) {
             return ResponseEntity.badRequest().build();
         }
 
-        // save original values 
-        jobConfig.setCreatedBy(jobConfigExisting.getCreatedBy());
-        jobConfig.setCreatedDate(jobConfigExisting.getCreatedDate());
-        jobConfig.setIsDeleted(false);
         return ResponseEntity.ok(jobConfigRespository.save(jobConfig));
     }
 

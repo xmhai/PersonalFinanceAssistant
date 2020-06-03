@@ -16,24 +16,21 @@ import lombok.Setter;
 
 @Entity
 @Where(clause = "is_deleted = 0")
-@SQLDelete(sql = "UPDATE job_config SET is_deleted = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE job_log SET is_deleted = 0 WHERE id = ?")
 @Getter @Setter @NoArgsConstructor
-public class JobConfig extends BaseEntity {
-	@Column(nullable=false, length=60)
-	private String name;
-	
-	@Column(length=200)
-	private String description;
-	
-	@Column(nullable=false, length=200)
-	private String jobClassName;
-	
-	@Column(nullable=false, length=60)
-	private String cronExpression;
-	
-	@Column
-	private LocalDateTime startTime;
+public class JobLog extends BaseEntity {
+	@Column(nullable=false)
+	private LocalDateTime startTime = LocalDateTime.now();
 	
 	@Column
 	private LocalDateTime endTime;
+	
+	@Column(nullable=false, length=60)
+	private String jobName;
+	
+	@Column(length=200)
+	private String messge;
+	
+	@Column(nullable = false)
+	private Boolean isComplete = false;
 }

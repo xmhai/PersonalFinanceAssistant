@@ -41,6 +41,7 @@ import DividendCreate from '../../dividend/components/DividendCreate'
 import DividendEdit from '../../dividend/components/DividendEdit'
 import DividendDelete from '../../dividend/components/DividendDelete'
 import DividendView from '../../dividend/components/DividendView'
+import Dividend from '../../dividend/components/Dividend'
 
 import ProfitList from '../../profit/components/ProfitList'
 import ProfitCreate from '../../profit/components/ProfitCreate'
@@ -100,6 +101,8 @@ class App extends React.Component {
 
                             <Route path="/job/configs" exact component={JobConfigList} />
                             <Route path="/job/logs" exact component={JobLogList} />
+
+                            <Route path="/test" exact component={Dividend} />
                         </Switch>
                     </div>
                     <AppFooter />

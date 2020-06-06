@@ -19,6 +19,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
+import { MuiEditTable } from '../../shared/components/MuiComponents';
 import { jobService } from '../../apis';
 
 function JobConfigList() {
@@ -28,6 +29,7 @@ function JobConfigList() {
     const [iserror, setIserror] = useState(false)
     const [errorMessages, setErrorMessages] = useState([])
 
+    /*
     const tableIcons = {
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
         Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -47,6 +49,7 @@ function JobConfigList() {
         ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
         ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
     };
+    */
 
     useEffect(() => {
         jobService.get("/job/configs")
@@ -60,7 +63,7 @@ function JobConfigList() {
             })
     }, [])
 
-    const handleRowUpdate = (newData, oldData, resolve) => {
+    const handleRowUpdate = (newData, oldData, resolve, reject) => {
         let errorList = validateData(newData);
         if (errorList.length < 1) {
             jobService.put("/job/configs/" + newData.id, newData)
@@ -69,26 +72,22 @@ function JobConfigList() {
                     const index = oldData.tableData.id;
                     dataUpdate[index] = newData;
                     setData([...dataUpdate]);
-                    resolve()
-                    setIserror(false)
-                    setErrorMessages([])
+                    resolve();
                 })
                 .catch(error => {
-                    setErrorMessages(["Update failed! Server error"])
-                    setIserror(true)
-                    resolve()
+                    setErrorMessages(errorList);
+                    setIserror(true);
+                    reject();
 
                 })
         } else {
-            setErrorMessages(errorList)
-            setIserror(true)
-            resolve()
-
+            setErrorMessages(errorList);
+            setIserror(true);
+            reject();
         }
-
     }
 
-    const handleRowAdd = (newData, resolve) => {
+    const handleRowAdd = (newData, resolve, reject) => {
         let errorList = validateData(newData);
         if (errorList.length < 1) { //no error
             jobService.post("/job/configs", newData)
@@ -96,31 +95,31 @@ function JobConfigList() {
                     let dataToAdd = [...data];
                     dataToAdd.push(newData);
                     setData(dataToAdd);
-                    resolve()
-                    setErrorMessages([])
-                    setIserror(false)
+                    resolve();
+                    setErrorMessages([]);
+                    setIserror(false);
                 })
                 .catch(error => {
-                    setErrorMessages(["Cannot add data. Server error!"])
-                    setIserror(true)
-                    resolve()
+                    setErrorMessages(["Cannot add data. Server error!"]);
+                    setIserror(true);
+                    reject();
                 })
         } else {
             setErrorMessages(errorList)
             setIserror(true)
-            resolve()
+            reject()
         }
     }    
 
     const validateData = (newData) => {
         let errorList = []
-        if (newData.name === undefined) {
+        if (newData.name === undefined || newData.name === "") {
             errorList.push("Please enter job name")
         }
-        if (newData.cronExpression === undefined) {
+        if (newData.cronExpression === undefined || newData.cronExpression === "") {
             errorList.push("Please enter cron expression")
         }
-        if (newData.jobClassName === undefined) {
+        if (newData.jobClassName === undefined || newData.jobClassName === "") {
             errorList.push("Please enter Job ClassName")
         }
         return errorList;
@@ -149,8 +148,8 @@ function JobConfigList() {
         { title: "Description", field: "description" },
         { title: "Cron Expression", field: "cronExpression" },
         { title: "Job ClassName", field: "jobClassName" },
-        { title: "Start Time", field: "startTime" },
-        { title: "End Time", field: "endTime" },
+        { title: "Start Time", field: "startTime", type: "datetime"},
+        { title: "End Time", field: "endTime", type: "datetime" },
     ];
 
     return (
@@ -164,19 +163,29 @@ function JobConfigList() {
                     </Alert>
                 }
             </div>
-            <MaterialTable
+            <MuiEditTable
                 title="Job Configs"
                 columns={columns}
                 data={data}
-                icons={tableIcons}
+                //icons={tableIcons}
+                options={{
+                    search: true,
+                    paging: true,
+                    pageSize: 10,
+                    pageSizeOptions: [10, 50, 100],
+                    actionsColumnIndex: -1,
+                    exportButton: true,
+                    headerStyle: { fontWight: 900, fontSize: "14px" },
+                    cellStyle: { fontSize: "14px" },
+                    tableLayout: "fixed",
+                }}
                 editable={{
                     onRowUpdate: (newData, oldData) =>
-                        new Promise((resolve) => {
+                        new Promise((resolve, reject) => {
                             handleRowUpdate(newData, oldData, resolve);
-
                         }),
                     onRowAdd: (newData) =>
-                        new Promise((resolve) => {
+                        new Promise((resolve, reject) => {
                             handleRowAdd(newData, resolve)
                         }),
                     onRowDelete: (oldData) =>

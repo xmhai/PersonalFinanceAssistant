@@ -51,6 +51,25 @@ export const MuiTable = ({ ...props }) => {
   );
 }
 
+export const MuiEditTable = ({ ...props }) => {
+  return (
+    <MaterialTable
+      options={{
+        search: true,
+        paging: true,
+        pageSize: 10,
+        pageSizeOptions: [10, 50, 100],
+        actionsColumnIndex: -1,
+        exportButton: true,
+        headerStyle: { fontWight: 900, fontSize: "14px" },
+        cellStyle: { fontSize: "14px" },
+        tableLayout: "fixed",
+      }}
+      {...props}
+    />
+  );
+}
+
 export const MuiTextField = ({ input, label, meta, type }) => {
   const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
   return (

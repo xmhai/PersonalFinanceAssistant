@@ -1,3 +1,5 @@
+import { reset } from 'redux-form';
+
 import { stockService } from '../../apis';
 import history from '../../app/components/history';
 import {
@@ -12,7 +14,7 @@ export const createDividend = formValues => async (dispatch, getState) => {
   const response = await stockService.post('/dividends', formValues);
 
   dispatch({ type: CREATE_DIVIDEND, payload: response.data });
-  history.push('/dividends');
+  dispatch(reset('dividendForm')); // reset form
 };
 
 export const fetchDividends = () => async dispatch => {

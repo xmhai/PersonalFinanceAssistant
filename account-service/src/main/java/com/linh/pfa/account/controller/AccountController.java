@@ -1,7 +1,6 @@
 package com.linh.pfa.account.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -50,15 +49,10 @@ public class AccountController {
     @PutMapping("/{id}")
 	@Transactional
     public ResponseEntity<Account> update(@PathVariable Long id, @RequestBody Account account) {
-    	Account accountExisting = accountRespository.findById(id).orElse(null);
-        if (!accountRespository.findById(id).isPresent()) {
+        if (accountRespository.findById(id).orElse(null) == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // save original values 
-        account.setCreatedBy(accountExisting.getCreatedBy());
-        account.setCreatedDate(accountExisting.getCreatedDate());
-        account.setIsDeleted(false);
         return ResponseEntity.ok(accountRespository.save(account));
     }
 

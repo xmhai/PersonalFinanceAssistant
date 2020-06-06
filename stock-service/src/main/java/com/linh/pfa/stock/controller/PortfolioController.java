@@ -49,23 +49,17 @@ public class PortfolioController {
 	@PostMapping("")
 	@Transactional
 	public ResponseEntity<Portfolio> create(@RequestBody Portfolio portfolio) {
-		return ResponseEntity.ok(portfolioRespository.saveAndFlush(portfolio));
+		return ResponseEntity.ok(portfolioRespository.save(portfolio));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
     public ResponseEntity<Portfolio> update(@PathVariable Long id, @RequestBody Portfolio portfolio) {
-    	Portfolio portfolioExisting = portfolioRespository.findById(id).orElse(null);
-        if (!portfolioRespository.findById(id).isPresent()) {
+        if (portfolioRespository.findById(id).orElse(null) == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // save original values 
-        portfolio.setCreatedBy(portfolioExisting.getCreatedBy());
-        portfolio.setCreatedDate(portfolioExisting.getCreatedDate());
-        portfolio.setIsDeleted(false);
-        
-        return ResponseEntity.ok(portfolioRespository.saveAndFlush(portfolio));
+        return ResponseEntity.ok(portfolioRespository.save(portfolio));
     }
 
     @DeleteMapping("/{id}")
@@ -76,7 +70,7 @@ public class PortfolioController {
             return ResponseEntity.badRequest().build();
         }
 
-        portfolioRespository.save(portfolio);
+        portfolioRespository.delete(portfolio);
         return ResponseEntity.ok().build();
     }
 

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import lombok.Getter;
@@ -19,6 +21,7 @@ import com.linh.common.base.BaseEntity;
 @Entity
 @SQLDelete(sql = "UPDATE portfolio SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
+@DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
 public class Portfolio extends BaseEntity {
 	@ManyToOne

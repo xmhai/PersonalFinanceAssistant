@@ -46,22 +46,17 @@ public class ProfitController {
 	@PostMapping("")
 	@Transactional
 	public ResponseEntity<Profit> create(@RequestBody Profit profit) {
-		profit.setCreatedBy(0L);
-		return ResponseEntity.ok(profitRespository.saveAndFlush(profit));
+		return ResponseEntity.ok(profitRespository.save(profit));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Profit> update(@PathVariable Long id, @RequestBody Profit p) {
-    	Profit profit = profitRespository.findById(id).orElse(null);
-        if (profit == null) {
+    public ResponseEntity<Profit> update(@PathVariable Long id, @RequestBody Profit profit) {
+        if (profitRespository.findById(id).orElse(null) == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // save original values 
-        profit.setRealized(p.getRealized());;
-        profit.setDividend(p.getDividend());;
-        return ResponseEntity.ok(profitRespository.saveAndFlush(profit));
+        return ResponseEntity.ok(profitRespository.save(profit));
     }
 
     @DeleteMapping("/{id}")

@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Where(clause = "is_deleted = 0")
 @SQLDelete(sql = "UPDATE job_config SET is_deleted = 1 WHERE id = ?")
+@Where(clause = "is_deleted = 0")
 @DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
 public class JobConfig extends BaseEntity {

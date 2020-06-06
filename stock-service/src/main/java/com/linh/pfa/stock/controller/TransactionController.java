@@ -53,18 +53,11 @@ public class TransactionController {
     @PutMapping("/{id}")
 	@Transactional
     public ResponseEntity<Transaction> update(@PathVariable Long id, @RequestBody Transaction transaction) {
-    	Transaction transactionExisting = transactionRespository.findById(id).orElse(null);
-        if (!transactionRespository.findById(id).isPresent()) {
+        if (transactionRespository.findById(id).orElse(null) == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // save original values 
-        transaction.setCreatedBy(transactionExisting.getCreatedBy());
-        transaction.setCreatedDate(transactionExisting.getCreatedDate());
-        transaction.setIsDeleted(false);
-        
-        transaction.setUpdatedBy(0L);
-        return ResponseEntity.ok(transactionRespository.saveAndFlush(transaction));
+        return ResponseEntity.ok(transactionRespository.save(transaction));
     }
 
     @DeleteMapping("/{id}")

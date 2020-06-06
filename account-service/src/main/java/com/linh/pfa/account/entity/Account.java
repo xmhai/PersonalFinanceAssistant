@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import lombok.Getter;
@@ -17,8 +19,9 @@ import com.linh.pfa.common.enums.Category;
 import com.linh.pfa.common.enums.Currency;
 
 @Entity
-@Where(clause = "is_deleted = 0")
 @SQLDelete(sql = "UPDATE account SET is_deleted = 1 WHERE id = ?")
+@Where(clause = "is_deleted = 0")
+@DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
 public class Account extends BaseEntity {
 	@Column(nullable=false, length=60)

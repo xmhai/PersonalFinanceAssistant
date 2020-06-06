@@ -32,21 +32,13 @@ public class StockService {
 	}
 	
 	@Transactional
-	public Stock update(Stock stock, Stock s) {
-		boolean codeChanged = !stock.getCode().equals(s.getCode()); 
-		
-        stock.setCategory(s.getCategory());;
-        stock.setCode(s.getCode());
-        stock.setName(s.getName());
-        stock.setCurrency(s.getCurrency());
-        stock.setExchange(s.getExchange());
-        stock.setLatestPrice(s.getLatestPrice());
-        stock = stockRespository.save(stock); 
-
+	public Stock update(Stock stockOld, Stock stockNew) {
+		boolean codeChanged = !stockOld.getCode().equals(stockNew.getCode()); 
+        stockRespository.save(stockNew); 
 		if (codeChanged) {
-			refreshPrice(stock);
+			refreshPrice(stockNew);
 		}
-		return stock;
+		return stockNew;
 	}
 	
 	@Transactional

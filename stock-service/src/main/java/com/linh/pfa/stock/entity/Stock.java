@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +19,9 @@ import com.linh.pfa.common.enums.Currency;
 import com.linh.pfa.common.enums.Exchange;
 
 @Entity
+@SQLDelete(sql = "UPDATE stock SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
+@DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
 public class Stock extends BaseEntity {
 	@Column(nullable=false, length=10)

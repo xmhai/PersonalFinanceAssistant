@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +20,12 @@ import com.linh.common.base.BaseEntity;
 import com.linh.pfa.common.enums.Action;
 
 @Entity
+@SQLDelete(sql = "UPDATE transaction SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @Table(indexes = {
 		@Index(name = "idx_transaction_stock_id", columnList="stockId"),
 		@Index(name = "idx_transaction_portfolio_id", columnList="portfolioId")})
+@DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
 public class Transaction extends BaseEntity {
 	@Column(nullable=false)

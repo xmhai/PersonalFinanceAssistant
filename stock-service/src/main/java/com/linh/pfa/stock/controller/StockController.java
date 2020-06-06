@@ -52,13 +52,13 @@ public class StockController {
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Stock> update(@PathVariable Long id, @RequestBody Stock s) {
-    	Stock stock = stockRespository.findById(id).orElse(null);
-        if (!stockRespository.findById(id).isPresent()) {
+    public ResponseEntity<Stock> update(@PathVariable Long id, @RequestBody Stock stock) {
+    	Stock stockOld = stockRespository.findById(id).orElse(null);
+        if (stockOld == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(stockService.update(stock, s));
+        return ResponseEntity.ok(stockService.update(stockOld, stock));
     }
 
     @DeleteMapping("/{id}")
@@ -69,7 +69,6 @@ public class StockController {
         }
 
         stockRespository.delete(stock);
-        
         return ResponseEntity.ok().build();
     }
 

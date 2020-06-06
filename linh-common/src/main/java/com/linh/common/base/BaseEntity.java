@@ -32,11 +32,11 @@ public class BaseEntity {
 	private Long id;
 
 	@JsonIgnore
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	private Long createdBy;
 
 	@JsonIgnore
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdDate = LocalDateTime.now();
 
 	@JsonIgnore

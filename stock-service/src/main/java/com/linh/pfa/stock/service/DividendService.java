@@ -42,21 +42,16 @@ public class DividendService {
 	    	profitRespository.save(profit);
 		}
 
-		dividendNew.setCreatedBy(dividendOld.getCreatedBy());
-		dividendNew.setCreatedDate(dividendOld.getCreatedDate());
-		dividendNew.setIsDeleted(false);
-    	
 		return dividendRespository.save(dividendNew);
 	}
 
 	@Transactional
-	public Dividend delete(Dividend dividend) {
+	public void delete(Dividend dividend) {
 		// update profit
     	Profit profit = profitRespository.findByStockId(dividend.getStockId()).get(0);
 		profit.setDividend(profit.getDividend().subtract(dividend.getAmount()));
     	profitRespository.save(profit);
 		
-    	dividend.setIsDeleted(true);
-		return dividendRespository.save(dividend);
+		dividendRespository.delete(dividend);
 	}
 }

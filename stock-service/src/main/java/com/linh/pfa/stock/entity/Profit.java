@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import lombok.Getter;
@@ -16,8 +18,9 @@ import lombok.Setter;
 import com.linh.common.base.BaseEntity;
 
 @Entity
-@Where(clause = "is_deleted = 0")
 @SQLDelete(sql = "UPDATE profit SET is_deleted = 1 WHERE id = ?")
+@Where(clause = "is_deleted = 0")
+@DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
 public class Profit extends BaseEntity {
 	@ManyToOne

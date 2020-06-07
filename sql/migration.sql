@@ -213,6 +213,7 @@ select * from bank_transaction
  where description not like 'UOB KAY HIAN%'
    and description not like 'UOB:4203035572%'
    and description not like 'FAST PAYMENT%'
+   and description not like 'Funds Trf - FAST%'
    and debit>0
  order by transaction_date desc;
 
@@ -221,6 +222,7 @@ select * from bank_transaction
  where description not like 'UOB KAY HIAN%'
    and description not like 'UOB:4203035572%'
    and description not like 'FAST PAYMENT%'
+   and description not like 'Funds Trf - FAST%'
    and debit>0
  group by month(transaction_date)
  order by mth;

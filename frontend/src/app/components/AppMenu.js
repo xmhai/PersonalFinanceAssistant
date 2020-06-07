@@ -13,7 +13,13 @@ class AppMenu extends React.Component {
                             <font color="#F2B233">PFA</font>
                         </Menu.Item>
                         <Menu.Item><Link to={`/`}>Home</Link></Menu.Item>
-                        <Menu.Item><Link to={`/accounts`}>Account</Link></Menu.Item>
+
+                        <Dropdown item text='Account'>
+                            <Dropdown.Menu>
+                                <Dropdown.Item text='Account' as={Link} to='/accounts' />
+                                <Dropdown.Item text='Bank Transaction' as={Link} to='/bank/transactions' />
+                            </Dropdown.Menu>
+                        </Dropdown>
 
                         <Dropdown item text='Stock'>
                             <Dropdown.Menu>
@@ -25,7 +31,7 @@ class AppMenu extends React.Component {
                             </Dropdown.Menu>
                         </Dropdown>
 
-                        <Dropdown item text='Config'>
+                        <Dropdown item text='Job'>
                             <Dropdown.Menu>
                                 <Dropdown.Item text='Job Configuration' as={Link} to='/job/configs' />
                                 <Dropdown.Item text='Job Log' as={Link} to='/job/logs' />

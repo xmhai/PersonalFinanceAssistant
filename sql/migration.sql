@@ -207,3 +207,20 @@ select stock_id,
     CURRENT_DATE,
     0
   from portfolio where stock_id not in (select stock_id from profit) group by stock_id;
+
+-- calculate monthly expense
+select * from bank_transaction
+ where description not like 'UOB KAY HIAN%'
+   and description not like 'UOB:4203035572%'
+   and description not like 'FAST PAYMENT%'
+   and debit>0
+ order by transaction_date desc;
+
+-- expense group by month 
+ select month(transaction_date) as mth, sum(debit) from bank_transaction
+ where description not like 'UOB KAY HIAN%'
+   and description not like 'UOB:4203035572%'
+   and description not like 'FAST PAYMENT%'
+   and debit>0
+ group by month(transaction_date)
+ order by mth;

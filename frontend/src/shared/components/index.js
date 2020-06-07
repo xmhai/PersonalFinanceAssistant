@@ -16,7 +16,7 @@ export const ColorNumber = ({ value }) => {
 export const Number = ({ value }) => {
     if (value || value === 0) {
         return (
-            <div>
+            <div style={{ textAlign: "right" }}>
                 {value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
         );

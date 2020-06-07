@@ -17,6 +17,7 @@ import AccountCreate from '../../account/components/AccountCreate'
 import AccountEdit from '../../account/components/AccountEdit'
 import AccountDelete from '../../account/components/AccountDelete'
 import AccountView from '../../account/components/AccountView'
+import BankTransaction from '../../account/components/BankTransaction'
 
 import PortfolioList from '../../portfolio/components/PortfolioList'
 import PortfolioCreate from '../../portfolio/components/PortfolioCreate'
@@ -68,6 +69,8 @@ class App extends React.Component {
                             <Route path="/accounts/edit/:id" exact component={AccountEdit} />
                             <Route path="/accounts/delete/:id" exact component={AccountDelete} />
                             <Route path="/accounts/:id" exact component={AccountView} />
+
+                            <Route path="/bank/transactions" exact component={BankTransaction} />
 
                             <Route path="/portfolios" exact component={PortfolioList} />
                             <Route path="/portfolios/new" exact component={PortfolioCreate} />

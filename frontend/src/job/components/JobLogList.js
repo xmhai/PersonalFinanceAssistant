@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { forwardRef } from 'react';
 
 import Alert from '@material-ui/lab/Alert';
 import MaterialTable from "material-table";

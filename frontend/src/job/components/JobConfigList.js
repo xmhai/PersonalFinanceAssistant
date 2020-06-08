@@ -20,6 +20,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 */
+import DirectionsRun from '@material-ui/icons/DirectionsRun';
 
 import { MuiEditTable } from '../../shared/components/MuiComponents';
 import { jobService } from '../../apis';
@@ -144,6 +145,17 @@ function JobConfigList() {
             })
     }
 
+    const triggerJob = (event, rowData) => {
+        jobService.post("/job/configs/run/" + rowData.id)
+            .then(res => {
+                alert("Job triggered!");
+            })
+            .catch(error => {
+                setErrorMessages(["Delete failed! Server error"])
+                setIserror(true)
+            })
+    }
+
     var columns = [
         { title: "id", field: "id", hidden: true },
         { title: "Job Name", field: "name" },
@@ -181,6 +193,13 @@ function JobConfigList() {
                     cellStyle: { fontSize: "14px" },
                     tableLayout: "fixed",
                 }}
+                actions={[
+                    {
+                        icon: () => <DirectionsRun />,
+                        tooltip: `Trigger`,
+                        onClick: triggerJob,
+                    },
+                ]}
                 editable={{
                     onRowUpdate: (newData, oldData) =>
                         new Promise((resolve, reject) => {

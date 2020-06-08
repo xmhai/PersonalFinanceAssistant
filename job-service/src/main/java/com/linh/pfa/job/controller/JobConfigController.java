@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,8 @@ import com.linh.pfa.job.config.JobConfigRepository;
 public class JobConfigController {
 	@Autowired
 	private JobConfigRepository jobConfigRespository;
+	@Autowired
+    private Scheduler scheduler;
 	
 	@GetMapping("")
 	public ResponseEntity<List<JobConfig>> getJobConfigs() {
@@ -56,4 +61,18 @@ public class JobConfigController {
         jobConfigRespository.delete(jobConfig);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/run/{id}")
+	@Transactional
+    public ResponseEntity<JobConfig> trigger(@PathVariable Long id) throws Exception {
+    	JobConfig jobConfig = jobConfigRespository.findById(id).orElse(null);
+        if (jobConfig == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        JobKey jobKey = JobKey.jobKey(jobConfig.getName(), "mygroup");
+        scheduler.triggerJob(jobKey);
+        return ResponseEntity.ok().build();
+    }
+
 }

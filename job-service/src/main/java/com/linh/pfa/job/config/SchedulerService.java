@@ -32,8 +32,7 @@ public class SchedulerService
     	List<JobConfig> jobConfigs = jobConfigRepository.findAll();
         for (JobConfig config : jobConfigs) {
         	Class clazz = Class.forName(config.getJobClassName());
-        	String jobKey = config.getName();
-        	JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(jobKey).storeDurably().build();
+        	JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(config.getName(), "mygroup").storeDurably().build();
 
         	CronTrigger trigger = newTrigger()
         		    .withIdentity("trigger-"+config.getName())

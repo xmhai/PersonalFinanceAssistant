@@ -1,5 +1,6 @@
-FROM openjdk:8-jdk-alpine
+FROM java:8
 
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} account-service.jar
-COPY wait-for-it.sh .
+VOLUME /tmp 
+ADD /target/account-service-0.0.1-SNAPSHOT.jar account-service.jar
+ 
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ENV}", "account-service.jar"]

@@ -1,6 +1,6 @@
-FROM openjdk:8-jdk-alpine
+FROM java:8
 
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} common-service.jar
-
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ENV}", "/common-service.jar"]
+VOLUME /tmp 
+ADD /target/common-service-0.0.1-SNAPSHOT.jar common-service.jar
+ 
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ENV}", "common-service.jar"]

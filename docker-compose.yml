@@ -8,6 +8,11 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "13306:3306"
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root--execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
   common-service:
     build:
       dockerfile: Dockerfile
@@ -21,7 +26,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/common-service.jar"]
+      WAIT_HOSTS: mysql:3306
   account-service:
     build:
       dockerfile: Dockerfile
@@ -35,7 +40,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/account-service.jar"]
+      STOCK_SERVICE_ENDPOINT: http://stock-service:10082
+      WAIT_HOSTS: mysql:3306
   stock-service:
     build:
       dockerfile: Dockerfile
@@ -49,28 +55,4 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/stock-service.jar"]
-  job-service:
-    build:
-      dockerfile: Dockerfile
-      context: ./job-service
-    depends_on:
-      - mysql
-    ports:
-      - 10083:10083
-    environment:
-      ENV: dockercompose
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/job-service.jar"]
-  frontend:
-    build:
-      dockerfile: Dockerfile
-      context: ./frontend
-    volumes:
-      - /app/node_modules
-      - ./frontend:/app
-    ports:
-      - "13000:3000"
-    stdin_open: true
+      WAIT_HOSTS: mysql:3306

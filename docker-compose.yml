@@ -1,0 +1,76 @@
+version: '3'
+services:
+  mysql:
+    restart: always
+    image: 'mysql:latest'
+    environment:
+      MYSQL_DATABASE: pfa
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "13306:3306"
+  common-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./common-service
+    depends_on:
+      - mysql
+    ports:
+      - 10080:10080      
+    environment:
+      ENV: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/common-service.jar"]
+  account-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./account-service
+    depends_on:
+      - mysql
+    ports:
+      - 10081:10081
+    environment:
+      ENV: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/account-service.jar"]
+  stock-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./stock-service
+    depends_on:
+      - mysql
+    ports:
+      - 10082:10082
+    environment:
+      ENV: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/stock-service.jar"]
+  job-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./job-service
+    depends_on:
+      - mysql
+    ports:
+      - 10083:10083
+    environment:
+      ENV: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "-Dspring.profiles.active=${ENV}", "/job-service.jar"]
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - "13000:3000"
+    stdin_open: true

@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,13 +27,18 @@ import com.linh.pfa.config.service.CurrencyService;
 public class AssetService {
 	@Autowired
 	private AccountRepository accountRespository;
+	
 	@Autowired
 	private RestTemplate restTemplate;
+	
 	@Autowired
 	private CurrencyService currencyService;
 	
 	@Autowired
 	private AssetHistoryRepository assetHistoryRespository;
+	
+    @Value("${pfa.endpoint.stock-service}")
+    private String stockServiceEndpoint;
 
 	public List<Map<String, Object>> getAllocation() throws Exception {
 		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
@@ -58,7 +64,7 @@ public class AssetService {
 		}
 		
 		// retrieve stocks allocation
-		String response = restTemplate.getForObject("http://localhost:10082/portfolios/allocation", String.class);
+		String response = restTemplate.getForObject(stockServiceEndpoint + "/portfolios/allocation", String.class);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = mapper.readValue(response, Map.class);
 		stockAmt = stockAmt + Double.valueOf(map.get(Category.STOCKS.name()).toString());

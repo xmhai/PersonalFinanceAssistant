@@ -1,6 +1,5 @@
 FROM java:8
 
-VOLUME /tmp 
-ADD /target/stock-service-0.0.1-SNAPSHOT.jar stock-service.jar
- 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ENV}", "stock-service.jar"]
+COPY /target/stock-service-0.0.1-SNAPSHOT.jar stock-service.jar
+COPY wait-for-it.sh /wait-for-it.sh 
+RUN chmod +x /wait-for-it.sh

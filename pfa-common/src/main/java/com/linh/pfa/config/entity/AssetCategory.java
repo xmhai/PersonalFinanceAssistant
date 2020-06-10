@@ -12,6 +12,6 @@ import lombok.Setter;
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class AssetCategory extends BaseEntity {
-	@Column(nullable=false, length=6)
+	@Column(nullable=false, length=20)
 	private String code;
 }

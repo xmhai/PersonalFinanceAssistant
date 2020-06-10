@@ -2,7 +2,9 @@ version: '3'
 services:
   mysql:
     restart: always
-    image: 'mysql:latest'
+    build:
+      dockerfile: Dockerfile
+      context: ./mysql
     environment:
       MYSQL_DATABASE: pfa
       MYSQL_ROOT_PASSWORD: root
@@ -27,6 +29,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       WAIT_HOSTS: mysql:3306
+    command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "common-service.jar"]
   account-service:
     build:
       dockerfile: Dockerfile
@@ -42,6 +45,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       STOCK_SERVICE_ENDPOINT: http://stock-service:10082
       WAIT_HOSTS: mysql:3306
+    command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "account-service.jar"]
   stock-service:
     build:
       dockerfile: Dockerfile
@@ -56,3 +60,29 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       WAIT_HOSTS: mysql:3306
+    command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "stock-service.jar"]
+  job-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./job-service
+    depends_on:
+      - mysql
+    ports:
+      - 10083:10083
+    environment:
+      ENV: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      WAIT_HOSTS: mysql:3306
+    command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "job-service.jar"]
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - "13000:3000"
+    stdin_open: true

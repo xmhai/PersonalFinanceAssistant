@@ -1,6 +1,6 @@
 FROM java:8
 
-VOLUME /tmp 
-ADD /target/common-service-0.0.1-SNAPSHOT.jar common-service.jar
- 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ENV}", "common-service.jar"]
+COPY /target/common-service-0.0.1-SNAPSHOT.jar common-service.jar
+COPY wait-for-it.sh /wait-for-it.sh 
+RUN chmod +x /wait-for-it.sh
+

@@ -74,6 +74,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      STOCK_SERVICE_ENDPOINT: http://stock-service:10082
       WAIT_HOSTS: mysql:3306
     command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "job-service.jar"]
   frontend:

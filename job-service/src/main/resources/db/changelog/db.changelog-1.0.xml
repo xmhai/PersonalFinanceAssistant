@@ -1,6 +1,11 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet author="Hai (generated)" id="1591764091334-9">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="job_config"/>
+		    </not>
+		</preConditions>
         <createTable tableName="job_config">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -31,6 +36,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-10">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="job_log"/>
+		    </not>
+		</preConditions>
         <createTable tableName="job_log">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -60,6 +70,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-13">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_BLOB_TRIGGERS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_BLOB_TRIGGERS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -74,6 +89,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-14">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_CALENDARS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_CALENDARS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -87,6 +107,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-15">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_CRON_TRIGGERS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_CRON_TRIGGERS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -104,6 +129,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-16">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_FIRED_TRIGGERS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_FIRED_TRIGGERS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -139,6 +169,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-17">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_JOB_DETAILS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_JOB_DETAILS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -169,6 +204,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-18">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_LOCKS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_LOCKS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -179,6 +219,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-19">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_PAUSED_TRIGGER_GRPS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_PAUSED_TRIGGER_GRPS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -189,6 +234,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-20">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_SCHEDULER_STATE"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_SCHEDULER_STATE">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -205,6 +255,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-21">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_SIMPLE_TRIGGERS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_SIMPLE_TRIGGERS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -227,6 +282,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-22">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_SIMPROP_TRIGGERS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_SIMPROP_TRIGGERS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -251,6 +311,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-23">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_TRIGGERS"/>
+		    </not>
+		</preConditions>
         <createTable tableName="QRTZ_TRIGGERS">
             <column name="SCHED_NAME" type="VARCHAR(120)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -287,6 +352,11 @@
         </createTable>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-26">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="QRTZ_TRIGGERS"/>
+		    </not>
+		</preConditions>
         <createIndex indexName="SCHED_NAME" tableName="QRTZ_TRIGGERS">
             <column name="SCHED_NAME"/>
             <column name="JOB_NAME"/>
@@ -294,18 +364,43 @@
         </createIndex>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-31">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <foreignKeyConstraintExists foreignKeyName="QRTZ_BLOB_TRIGGERS_ibfk_1"/>
+		    </not>
+		</preConditions>
         <addForeignKeyConstraint baseColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" baseTableName="QRTZ_BLOB_TRIGGERS" constraintName="QRTZ_BLOB_TRIGGERS_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" referencedTableName="QRTZ_TRIGGERS" validate="true"/>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-32">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <foreignKeyConstraintExists foreignKeyName="QRTZ_CRON_TRIGGERS_ibfk_1"/>
+		    </not>
+		</preConditions>
         <addForeignKeyConstraint baseColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" baseTableName="QRTZ_CRON_TRIGGERS" constraintName="QRTZ_CRON_TRIGGERS_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" referencedTableName="QRTZ_TRIGGERS" validate="true"/>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-33">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <foreignKeyConstraintExists foreignKeyName="QRTZ_SIMPLE_TRIGGERS_ibfk_1"/>
+		    </not>
+		</preConditions>
         <addForeignKeyConstraint baseColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" baseTableName="QRTZ_SIMPLE_TRIGGERS" constraintName="QRTZ_SIMPLE_TRIGGERS_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" referencedTableName="QRTZ_TRIGGERS" validate="true"/>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-34">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <foreignKeyConstraintExists foreignKeyName="QRTZ_SIMPROP_TRIGGERS_ibfk_1"/>
+		    </not>
+		</preConditions>
         <addForeignKeyConstraint baseColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" baseTableName="QRTZ_SIMPROP_TRIGGERS" constraintName="QRTZ_SIMPROP_TRIGGERS_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" referencedTableName="QRTZ_TRIGGERS" validate="true"/>
     </changeSet>
     <changeSet author="Hai (generated)" id="1591764091334-35">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <foreignKeyConstraintExists foreignKeyName="QRTZ_TRIGGERS_ibfk_1"/>
+		    </not>
+		</preConditions>
         <addForeignKeyConstraint baseColumnNames="SCHED_NAME,JOB_NAME,JOB_GROUP" baseTableName="QRTZ_TRIGGERS" constraintName="QRTZ_TRIGGERS_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="SCHED_NAME,JOB_NAME,JOB_GROUP" referencedTableName="QRTZ_JOB_DETAILS" validate="true"/>
     </changeSet>
 

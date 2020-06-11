@@ -1,6 +1,11 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet author="Hai (generated)" id="1591764091334-1">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="account"/>
+		    </not>
+		</preConditions>
         <createTable tableName="account">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -31,7 +36,13 @@
             </column>
         </createTable>
     </changeSet>
+    
     <changeSet author="Hai (generated)" id="1591764091334-2">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="action"/>
+		    </not>
+		</preConditions>
         <createTable tableName="action">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -50,7 +61,13 @@
             </column>
         </createTable>
     </changeSet>
+    
     <changeSet author="Hai (generated)" id="1591764091334-3">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="asset_category"/>
+		    </not>
+		</preConditions>
         <createTable tableName="asset_category">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -71,7 +88,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-4">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="asset_history"/>
+		    </not>
+		</preConditions>
         <createTable tableName="asset_history">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -98,7 +121,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-5">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="bank_transaction"/>
+		    </not>
+		</preConditions>
         <createTable tableName="bank_transaction">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -124,7 +153,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-6">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="currency"/>
+		    </not>
+		</preConditions>
         <createTable tableName="currency">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -146,7 +181,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-7">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="dividend"/>
+		    </not>
+		</preConditions>
         <createTable tableName="dividend">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -171,7 +212,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-8">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="exchange"/>
+		    </not>
+		</preConditions>
         <createTable tableName="exchange">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -192,7 +239,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-9">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="job_config"/>
+		    </not>
+		</preConditions>
         <createTable tableName="job_config">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -222,7 +275,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-10">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="job_log"/>
+		    </not>
+		</preConditions>
         <createTable tableName="job_log">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -251,7 +310,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-11">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="portfolio"/>
+		    </not>
+		</preConditions>
         <createTable tableName="portfolio">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -277,7 +342,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-12">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="profit"/>
+		    </not>
+		</preConditions>
         <createTable tableName="profit">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -300,7 +371,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-24">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="stock"/>
+		    </not>
+		</preConditions>
         <createTable tableName="stock">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -334,7 +411,13 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-25">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="transaction"/>
+		    </not>
+		</preConditions>
         <createTable tableName="transaction">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -371,27 +454,57 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-27">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <tableExists tableName="action"/>
+		    </not>
+		</preConditions>
         <createIndex indexName="idx_bank_transaction_date" tableName="bank_transaction">
             <column name="transaction_date"/>
         </createIndex>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-28">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <indexExists indexName="idx_bank_transaction_desc"/>
+		    </not>
+		</preConditions>
         <createIndex indexName="idx_bank_transaction_desc" tableName="bank_transaction">
             <column name="description"/>
         </createIndex>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-29">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <indexExists indexName="idx_transaction_portfolio_id"/>
+		    </not>
+		</preConditions>
         <createIndex indexName="idx_transaction_portfolio_id" tableName="transaction">
             <column name="portfolio_id"/>
         </createIndex>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-30">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <indexExists indexName="idx_transaction_stock_id"/>
+		    </not>
+		</preConditions>
         <createIndex indexName="idx_transaction_stock_id" tableName="transaction">
             <column name="stock_id"/>
         </createIndex>
     </changeSet>
+
     <changeSet author="Hai (generated)" id="1591764091334-36">
+		<preConditions onFail="MARK_RAN">
+		    <not>
+		        <viewExists viewName="vw_stock_exchange_rate"/>
+		    </not>
+		</preConditions>
         <createView fullDefinition="false" remarks="VIEW" viewName="vw_stock_exchange_rate">select `s`.`id` AS `id`,`c`.`exchange_rate` AS `exchange_rate` from `pfa`.`stock` `s` join `pfa`.`currency` `c` where (`s`.`currency_id` = `c`.`id`)</createView>
     </changeSet>
 

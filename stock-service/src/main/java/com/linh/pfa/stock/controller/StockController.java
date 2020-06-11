@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ public class StockController {
 	@Autowired
 	private StockRepository stockRespository;
 	
+	@Cacheable("stocks")
 	@GetMapping("")
 	public ResponseEntity<List<Stock>> getStocks() {
 		return ResponseEntity.ok(stockRespository.findAll(Sort.by(Sort.Direction.ASC, "name")));

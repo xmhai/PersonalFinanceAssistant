@@ -2,6 +2,7 @@ package com.linh.pfa.stock.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -23,6 +24,7 @@ import com.linh.pfa.common.enums.Exchange;
 @Where(clause = "is_deleted = 0")
 @DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
+@Cacheable
 public class Stock extends BaseEntity {
 	@Column(nullable=false, length=10)
 	private String code;

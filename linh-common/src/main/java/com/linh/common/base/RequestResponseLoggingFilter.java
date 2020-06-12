@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(1)
 public class RequestResponseLoggingFilter implements Filter {
-	Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
+	Logger logger = LoggerFactory.getLogger(RequestResponseLoggingFilter.class);
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

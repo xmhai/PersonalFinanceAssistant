@@ -1,5 +1,6 @@
 package com.linh.common.base;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BaseEntity {
+public class BaseEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

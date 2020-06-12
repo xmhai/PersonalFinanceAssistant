@@ -9,7 +9,7 @@ services:
       MYSQL_DATABASE: pfa
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "13306:3306"
+      - 13306:3306
     healthcheck:
       test: "/usr/bin/mysql --user=root --password=root--execute \"SHOW DATABASES;\""
       interval: 2s
@@ -22,7 +22,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 10080:10080      
+      - 10080:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
@@ -37,13 +37,13 @@ services:
     depends_on:
       - mysql
     ports:
-      - 10081:10081
+      - 10081:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-      STOCK_SERVICE_ENDPOINT: http://stock-service:10082
+      STOCK_SERVICE_ENDPOINT: http://stock-service:8080
       WAIT_HOSTS: mysql:3306
     command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "account-service.jar"]
   stock-service:
@@ -53,7 +53,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 10082:10082
+      - 10082:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
@@ -68,13 +68,13 @@ services:
     depends_on:
       - mysql
     ports:
-      - 10083:10083
+      - 10083:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pfa
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-      STOCK_SERVICE_ENDPOINT: http://stock-service:10082
+      STOCK_SERVICE_ENDPOINT: http://stock-service:8080
       WAIT_HOSTS: mysql:3306
     command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "job-service.jar"]
   frontend:

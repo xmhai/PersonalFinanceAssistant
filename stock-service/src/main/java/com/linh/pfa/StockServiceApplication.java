@@ -1,8 +1,11 @@
 package com.linh.pfa;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -17,7 +20,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -49,12 +51,9 @@ public class StockServiceApplication {
 		return builder.build();
 	}
 
-	@Value("classpath:redisson.yaml")
-	Resource redissonYamlFile;
-	
     @Bean(destroyMethod="shutdown")
     RedissonClient redisson() throws IOException {
-        Config config = Config.fromYAML(redissonYamlFile.getFile());
+        Config config = Config.fromYAML(this.getClass().getClassLoader().getResource("redisson.yaml"));
         return Redisson.create(config);
     }
 

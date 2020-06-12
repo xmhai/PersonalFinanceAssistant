@@ -7,7 +7,7 @@ singleServerConfig:
   password: null
   subscriptionsPerConnection: 5
   clientName: null
-  address: "redis://localhost:6379"
+  address: ${REDIS_URL}
   subscriptionConnectionMinimumIdleSize: 1
   subscriptionConnectionPoolSize: 5
   connectionMinimumIdleSize: 5

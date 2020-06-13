@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const commonService = axios.create({ baseURL: 'http://localhost:10080' });
-export const accountService = axios.create({ baseURL: 'http://localhost:10081' });
-export const stockService = axios.create({ baseURL: 'http://localhost:10082' });
-export const jobService = axios.create({ baseURL: 'http://localhost:10083' });
+export const commonService = axios.create({ baseURL: '/api/common' });
+export const accountService = axios.create({ baseURL: '/api/account' });
+export const stockService = axios.create({ baseURL: '/api/stock' });
+export const jobService = axios.create({ baseURL: '/api/job' });
 
 const setupAxiosInterceptors = (store) => {
     const { dispatch } = store;

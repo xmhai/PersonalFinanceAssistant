@@ -22,6 +22,18 @@ services:
       interval: 2s
       timeout: 20s
       retries: 10
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - 10080:80
+    depends_on:
+      - common-service
+      - account-service
+      - stock-service
+      - job-service
   common-service:
     build:
       dockerfile: Dockerfile
@@ -29,7 +41,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 10080:8080
+      - 18080:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/pfa
@@ -43,7 +55,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 10081:8080
+      - 18081:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/pfa
@@ -59,7 +71,7 @@ services:
       - mysql
       - redis
     ports:
-      - 10082:8080
+      - 18082:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/pfa
@@ -74,7 +86,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 10083:8080
+      - 18083:8080
     environment:
       ENV: dockercompose
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/pfa
@@ -82,3 +94,13 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       STOCK_SERVICE_ENDPOINT: http://stock-service:8080
     command: ["/wait-for-it.sh", "mysql:3306", "--timeout=300", "--", "java", "-jar", "-Dspring.profiles.active=dockercompose", "job-service.jar"]
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - "13000:3000"
+    stdin_open: true

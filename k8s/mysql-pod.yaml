@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-pod
+  labels:
+    component: mysql
+spec:
+  containers:
+    - name: mysql
+      image: pfa-mysql
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 3306

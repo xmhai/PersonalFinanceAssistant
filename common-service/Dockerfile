@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8-jdk-alpine
 
 COPY /target/common-service-0.0.1-SNAPSHOT.jar common-service.jar
 COPY wait-for-it.sh /wait-for-it.sh 

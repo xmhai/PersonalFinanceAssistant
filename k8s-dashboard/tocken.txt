@@ -1,0 +1,63 @@
+PS C:\Users\Hai> kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)
+Name:         default-token-4dbtl
+Namespace:    kubernetes-dashboard
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: default
+              kubernetes.io/service-account.uid: 48a24604-ba9e-4753-bed8-02d8dd881909
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  20 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Ijl5YlZVMFEzd2VlSGRNY3JMVDJqVHNPRDZuNmdWdVR2Z2dTWE5mRDBCMFEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZWZhdWx0LXRva2VuLTRkYnRsIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI0OGEyNDYwNC1iYTllLTQ3NTMtYmVkOC0wMmQ4ZGQ4ODE5MDkiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6ZGVmYXVsdCJ9.UPGjhQ-qJHUXUu2IEMftjbVfpGhhV65e3Bw7edRIUJoApFywAzmsa3UJWGAjroVlAFWp8zwb5IYjV3eOFgQQPkHWsiDCaWe_I_8tBZyRq81wSTtY4N8CxsjitiGJxf5iIhX_C9ecun1h4uOY7aRVn13zf9Ef1UWvV7StY9xCIrsSi74NOwJIv92z_oBEHVsHxgsHlu5QeryPCwWVzS_HNBbuj3RRhKSo5xu4Ts6KTZwc6bxHlkKNezda_WANQdfAy2db2geB5xp8IQZQtvOP7L5jX6BSPnHLPXO6E6nGlrF0qiram7GkhqbxaOSj1UC4qtl6BVmHTuUpEX8r3OxFmw
+
+
+Name:         kubernetes-dashboard-certs
+Namespace:    kubernetes-dashboard
+Labels:       k8s-app=kubernetes-dashboard
+Annotations:
+Type:         Opaque
+
+Data
+====
+
+
+Name:         kubernetes-dashboard-csrf
+Namespace:    kubernetes-dashboard
+Labels:       k8s-app=kubernetes-dashboard
+Annotations:
+Type:         Opaque
+
+Data
+====
+csrf:  256 bytes
+
+
+Name:         kubernetes-dashboard-key-holder
+Namespace:    kubernetes-dashboard
+Labels:       <none>
+Annotations:  <none>
+
+Type:  Opaque
+
+Data
+====
+priv:  1679 bytes
+pub:   459 bytes
+
+
+Name:         kubernetes-dashboard-token-sk9pw
+Namespace:    kubernetes-dashboard
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: kubernetes-dashboard
+              kubernetes.io/service-account.uid: f8954d67-8b81-49ac-ae9f-98c6bcbf78c8
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  20 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Ijl5YlZVMFEzd2VlSGRNY3JMVDJqVHNPRDZuNmdWdVR2Z2dTWE5mRDBCMFEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi1zazlwdyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImY4OTU0ZDY3LThiODEtNDlhYy1hZTlmLTk4YzZiY2JmNzhjOCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.dZOtYN6Kq0RVmzMAwjPqQdBvG6yeiKW4w3V_EzyuNHVlB3DW78K39tFq61mrAWq3OgNSxxSdcNYj8ml5mtOsHC2uYQXls_VH8ClsQHbJHNsCcHxs_mDTh1JaG5O8HGDeIMIokKKTAGk28BKBEvI2D6YwdBKj1Uu9wCe7bs0Yoqnurjq-cCyJvVdYzrW9rRZPDZZEBbpp63KqiBnRydZ2ZtjLPrfi5rIjfatFI1o5qAeeVT521UjauaAvN9FwdGeB2OBnlhLDIhNWIKkIdTjjzyPCADjyM3cUdsIRX71ESDnzxaRkpEVJlyrDFeuTQjAqB9pIR0Ka06OxDl4mXi8Hrg

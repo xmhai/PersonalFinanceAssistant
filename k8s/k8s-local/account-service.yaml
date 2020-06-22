@@ -22,9 +22,9 @@ spec:
             - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql-cluster-ip-service/pfa
+              value: jdbc:mysql://mysql-service/pfa
             - name: SPRING_DATASOURCE_USERNAME
-              value: root
+              value: hai
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:

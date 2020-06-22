@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: common-service-deployment
+  labels:
+    component: common-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: common-service
+  template:
+    metadata:
+      labels:
+        component: common-service
+    spec:
+      containers:
+        - name: common-service
+          image: linhai.azurecr.io/pfa-frontend
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service/pfa
+            - name: SPRING_DATASOURCE_USERNAME
+              value: hai@linhai-mysql
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: Test!1234
+            - name: SPRING_PROFILES_ACTIVE
+              value: dockercompose
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: common-service-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: common-service
+  ports:
+    - port: 8080
+      targetPort: 8080

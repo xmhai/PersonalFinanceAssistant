@@ -1,9 +1,11 @@
-version: '3'
+version: '2.4'
 services:
   nginx:
+    mem_limit: '50M'
+    memswap_limit: '50M'
     restart: always
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
       context: ./nginx
     image: pfa-nginx
     ports:
@@ -13,69 +15,82 @@ services:
       - account-service
       - stock-service
       - job-service
+      - frontend
   common-service:
+    mem_limit: '200M'
+#    memswap_limit: '200M'
     build:
       dockerfile: Dockerfile
       context: ./common-service
     image: pfa-common-service
-    ports:
-      - 18080:8080
     environment:
-      ENV: dockercompose
-      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.1.136:3306/pfa
-      SPRING_DATASOURCE_USERNAME: hai
-      SPRING_DATASOURCE_PASSWORD: hai
-    command: ["java", "-jar", "-Dspring.profiles.active=dockercompose", "common-service.jar"]
+      SPRING_APPLICATION_JSON: '{"server.port":8080}'
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      REDIS_HOST: host.docker.internal
+      COMMON_SERVICE_ENDPOINT: http://common-service:8080
   account-service:
+    mem_limit: '200M'
+#    memswap_limit: '200M'
     build:
       dockerfile: Dockerfile
       context: ./account-service
     image: pfa-account-service
-    ports:
-      - 18081:8080
     environment:
-      ENV: dockercompose
-      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.1.136:3306/pfa
-      SPRING_DATASOURCE_USERNAME: hai
-      SPRING_DATASOURCE_PASSWORD: hai
+      SPRING_APPLICATION_JSON: '{"server.port":8080}'
+      SERVER_PORT: 8080
+      SERVER_TOMCAT_MAXTHREADS: 1
+      JAVA_OPTS: -Xmx100m -Xms100m
+      SPRING_PROFILES_ACTIVE: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      REDIS_HOST: host.docker.internal
       STOCK_SERVICE_ENDPOINT: http://stock-service:8080
-    command: ["java", "-jar", "-Dspring.profiles.active=dockercompose", "account-service.jar"]
+      COMMON_SERVICE_ENDPOINT: http://common-service:8080
   stock-service:
+    mem_limit: '200M'
+#    memswap_limit: '200M'
     build:
       dockerfile: Dockerfile
       context: ./stock-service
     image: pfa-stock-service
-    ports:
-      - 18082:8080
     environment:
-      ENV: dockercompose
-      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.1.136:3306/pfa
-      SPRING_DATASOURCE_USERNAME: hai
-      SPRING_DATASOURCE_PASSWORD: hai
-      REDIS_URL: redis://192.168.1.136:6379
-    command: ["java", "-jar", "-Dspring.profiles.active=dockercompose", "stock-service.jar"]
+      SPRING_APPLICATION_JSON: '{"server.port":8080}'
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      REDIS_HOST: host.docker.internal
+      COMMON_SERVICE_ENDPOINT: http://common-service:8080
+      JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
+    ports:
+      - 8000:8000
   job-service:
+    mem_limit: '200M'
+#    memswap_limit: '200M'
     build:
       dockerfile: Dockerfile
       context: ./job-service
     image: pfa-job-service
-    ports:
-      - 18083:8080
     environment:
-      ENV: dockercompose
-      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.1.136:3306/pfa
-      SPRING_DATASOURCE_USERNAME: hai
-      SPRING_DATASOURCE_PASSWORD: hai
+      SPRING_APPLICATION_JSON: '{"server.port":8080}'
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: dockercompose
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/pfa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      REDIS_HOST: host.docker.internal
       STOCK_SERVICE_ENDPOINT: http://stock-service:8080
-    command: ["java", "-jar", "-Dspring.profiles.active=dockercompose", "job-service.jar"]
+      COMMON_SERVICE_ENDPOINT: http://common-service:8080
   frontend:
+    mem_limit: '50M'
+    memswap_limit: '50M'
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
       context: ./frontend
     image: pfa-frontend
-    volumes:
-      - /app/node_modules
-      - ./frontend:/app
-    ports:
-      - "13000:3000"
-    stdin_open: true

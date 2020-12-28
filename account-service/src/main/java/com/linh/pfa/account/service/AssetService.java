@@ -21,7 +21,7 @@ import com.linh.pfa.account.entity.AccountRepository;
 import com.linh.pfa.account.entity.AssetHistory;
 import com.linh.pfa.account.entity.AssetHistoryRepository;
 import com.linh.pfa.common.enums.Category;
-import com.linh.pfa.config.service.CurrencyService;
+import com.linh.pfa.common.service.CommonServiceProxy;
 
 @Service
 public class AssetService {
@@ -32,7 +32,7 @@ public class AssetService {
 	private RestTemplate restTemplate;
 	
 	@Autowired
-	private CurrencyService currencyService;
+	private CommonServiceProxy commonService;
 	
 	@Autowired
 	private AssetHistoryRepository assetHistoryRespository;
@@ -41,7 +41,7 @@ public class AssetService {
     private String stockServiceEndpoint;
 
 	public List<Map<String, Object>> getAllocation() throws Exception {
-		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
+		Map<Long, BigDecimal> currencies = commonService.getExchangeRate();
 		
 		// get account allocation (except stocks)
 		List<Account> accounts = accountRespository.findAll();

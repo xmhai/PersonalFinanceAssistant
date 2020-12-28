@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration scan="true">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    
+    <!-- 
+    <variable name="LOGSTASH_HOST" value="${LOGSTASH_URL:-localhost}" />
+    <variable name="LOGSTASH_PORT" value="${LOGSTASH_PORT:-5044}" />
+
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <destination>${LOGSTASH_HOST}:${LOGSTASH_PORT}</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"app_name":"stock_service"}</customFields>
+        </encoder>
+    </appender>
+     -->
+
+    <root level="INFO">
+    	<appender-ref ref="CONSOLE"/>
+    <!-- 
+        <appender-ref ref="logstash"/>
+     -->
+    </root>
+
+</configuration>

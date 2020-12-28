@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linh.pfa.config.service.CurrencyService;
+import com.linh.pfa.common.service.CommonServiceProxy;
 import com.linh.pfa.stock.entity.Portfolio;
 import com.linh.pfa.stock.entity.PortfolioRepository;
 import com.linh.pfa.stock.entity.Profit;
@@ -24,7 +24,7 @@ public class ProfitService {
 	@Autowired
 	private PortfolioRepository portfolioRespository;
 	@Autowired
-	private CurrencyService currencyService;
+	private CommonServiceProxy commonService;
 	
 	@Transactional
 	public void addRealized(Stock stock, BigDecimal realized) {
@@ -42,8 +42,9 @@ public class ProfitService {
 	}
 	
 	public List<Map<String, Object>> getProfits() {
-		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
-
+		// retrieve exchange rate
+		Map<Long, BigDecimal> currencyMap = commonService.getExchangeRate();
+		
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		List<Profit> profits = profitRespository.findAll();
 		for (Profit profit : profits) {
@@ -61,7 +62,7 @@ public class ProfitService {
 			List<Portfolio> portfolios = portfolioRespository.findByStockId(stock.getId());
 	    	if (!portfolios.isEmpty()) {
 	    		Portfolio p = portfolios.get(0);
-	    		unrealizedSGD = stock.getLatestPrice().subtract(p.getCost()).multiply(new BigDecimal(p.getQuantity())).multiply(currencies.get(currencyId)); 
+	    		unrealizedSGD = stock.getLatestPrice().subtract(p.getCost()).multiply(new BigDecimal(p.getQuantity())).multiply(currencyMap.get(currencyId)); 
 	    	}
 			map.put("unrealized", unrealizedSGD);
 			

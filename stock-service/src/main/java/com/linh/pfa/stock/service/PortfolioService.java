@@ -12,11 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.linh.common.base.BusinessException;
 import com.linh.pfa.common.enums.Category;
-import com.linh.pfa.config.service.CurrencyService;
+import com.linh.pfa.common.service.CommonServiceProxy;
 import com.linh.pfa.stock.entity.Portfolio;
 import com.linh.pfa.stock.entity.PortfolioRepository;
-import com.linh.pfa.stock.entity.Profit;
-import com.linh.pfa.stock.entity.ProfitRepository;
 import com.linh.pfa.stock.entity.Stock;
 import com.linh.pfa.stock.entity.StockRepository;
 
@@ -29,7 +27,7 @@ public class PortfolioService {
 	@Autowired
 	private StockRepository stockRespository;
 	@Autowired
-	private CurrencyService currencyService;
+	private CommonServiceProxy commonService;
 
 	@Transactional
 	public Portfolio addPosition(Long stockId, Integer quantity, BigDecimal price) {
@@ -74,7 +72,7 @@ public class PortfolioService {
 	}
 	
 	private Portfolio closePosition(Portfolio portfolio, Long stockId, Integer quantity, BigDecimal price) {
-		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
+		Map<Long, BigDecimal> currencies = commonService.getExchangeRate();
     	Stock stock = stockRespository.findById(stockId).orElse(null);
 		
     	// calculate profit
@@ -90,9 +88,9 @@ public class PortfolioService {
 	}
 
 	public Map<String, Double> getAllocation() {
-		Map<Long, BigDecimal> currencies = currencyService.getExchangeRate();
+		Map<Long, BigDecimal> currencies = commonService.getExchangeRate();
 		
-		List<Portfolio> portfolios = portfolioRespository.findAll();
+		List<Portfolio> portfolios = portfolioRespository.findActivePortfolio();
 		double stockAmt = 0; 
 		double bondAmt = 0; 
 		double reitAmt = 0; 

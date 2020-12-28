@@ -48,7 +48,7 @@ public class Portfolio extends BaseEntity {
 		int newPosition = quantity + qty;
 		BigDecimal newTotalCost = cost.multiply(new BigDecimal(quantity)).add(price.multiply(new BigDecimal(qty)));   
 		quantity = newPosition;
-		cost =  newTotalCost.divide(new BigDecimal(newPosition)); 
+		cost =  newTotalCost.divide(new BigDecimal(newPosition), 8, BigDecimal.ROUND_UP); 
 	}
 
 	public void reduce(int qty, BigDecimal price) {

@@ -34,7 +34,7 @@ class AssetHistory extends React.Component {
                                         return (
                                             <Table.Row key={`row-${recordDate}`}>
                                                 <Table.Cell>{recordDate}</Table.Cell>
-                                                <Table.Cell textAlign="right">{total.toLocaleString()}</Table.Cell>
+                                                <Table.Cell textAlign="right">{total.toLocaleString(undefined, {minimumFractionDigits:2,  maximumFractionDigits:2})}</Table.Cell>
                                             </Table.Row>
                                         );
                                     }

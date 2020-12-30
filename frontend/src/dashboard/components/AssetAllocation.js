@@ -39,7 +39,7 @@ class AssetAllocation extends React.Component {
                                     return (
                                         <Table.Row key={`row-${category}`}>
                                             <Table.Cell>{category}</Table.Cell>
-                                            <Table.Cell textAlign="right">{amount.toLocaleString()}</Table.Cell>
+                                            <Table.Cell textAlign="right">{amount.toLocaleString(undefined, {minimumFractionDigits:2,  maximumFractionDigits:2})}</Table.Cell>
                                             <Table.Cell textAlign="right">{percentage.toFixed(2)}</Table.Cell>
                                         </Table.Row>
                                     );
@@ -49,7 +49,7 @@ class AssetAllocation extends React.Component {
                         <Table.Footer>
                             <Table.Row>
                                 <Table.HeaderCell><b>Summary</b></Table.HeaderCell>
-                                <Table.HeaderCell textAlign="right"><b>{this.state.sum.toLocaleString()}</b></Table.HeaderCell>
+                                <Table.HeaderCell textAlign="right"><b>{this.state.sum.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</b></Table.HeaderCell>
                                 <Table.HeaderCell textAlign="right"><button>Save</button></Table.HeaderCell>
                             </Table.Row>
                         </Table.Footer>

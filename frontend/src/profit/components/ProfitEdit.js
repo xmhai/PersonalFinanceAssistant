@@ -17,6 +17,8 @@ class ProfitEdit extends React.Component {
       return <div>Loading...</div>;
     }
 
+    console.log(this.props.profit);
+    
     return (
       <ProfitForm initialValues={this.props.profit} onSubmit={this.onSubmit} title="Edit Profit" />
     );

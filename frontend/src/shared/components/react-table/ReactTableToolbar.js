@@ -13,8 +13,9 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 const useToolbarStyles = makeStyles(theme => ({
   root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
+    padding: "0px",
+    height: "32px",
+    minHeight: "32px",
   },
   highlight:
     theme.palette.type === 'light'
@@ -28,6 +29,7 @@ const useToolbarStyles = makeStyles(theme => ({
         },
   title: {
     flex: '1 1 100%',
+    color: "grey",
   },
 }))
 
@@ -48,7 +50,7 @@ const ReactTableToolbar = props => {
       })}
     >
       <Typography className={classes.title} variant="h6" id="tableTitle">
-        Profit
+        {props.title}
       </Typography>
 
       <GlobalFilter
@@ -70,7 +72,6 @@ const ReactTableToolbar = props => {
 ReactTableToolbar.propTypes = {
   setGlobalFilter: PropTypes.func.isRequired,
   preGlobalFilteredRows: PropTypes.array.isRequired,
-  globalFilter: PropTypes.string.isRequired,
 }
 
 export default ReactTableToolbar

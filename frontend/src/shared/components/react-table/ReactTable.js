@@ -1,8 +1,9 @@
 import React from 'react'
 
-import Checkbox from '@material-ui/core/Checkbox'
-import MaUTable from '@material-ui/core/Table'
+import { makeStyles } from '@material-ui/core/styles';
+//import Checkbox from '@material-ui/core/Checkbox'
 import PropTypes from 'prop-types'
+import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
@@ -20,7 +21,30 @@ import {
 
 import ReactTableToolbar from './ReactTableToolbar'
 
+const useStyles = makeStyles({
+  table: {
+    fontSize: "20px"
+  },
+  cell: {
+    height: "10px",
+    padding: "1px 5px",
+    fontSize: "14px"
+  },
+  headerCell: {
+    padding: "14px 5px",
+    fontSize: "14px"
+  },
+  body: {
+    minWidth: 650,
+  },
+  footer: {
+    padding: "14px 5px",
+    fontSize: "14px"
+  },
+});
+
 export const ReactTable = ({
+  title,
   columns,
   data,
   skipPageReset,
@@ -55,34 +79,40 @@ export const ReactTable = ({
     setPageSize(Number(event.target.value))
   }
 
-  const tableStyle = { height: "10px", padding: "0px"};
+  const classes = useStyles();
 
   // Render the UI for your table
   return (
     <TableContainer>
       <ReactTableToolbar
+        title={title}
         preGlobalFilteredRows={preGlobalFilteredRows}
         setGlobalFilter={setGlobalFilter}
         globalFilter={globalFilter}
       />        
-      <MaUTable {...getTableProps()}>
+      <Table {...getTableProps()} className={classes.table}>
         <TableHead>
           {headerGroups.map(headerGroup => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <TableCell
-                  {...(column.id === 'selection'
-                    ? column.getHeaderProps()
-                    : column.getHeaderProps(column.getSortByToggleProps()))}
+                <TableCell className={classes.headerCell}
+                  width={column.width}
+                  align={column.type === 'numeric' ? 'right' : 'left'}
+                  {...(column.id === 'selection' ? column.getHeaderProps() : column.getHeaderProps(column.getSortByToggleProps()))}
                 >
-                  {column.render('Header')}
-                  {column.id !== 'selection' ? (
-                    <TableSortLabel
+                  {column.type === 'numeric' ?
+                    (<TableSortLabel
                       active={column.isSorted}
                       // react-table has a unsorted state which is not treated here
                       direction={column.isSortedDesc ? 'desc' : 'asc'}
-                    />
-                  ) : null}
+                    />) : null}
+                  {column.render('Header')}
+                  {column.type !== 'numeric' ?
+                    (<TableSortLabel
+                      active={column.isSorted}
+                      // react-table has a unsorted state which is not treated here
+                      direction={column.isSortedDesc ? 'desc' : 'asc'}
+                    />) : null}
                 </TableCell>
               ))}
             </TableRow>
@@ -92,10 +122,10 @@ export const ReactTable = ({
           {page.map((row, i) => {
             prepareRow(row)
             return (
-              <TableRow {...row.getRowProps()} style={tableStyle}>
+              <TableRow {...row.getRowProps()}>
                 {row.cells.map(cell => {
                   return (
-                    <TableCell {...cell.getCellProps()}>
+                    <TableCell {...cell.getCellProps()} className={classes.cell}>
                       {cell.render('Cell')}
                     </TableCell>
                   )
@@ -109,7 +139,7 @@ export const ReactTable = ({
           {footerGroups.map(group => (
             <TableRow {...group.getFooterGroupProps()}>
                 {group.headers.map(column => (
-                <TableCell {...column.getFooterProps()}>{column.render('Footer')}</TableCell>
+                <TableCell align='right' {...column.getFooterProps()} className={classes.footer}>{column.render('Footer')}</TableCell>
                 ))}
             </TableRow>
           ))}            
@@ -134,7 +164,7 @@ export const ReactTable = ({
             />
           </TableRow>
         </TableFooter>
-      </MaUTable>
+      </Table>
     </TableContainer>
   )
 }

@@ -4,8 +4,9 @@ import _ from 'lodash';
 
 import { fetchDividends } from '../actions';
 import { fetchStocks } from '../../stock/actions';
-import { MuiTable } from '../../shared/components/MuiComponents';
+
 import { Number } from '../../shared/components';
+import { ReactTable } from '../../shared/components/react-table/ReactTable';
 
 class DividendList extends React.Component {
     componentDidMount() {
@@ -13,19 +14,32 @@ class DividendList extends React.Component {
         this.props.fetchDividends();
     }
 
+    columns = [
+        { Header: 'Stock',
+          accessor: 'stockName',
+          width: "300px",
+        },
+        { Header: 'Pay Date',
+          accessor: 'payDate',
+        },
+        { Header: 'Amount',
+          accessor: 'amount',
+          type: 'numeric',
+          sortType: 'basic',
+          Cell: ({ cell: { value } }) => <Number value={value} />,
+          align: 'right',
+          Footer: info => {
+            const total = info.rows.reduce((sum, row) => row.values.amount + sum, 0);
+            return <><Number value={total} /></>
+        },
+    },
+    ];
+
     renderTable() {
         return (
-            <MuiTable
-                style={{ maxWidth: "700px", margin: "auto" }}
-                title="Dividend"
-                baseUrl="/dividends"
-                data={this.props.dividends}
-                columns={[
-                    { title: 'Stock', field: 'stockId', lookup: this.props.stocks },
-                    { title: 'Pay Date', field: 'payDate' },
-                    { title: 'Amount', field: 'amount', type: 'numeric', render: r => <Number value={r.amount} /> },
-                ]}
-            />
+            <>
+            <ReactTable columns={this.columns} data={this.props.dividends} title="Divident" baseUrl="/dividends"/>
+            </>
         );
     }
 
@@ -37,9 +51,12 @@ class DividendList extends React.Component {
 }
 
 const mapStateToProps = state => {
+    const stocksMap = _.mapValues(_.keyBy(state.stocks, 'id'), 'name');
+    const dividends = _.orderBy(Object.values(state.dividends), ['payDate'], ['desc'])
+                     .map(obj=> ({ ...obj, stockName: stocksMap[obj.stockId] }));
     return {
-        dividends: _.orderBy(Object.values(state.dividends), ['payDate'], ['desc']),
-        stocks: _.mapValues(_.keyBy(state.stocks, 'id'), 'name'),
+        dividends: dividends,
+        stocks: stocksMap,
     };
 };
 

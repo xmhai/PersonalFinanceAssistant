@@ -1,7 +1,6 @@
 import React from 'react'
 
 import clsx from 'clsx'
-import DeleteIcon from '@material-ui/icons/Delete'
 import GlobalFilter from './GlobalFilter'
 import IconButton from '@material-ui/core/IconButton'
 import { lighten, makeStyles } from '@material-ui/core/styles'
@@ -10,6 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Tooltip from '@material-ui/core/Tooltip'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+
+import history from '../../../app/components/history';
 
 const useToolbarStyles = makeStyles(theme => ({
   root: {
@@ -37,12 +38,16 @@ const ReactTableToolbar = props => {
   const classes = useToolbarStyles()
   const {
     numSelected,
-    addUserHandler,
-    deleteUserHandler,
+    baseUrl,
     preGlobalFilteredRows,
     setGlobalFilter,
     globalFilter,
   } = props
+
+  const handleAdd = () =>  {
+    history.push(`${baseUrl}/new`);
+  }
+
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -60,7 +65,7 @@ const ReactTableToolbar = props => {
       />
 
       <Tooltip title="Add">
-        <IconButton aria-label="add" onClick={addUserHandler}>
+        <IconButton aria-label="add" onClick={() => handleAdd()}>
           <AddCircleOutlineIcon />
         </IconButton>
       </Tooltip>

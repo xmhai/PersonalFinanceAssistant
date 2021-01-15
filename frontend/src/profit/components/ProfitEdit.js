@@ -29,7 +29,4 @@ const mapStateToProps = (state, ownProps) => {
   return { profit: state.profits[ownProps.match.params.id] };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchProfit, editProfit }
-)(ProfitEdit);
+export default connect(mapStateToProps, { fetchProfit, editProfit })(ProfitEdit);

@@ -24,18 +24,6 @@ class ProfitList extends React.Component {
         this.props.fetchProfits();
     }
 
-    handleAdd() {
-        history.push(`/profits/new`);
-    }
-
-    handleEdit(rowData) {
-        history.push(`/profits/edit/${rowData.id}`);
-    }
-
-    handleDelete(rowData) {
-        history.push(`/profits/delete/${rowData.id}`);
-    }
-
     columns = [
           { Header: 'Stock',
             accessor: 'stock.name',
@@ -74,24 +62,12 @@ class ProfitList extends React.Component {
                 return <><ColorNumber value={total} /></>
             },
           },
-          { Header: 'Action',
-            Cell: ({row}) => (
-                <div>
-                    <IconButton aria-label="edit" onClick={() => this.handleEdit(row.original)}>
-                        <EditIcon />
-                    </IconButton>
-                    <IconButton aria-label="delete" onClick={() => this.handleDelete(row.original)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </div>
-            ),
-          }          
     ];
 
     renderTable() {
         return (
             <>
-            <ReactTable title="Profit" columns={this.columns} data={this.props.profits}/>
+            <ReactTable columns={this.columns} data={this.props.profits} title="Profit" baseUrl="/profits"/>
             </>
         );
     }

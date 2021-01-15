@@ -3,20 +3,10 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { fetchProfits } from '../actions';
-import { fetchStocks } from '../../stock/actions';
 import { fetchExchanges } from '../../common/actions';
 
-import { MuiTable } from '../../shared/components/MuiComponents';
 import { ColorNumber } from '../../shared/components';
 import { ReactTable } from '../../shared/components/react-table/ReactTable';
-
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import DescriptionIcon from '@material-ui/icons/Description';
-
-import history from '../../app/components/history';
 
 class ProfitList extends React.Component {
     componentDidMount() {

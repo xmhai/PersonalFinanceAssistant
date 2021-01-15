@@ -33,15 +33,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 
 import history from '../../../app/components/history';
 
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
-
 function TablePaginationActions(props) {
-  const classes = useStyles1();
   const { count, page, rowsPerPage, onChangePage } = props;
 
   const handleFirstPageButtonClick = (event) => {
@@ -119,29 +111,34 @@ export const ReactTable = ({
 }) => {
   const {
     getTableProps,
-    getTableBodyProps,
+    //getTableBodyProps,
     headerGroups,
     footerGroups,
     rows,
     prepareRow,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state,
+    //state,
 
+    // refer to: https://codesandbox.io/s/react-table-global-filter-pagination-49w2p?file=/src/App.js:3907-3911
     page, // Instead of using 'rows', we'll use page,
     // which has only the rows for the active page
 
     // The rest of these things are super handy, too ;)
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
+    //canPreviousPage,
+    //canNextPage,
+    //pageOptions,
+    //pageCount,
     gotoPage,
-    nextPage,
-    previousPage,
+    //nextPage,
+    //previousPage,
     setPageSize,
 
-    state: { pageIndex, pageSize, globalFilter },
+    state: {
+      pageIndex,
+      pageSize,
+      globalFilter
+    },
   } = useTable(
     {
       columns,
@@ -154,7 +151,7 @@ export const ReactTable = ({
 
   React.useEffect(() => {
     // props.dispatch({ type: actions.resetPage })
-    console.log(globalFilter);
+    //console.log(globalFilter);
   }, [globalFilter]);
 
   const handleChangePage = (event, newPage) => {
@@ -217,7 +214,7 @@ export const ReactTable = ({
                     />) : null}
                 </TableCell>
               ))}
-              <TableCell className={classes.headerCell} align="center">Action</TableCell>
+              <TableCell className={classes.headerCell} align="right"></TableCell>
             </TableRow>
           ))}
         </TableHead>
@@ -233,7 +230,7 @@ export const ReactTable = ({
                     </TableCell>
                   )
                 })}
-                <TableCell className={classes.cell} align="center">
+                <TableCell className={classes.cell} align="right">
                   <div>
                       <IconButton aria-label="view" onClick={() => handleView(row)}>
                           <DescriptionIcon />

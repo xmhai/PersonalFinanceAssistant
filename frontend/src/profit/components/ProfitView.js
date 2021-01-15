@@ -15,7 +15,7 @@ class ProfitView extends React.Component {
       return <div>Loading...</div>;
     }
 
-    const { instituteName, profitNo } = this.props.profit;
+    //const { instituteName, profitNo } = this.props.profit;
 
     return (
       <div>

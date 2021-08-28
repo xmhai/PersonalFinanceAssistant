@@ -29,9 +29,10 @@ public class StockPriceRetrieverChain {
 	
 	public double getPrice(Stock stock) {
 		for (StockPriceRetriever retriever : retrievers) {
+			System.out.println("Stock:" + stock.getCode());
 			double price = retriever.getPrice(stock);
 			if (price > 0) {
-				System.out.println(price);
+				System.out.println("Last Price:" + price);
 				return price;
 			}
 		}

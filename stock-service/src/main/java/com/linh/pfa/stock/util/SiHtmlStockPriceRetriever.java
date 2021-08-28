@@ -7,7 +7,7 @@ import com.linh.pfa.stock.entity.Stock;
 @Service
 public class SiHtmlStockPriceRetriever extends HtmlStockPriceRetriever {
 	SiHtmlStockPriceRetriever () {
-		String u = "http://www.shareinvestor.com/fundamental/factsheet.html?counter=%s";
+		String u = "https://www.shareinvestor.com/fundamental/factsheet.html?counter=%s";
 		String p = "Last \\(SGD\\): \\<strong\\>(.*?)\\<\\/strong\\>"; 
 		setUrl(u, p);
 	}

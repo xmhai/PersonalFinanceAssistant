@@ -3,6 +3,7 @@ Backlog
 org.redisson.connection.DNSMonitor       : Unable to resolve host.docker.internal
 - HKEX price update, log stock code and price
 - Broker account & Set transaction stock broker account
+- Use Openfeign for inter-service call
 - Use spring batch for price update
 - Stock display last updated date
 - Dividend in different currency to support Tiger Broker Dividend

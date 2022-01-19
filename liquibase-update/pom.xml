@@ -8,20 +8,15 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>common-service</artifactId>
-	<name>common-service</name>
-	<description>Common Service</description>
+	
+	<artifactId>liquibase-update</artifactId>
+	<name>liquibase-update</name>
+	<description>Stock price update job</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.linh</groupId>
-			<artifactId>linh-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.linh.pfa</groupId>
-			<artifactId>pfa-common</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -5,11 +5,12 @@
 	<parent>
 		<groupId>com.linh.pfa</groupId>
 		<artifactId>pfa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>liquibase-update</artifactId>
+	<version>1.0.0</version>
 	<name>liquibase-update</name>
 	<description>Stock price update job</description>
 

@@ -5,23 +5,12 @@
 	<parent>
 		<groupId>com.linh.pfa</groupId>
 		<artifactId>pfa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>linh-common</artifactId>
+	<version>1.0.0</version>
 	<name>linh-common</name>
 	<description>Common library</description>
-
-	<build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-	</build>
 </project>

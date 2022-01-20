@@ -5,10 +5,11 @@
 	<parent>
 		<groupId>com.linh.pfa</groupId>
 		<artifactId>pfa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>account-service</artifactId>
+	<version>1.0.0</version>
 	<name>account-service</name>
 	<description>Account Service</description>
 
@@ -16,12 +17,12 @@
 		<dependency>
 			<groupId>com.linh</groupId>
 			<artifactId>linh-common</artifactId>
-			<version>${project.version}</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.linh.pfa</groupId>
 			<artifactId>pfa-common</artifactId>
-			<version>${project.version}</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 </project>

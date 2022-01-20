@@ -6,31 +6,20 @@
 	<parent>
 		<groupId>com.linh.pfa</groupId>
 		<artifactId>pfa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>pfa-common</artifactId>
+	<version>1.0.0</version>
 	<name>pfa-common</name>
 	<description>PFA Project Common library</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.linh</groupId>
+			<groupId>com.linh.pfa</groupId>
 			<artifactId>linh-common</artifactId>
-			<version>${project.version}</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
-
-	<build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-	</build>
 </project>

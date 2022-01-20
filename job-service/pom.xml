@@ -5,23 +5,24 @@
 	<parent>
 		<groupId>com.linh.pfa</groupId>
 		<artifactId>pfa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>job-service</artifactId>
+	<version>1.0.0</version>
 	<name>job-service</name>
 	<description>Job Service</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.linh</groupId>
+			<groupId>com.linh.pfa</groupId>
 			<artifactId>linh-common</artifactId>
-			<version>${project.version}</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.linh.pfa</groupId>
 			<artifactId>pfa-common</artifactId>
-			<version>${project.version}</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -33,4 +34,13 @@
 			<artifactId>spring-boot-starter-quartz</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

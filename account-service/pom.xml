@@ -15,7 +15,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.linh</groupId>
+			<groupId>com.linh.pfa</groupId>
 			<artifactId>linh-common</artifactId>
 			<version>1.0.0</version>
 		</dependency>

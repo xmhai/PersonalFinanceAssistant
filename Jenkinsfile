@@ -48,8 +48,8 @@ pipeline {
                     files.each{ f -> 
                         if(f.directory) {
                             echo "This is directory: ${f.name} "
-                            pom = readMavenPom file: "${f.name}/pom.xml";
-                            if (pom) {
+                            if (fileExists('${f.name}/pom.xml')) {
+                                pom = readMavenPom file: "${f.name}/pom.xml";
                                 echo "${pom.artifactId}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
                             }
                         }

@@ -48,6 +48,10 @@ pipeline {
                     files.each{ f -> 
                         if(f.directory) {
                             echo "This is directory: ${f.name} "
+                            pom = readMavenPom file: "${f.name}/pom.xml";
+                            if (pom) {
+                                echo "${pom.artifactId}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
+                            }
                         }
                     }                    
 

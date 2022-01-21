@@ -47,10 +47,12 @@ pipeline {
                     def files = findFiles() 
                     files.each{ f -> 
                         if(f.directory) {
-                            echo "This is directory: ${f.name} "
-                            if (fileExists('${f.name}/pom.xml')) {
+                            def pomExists = fileExists "${f.name}/pom.xml"
+                            if (pomExists)) {
                                 pom = readMavenPom file: "${f.name}/pom.xml";
                                 echo "${pom.artifactId}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
+                            } else {
+                                echo "${f.name}/pom.xml doesn't exist"
                             }
                         }
                     }                    

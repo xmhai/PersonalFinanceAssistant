@@ -23,6 +23,7 @@ pipeline {
     }
 
     stages {
+        /*
         stage("clone code") {
             steps {
                 script {
@@ -38,13 +39,22 @@ pipeline {
                 }
             }
         }
+        */
 
         stage("publish to nexus") {
             steps {
                 script {
+                    def files = findFiles() 
+                    files.each{ f -> 
+                        if(f.directory) {
+                            echo "This is directory: ${f.name} "
+                        }
+                    }                    
+
+                    /*
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
                     pom = readMavenPom file: "pom.xml";
-                    echo "${pom.artifactId}"
+                    echo "${pom.artifactId}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
                     if ("${pom.packaging}" == "jar") {
                         // Find built artifact under target folder
                         filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
@@ -67,17 +77,8 @@ pipeline {
                                 repository: NEXUS_REPOSITORY,
                                 credentialsId: NEXUS_CREDENTIAL_ID,
                                 artifacts: [
-                                    // Artifact generated such as .jar, .ear and .war files.
-                                    [artifactId: pom.artifactId,
-                                    classifier: '',
-                                    file: artifactPath,
-                                    type: pom.packaging],
-
-                                    // Lets upload the pom.xml file for additional information for Transitive dependencies
-                                    [artifactId: pom.artifactId,
-                                    classifier: '',
-                                    file: "pom.xml",
-                                    type: "pom"]
+                                    [artifactId: pom.artifactId, classifier: '', file: artifactPath, type: pom.packaging], 
+                                    [artifactId: pom.artifactId, classifier: '', file: "pom.xml", type: "pom"]
                                 ]
                             );
 
@@ -85,6 +86,7 @@ pipeline {
                             error "*** File: ${artifactPath}, could not be found";
                         }
                     }
+                    */
                 }
             }
         }

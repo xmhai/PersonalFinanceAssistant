@@ -48,7 +48,7 @@ pipeline {
                     files.each{ f -> 
                         if(f.directory) {
                             def pomExists = fileExists "${f.name}/pom.xml"
-                            if (pomExists)) {
+                            if (pomExists) {
                                 pom = readMavenPom file: "${f.name}/pom.xml";
                                 echo "${pom.artifactId}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
                             } else {

@@ -44,13 +44,43 @@ pipeline {
         stage("publish to nexus") {
             steps {
                 script {
+                    // read parent pom
+                    parentpom = readMavenPom file: "pom.xml";
+
                     def files = findFiles() 
                     files.each{ f -> 
                         if(f.directory) {
                             def pomExists = fileExists "${f.name}/pom.xml"
                             if (pomExists) {
                                 pom = readMavenPom file: "${f.name}/pom.xml";
-                                echo "${pom.artifactId}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
+                                echo "${pom.artifactId}, group: ${parentpom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
+
+                                if ("${pom.packaging}" == "jar") {
+                                    // Find built artifact under target folder
+                                    filesByGlob = findFiles(glob: "${f.name}/target/*.${pom.packaging}");
+                                    boolean exists = filesByGlob.length > 0
+
+                                    if (exists) {
+                                        // Print some info from the artifact found
+                                        echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                                        // Extract the path from the File found
+                                        artifactPath = filesByGlob[0].path;
+
+                                        nexusArtifactUploader(
+                                            nexusVersion: NEXUS_VERSION,
+                                            protocol: NEXUS_PROTOCOL,
+                                            nexusUrl: NEXUS_URL,
+                                            groupId: parentpom.groupId,
+                                            version: pom.version,
+                                            repository: NEXUS_REPOSITORY,
+                                            credentialsId: NEXUS_CREDENTIAL_ID,
+                                            artifacts: [
+                                                [artifactId: pom.artifactId, classifier: '', file: artifactPath, type: pom.packaging], 
+                                                [artifactId: pom.artifactId, classifier: '', file: "${f.name}/pom.xml", type: "pom"]
+                                            ]
+                                        );
+                                    }
+                                }
                             } else {
                                 echo "${f.name}/pom.xml doesn't exist"
                             }

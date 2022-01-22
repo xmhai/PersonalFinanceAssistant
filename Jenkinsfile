@@ -97,7 +97,7 @@ pipeline {
         stage("publish to harbor") {
             steps {
                 script {
-                    docker login ${REGISTRY_URL} -u ${REGISTRY_USERNAME} -p ${REGISTRY_PASSWORD}
+                    sh "docker login ${REGISTRY_URL} -u ${REGISTRY_USERNAME} -p ${REGISTRY_PASSWORD}"
 
                     // read parent pom
                     parentpom = readMavenPom file: "pom.xml";
@@ -119,8 +119,8 @@ pipeline {
                                         // Print some info from the artifact found
                                         echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
 
-                                        docker build -t ${REGISTRY_URL}/${pom.artifactId} ./${f.name}
-                                        docker push ${REGISTRY_URL}/${pom.artifactId}
+                                        sh "docker build -t ${REGISTRY_URL}/${pom.artifactId} ./${f.name}"
+                                        sh "docker push ${REGISTRY_URL}/${pom.artifactId}"
                                     }
                                 }
                             } else {
@@ -129,7 +129,7 @@ pipeline {
                         }
                     }                    
 
-                    docker system prune --volumes -f                                        
+                    sh "docker system prune --volumes -f"
                 }
             }
         }

@@ -106,7 +106,8 @@ pipeline {
                     files.each{ f -> 
                         if(f.directory) {
                             def pomExists = fileExists "${f.name}/pom.xml"
-                            if (pomExists) {
+                            def dockerFileExists = fileExists "${f.name}/Dockerfile"
+                            if (pomExists && dockerFileExists) {
                                 pom = readMavenPom file: "${f.name}/pom.xml";
                                 echo "${pom.artifactId}, group: ${parentpom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
 
@@ -128,7 +129,7 @@ pipeline {
                                     }
                                 }
                             } else {
-                                echo "${f.name}/pom.xml doesn't exist"
+                                echo "${f.name}/pom.xml or ${f.name}/Dockerfile doesn't exist"
                             }
                         }
                     }                    

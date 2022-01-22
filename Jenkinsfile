@@ -98,7 +98,7 @@ pipeline {
         stage("publish to harbor") {
             steps {
                 script {
-                    echo "${REGISTRY_PASSWORD}" | docker login ${REGISTRY_URL} -u ${REGISTRY_USERNAME} --password-stdin"
+                    echo "${REGISTRY_PASSWORD}" | docker login ${REGISTRY_URL} -u ${REGISTRY_USERNAME} --password-stdin
 
                     // read parent pom
                     parentpom = readMavenPom file: "pom.xml";

@@ -20,6 +20,10 @@ pipeline {
         NEXUS_REPOSITORY = "maven-releases"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
+
+        REGISTRY_URL = "192.168.86.43:9080/library"
+        REGISTRY_USERNAME = "admin"
+        REGISTRY_PASSWORD = "admin"
     }
 
     stages {
@@ -39,6 +43,7 @@ pipeline {
             }
         }
 
+        /*
         stage("publish to nexus") {
             steps {
                 script {
@@ -87,6 +92,46 @@ pipeline {
                 }
             }
         }
+        */
 
+        stage("publish to harbor") {
+            steps {
+                script {
+                    docker login ${REGISTRY_URL} -u ${REGISTRY_USERNAME} -p ${REGISTRY_PASSWORD}
+
+                    // read parent pom
+                    parentpom = readMavenPom file: "pom.xml";
+
+                    def files = findFiles() 
+                    files.each{ f -> 
+                        if(f.directory) {
+                            def pomExists = fileExists "${f.name}/pom.xml"
+                            if (pomExists) {
+                                pom = readMavenPom file: "${f.name}/pom.xml";
+                                echo "${pom.artifactId}, group: ${parentpom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
+
+                                if ("${pom.packaging}" == "jar") {
+                                    // Find built artifact under target folder
+                                    filesByGlob = findFiles(glob: "${f.name}/target/*.${pom.packaging}");
+                                    boolean exists = filesByGlob.length > 0
+
+                                    if (exists) {
+                                        // Print some info from the artifact found
+                                        echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+
+                                        docker build -t ${REGISTRY_URL}/${pom.artifactId} ./${f.name}
+                                        docker push ${REGISTRY_URL}/${pom.artifactId}
+                                    }
+                                }
+                            } else {
+                                echo "${f.name}/pom.xml doesn't exist"
+                            }
+                        }
+                    }                    
+
+                    docker system prune --volumes -f                                        
+                }
+            }
+        }
     }
 }

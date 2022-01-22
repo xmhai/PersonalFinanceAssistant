@@ -117,9 +117,9 @@ pipeline {
                                         // Print some info from the artifact found
                                         echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
 
-                                        dockerImage = docker.build ${HARBOR_URL}/${pom.artifactId} ./${f.name}
+                                        dockerImage = docker.build ${HARBOR_URL}/${pom.artifactId} ./${f.name};
                                         docker.withRegistry(HARBOR_URL, HARBOR_CREDENTIAL_ID) {
-                                            dockerImage.push()
+                                            dockerImage.push();
                                         }
                                     }
                                 }

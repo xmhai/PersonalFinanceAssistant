@@ -7,6 +7,7 @@ pipeline {
     tools {
         // Note: this should match with the tool name configured in your jenkins instance (JENKINS_URL/configureTools/)
         maven "maven"
+        docker "docker"
     }
 
     environment {
@@ -97,7 +98,7 @@ pipeline {
         stage("publish to harbor") {
             steps {
                 script {
-                    sh "echo \\"${REGISTRY_PASSWORD}\\" | docker login ${REGISTRY_URL} -u ${REGISTRY_USERNAME} --password-stdin"
+                    echo "${REGISTRY_PASSWORD}" | docker login ${REGISTRY_URL} -u ${REGISTRY_USERNAME} --password-stdin"
 
                     // read parent pom
                     parentpom = readMavenPom file: "pom.xml";
@@ -119,8 +120,8 @@ pipeline {
                                         // Print some info from the artifact found
                                         echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
 
-                                        sh "docker build -t ${REGISTRY_URL}/${pom.artifactId} ./${f.name}"
-                                        sh "docker push ${REGISTRY_URL}/${pom.artifactId}"
+                                        docker build -t ${REGISTRY_URL}/${pom.artifactId} ./${f.name}
+                                        docker push ${REGISTRY_URL}/${pom.artifactId}
                                     }
                                 }
                             } else {
@@ -129,7 +130,7 @@ pipeline {
                         }
                     }                    
 
-                    sh "docker system prune --volumes -f"
+                    docker system prune --volumes -f
                 }
             }
         }

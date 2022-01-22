@@ -123,7 +123,7 @@ pipeline {
                                         echo "build docker image..."
                                         def dockerImage = docker.build("${HARBOR_URL}/${pom.artifactId}", "./${f.name}");
                                         echo "push docker image to harbor..."
-                                        docker.withRegistry("${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
+                                        docker.withRegistry("http://${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
                                             dockerImage.push();
                                         }
                                     }

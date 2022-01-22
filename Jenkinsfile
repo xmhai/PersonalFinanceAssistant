@@ -25,7 +25,7 @@ pipeline {
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
 
         HARBOR_URL = "192.168.86.43:9080/library"
-        HARBOR_CREDENTIAL_ID = "harbor_credentials"
+        HARBOR_CREDENTIAL_ID = "harbor-credentials"
     }
 
     stages {

@@ -19,23 +19,4 @@ public class CommonServiceApplication {
 		log.info("Application running...");
 		SpringApplication.run(CommonServiceApplication.class, args);
 	}
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-					.allowedOrigins("*")
-					.allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
-					.allowCredentials(true);
-			}
-		};
-	}
-
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		log.info("bean RestTemplate created");
-		return builder.build();
-	}
 }

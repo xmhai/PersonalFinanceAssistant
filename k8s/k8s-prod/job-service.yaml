@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: job-service-deployment
+  labels:
+    component: job-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: job-service
+  template:
+    metadata:
+      labels:
+        component: job-service
+    spec:
+      containers:
+        - name: job-service
+          image: pfa-job-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service/pfa
+            - name: SPRING_DATASOURCE_USERNAME
+              value: hai
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dbpassword
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_PROFILES_ACTIVE
+              value: dockercompose
+            - name: STOCK_SERVICE_ENDPOINT
+              value: http://stock-service-cluster-ip-service:8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: job-service-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: job-service
+  ports:
+    - port: 8080
+      targetPort: 8080

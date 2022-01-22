@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: common-service-deployment
+  labels:
+    component: common-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: common-service
+  template:
+    metadata:
+      labels:
+        component: common-service
+    spec:
+      containers:
+        - name: common-service
+          image: harbor.home:9443/library/common-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service/pfa
+            - name: SPRING_DATASOURCE_USERNAME
+              value: hai
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dbpassword
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: common-service-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: common-service
+  ports:
+    - port: 8080
+      targetPort: 8080

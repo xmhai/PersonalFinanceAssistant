@@ -1,0 +1,31 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Listener
+metadata:
+  name: edge-stack-listener-8080
+  namespace: ambassador
+spec:
+  port: 8080
+  protocol: HTTP
+  securityModel: INSECURE
+  hostBinding:
+    namespace:
+      from: ALL
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: srv-host
+spec:
+  hostname: "*"
+  requestPolicy:
+    insecure:
+      action: Route
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: common-service-mapping
+spec:
+  hostname: "*"
+  prefix: /api/common/
+  service: common-service-cluster-ip-service:8080

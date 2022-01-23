@@ -22,7 +22,7 @@ pfa:
 
 logging:
   level:
-    root: "warn"
+    root: "info"
     org.redisson: "debug"
 
 ---

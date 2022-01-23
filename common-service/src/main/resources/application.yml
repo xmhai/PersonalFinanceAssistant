@@ -20,6 +20,11 @@ pfa:
   endpoint:
     common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
 
+logging:
+  level:
+    root: "warn"
+    org.redisson: "debug"
+
 ---
 spring:
     profiles: prod

@@ -7,7 +7,7 @@ singleServerConfig:
   password: null
   subscriptionsPerConnection: 5
   clientName: null
-  address: redis://${REDIS_HOST:-127.0.0.1}:6379
+  address: ${REDIS_URL:-redis://127.0.0.1:6379}
   subscriptionConnectionMinimumIdleSize: 1
   subscriptionConnectionPoolSize: 5
   connectionMinimumIdleSize: 5

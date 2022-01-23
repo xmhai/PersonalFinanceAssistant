@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:10081}
+  port: 10081
 
 spring:
   datasource:
@@ -22,4 +22,7 @@ pfa:
 
 ---
 spring:
-  profiles: prod
+    profiles: prod
+          
+server:
+  port: 8080

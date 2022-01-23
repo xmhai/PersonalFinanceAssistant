@@ -21,8 +21,8 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: SERVER_PORT
-              value: "8080"
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service/pfa
             - name: SPRING_DATASOURCE_USERNAME
@@ -32,8 +32,8 @@ spec:
                 secretKeyRef:
                   name: dbpassword
                   key: SPRING_DATASOURCE_PASSWORD
-            - name: SPRING_PROFILES_ACTIVE
-              value: prod
+            - name: REDIS_URL
+              value: redis://redis-service
 ---
 apiVersion: v1
 kind: Service

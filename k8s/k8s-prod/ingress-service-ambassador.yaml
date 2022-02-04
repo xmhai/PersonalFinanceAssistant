@@ -1,12 +1,25 @@
 apiVersion: getambassador.io/v3alpha1
 kind: Listener
 metadata:
-  name: edge-stack-listener-8080
+  name: http-listener-8080
   namespace: ambassador
 spec:
   port: 8080
   protocol: HTTP
   securityModel: INSECURE
+  hostBinding:
+    namespace:
+      from: ALL
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Listener
+metadata:
+  name: https-listener
+  namespace: ambassador
+spec:
+  port: 8443
+  protocol: HTTPS
+  securityModel: XFP
   hostBinding:
     namespace:
       from: ALL
@@ -20,6 +33,13 @@ spec:
   requestPolicy:
     insecure:
       action: Route
+  acmeProvider:
+    authority: none
+  tlsSecret:
+    name: tls-cert
+  selector:
+    matchLabels:
+      hostname: srv-host
 ---
 apiVersion: getambassador.io/v3alpha1
 kind: Mapping
@@ -29,3 +49,12 @@ spec:
   hostname: "*"
   prefix: /api/common/
   service: common-service-cluster-ip-service:8080
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: dashboard-mapping
+spec:
+  hostname: "*"
+  prefix: /dashboard/
+  service: https://kubernetes-dashboard.kubernetes-dashboard:443

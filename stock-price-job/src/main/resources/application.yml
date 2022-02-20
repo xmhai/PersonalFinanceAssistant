@@ -1,1 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/pfa}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+  jpa:
+    generate-ddl: 'false'
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: 'true'
+  jackson:
+    date-format: dd-MM-yyyy HH:mm:ss
+  batch:
+    initialize-schema: always
 
+pfa:
+  endpoint:
+    stock-service: ${STOCK_SERVICE_ENDPOINT:http://localhost:10082}

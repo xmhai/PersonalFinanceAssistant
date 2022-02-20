@@ -1,4 +1,5 @@
-server.port: ${SERVER_PORT:10082}
+server:
+  port: 10082
 
 spring:
   datasource:
@@ -19,4 +20,12 @@ spring:
   data:
     redis.repositories.enabled: false
 
-pfa.endpoint.common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
+pfa:
+  endpoint.common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
+
+---
+spring:
+    profiles: prod
+          
+server:
+  port: 8080

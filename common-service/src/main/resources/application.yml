@@ -16,14 +16,9 @@ spring:
   jackson:
     date-format: dd-MM-yyyy HH:mm:ss
 
-pfa:
-  endpoint:
-    common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
-
 logging:
   level:
     root: "info"
-    org.redisson: "debug"
 
 ---
 spring:

@@ -21,7 +21,8 @@ spring:
     redis.repositories.enabled: false
 
 pfa:
-  endpoint.common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
+  endpoint:
+    common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
 
 ---
 spring:

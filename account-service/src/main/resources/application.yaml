@@ -1,16 +1,30 @@
-server.port=${SERVER_PORT:10083}
+server:
+  port: 10083
 
-spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/pfa}
-spring.datasource.username=${SPRING_DATASOURCE_USERNAME:root}
-spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:root}
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/pfa}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+  jpa:
+    generate-ddl: 'false'
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: 'true'
+  jackson:
+    date-format: dd-MM-yyyy HH:mm:ss
 
-spring.jpa.generate-ddl=false
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.show-sql=true
-
-spring.jackson.date-format=dd-MM-yyyy HH:mm:ss
-
-pfa.endpoint.common-service=${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
-pfa.endpoint.stock-service=${STOCK_SERVICE_ENDPOINT:http://localhost:10082}
+pfa:
+  endpoint:
+    common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
+    stock-service: ${STOCK_SERVICE_ENDPOINT:http://localhost:10082}
+    
+---
+spring:
+    profiles: prod
+          
+server:
+  port: 8080
+    

@@ -33,24 +33,6 @@ public class StockServiceApplication {
 		SpringApplication.run(StockServiceApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-					.allowedOrigins("*")
-					.allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
-					.allowCredentials(true);
-			}
-		};
-	}
-
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
-
     @Bean(destroyMethod="shutdown")
     RedissonClient redisson() throws IOException {
         Config config = Config.fromYAML(this.getClass().getClassLoader().getResource("redisson.yaml"));

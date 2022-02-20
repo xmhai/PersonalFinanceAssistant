@@ -1,5 +1,6 @@
 package com.linh.pfa.stock.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -97,5 +98,15 @@ public class StockController {
         stockService.refreshPrice(stock);
 
         return ResponseEntity.ok(stock.getLatestPrice().doubleValue());
+    }
+
+    @GetMapping("/latestprice/{id}")
+    public ResponseEntity<BigDecimal> getLatestPrice(@PathVariable Long id) {
+    	Stock stock = stockRespository.findById(id).orElse(null);
+        if (!stockRespository.findById(id).isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+        
+        return ResponseEntity.ok(stockService.getLatestPrice(stock));
     }
 }

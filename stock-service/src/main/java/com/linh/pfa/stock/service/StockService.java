@@ -71,4 +71,20 @@ public class StockService {
 		
 		return stock;
     }
+	
+	public BigDecimal getLatestPrice(Stock stock) {
+		if (stock.getCode().endsWith(".UN")) {
+			// psudeo stock
+			return stock.getLatestPrice();
+		}
+		
+		if (stock.getLatestPrice() != null && stock.getLatestPrice().doubleValue()>0
+				&& Duration.between(stock.getUpdatedDate(), LocalDateTime.now()).toMinutes()<30) {
+			// don't refresh if just refreshed
+			return stock.getLatestPrice();
+		}
+		
+        // Get current price and update to stock table
+		return new BigDecimal(stockPriceRetrieverChain.getPrice(stock));
+	}
 }

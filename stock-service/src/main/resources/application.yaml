@@ -1,0 +1,22 @@
+server.port: ${SERVER_PORT:10082}
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/pfa}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+  jpa:
+    generate-ddl: 'false'
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate.ddl-auto: validate
+    show-sql: 'true'
+    properties:
+      javax.persistence.sharedCache.mode: ALL
+      hibernate.cache.region.factory_class: org.redisson.hibernate.RedissonRegionFactory
+  jackson:
+    date-format: dd-MM-yyyy HH:mm:ss
+  data:
+    redis.repositories.enabled: false
+
+pfa.endpoint.common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}

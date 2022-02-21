@@ -20,6 +20,10 @@ logging:
   level:
     root: "info"
 
+pfa:
+  endpoint:
+    common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}
+
 ---
 spring:
     profiles: prod

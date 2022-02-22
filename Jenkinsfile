@@ -37,6 +37,17 @@ pipeline {
             }
         }
 
+        stage("build Frontend") {
+            steps {
+                script {
+                    sh "cd frontend"
+                    sh "npm install"
+                    sh "npm run build"
+                    sh "cd .."
+                }
+            }
+        }
+
         stage("mvn build") {
             steps {
                 script {

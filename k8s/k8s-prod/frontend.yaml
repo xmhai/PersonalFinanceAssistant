@@ -16,21 +16,21 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: pfa-frontend
-          imagePullPolicy: Never
+          image: harbor.home:9443/library/pfa-frontend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
           stdin: true
           tty: true
-          ports:
-            - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-cluster-ip-service
+  name: frontend-service
 spec:
   type: ClusterIP
   selector:
     component: frontend
   ports:
-    - port: 3000
-      targetPort: 3000
+    - port: 80
+      targetPort: 80

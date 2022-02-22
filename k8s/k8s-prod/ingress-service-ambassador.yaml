@@ -44,17 +44,45 @@ spec:
 apiVersion: getambassador.io/v3alpha1
 kind: Mapping
 metadata:
-  name: common-service-mapping
-spec:
-  hostname: "*"
-  prefix: /api/common/
-  service: common-service-cluster-ip-service:8080
----
-apiVersion: getambassador.io/v3alpha1
-kind: Mapping
-metadata:
   name: dashboard-mapping
 spec:
   hostname: "*"
   prefix: /dashboard/
   service: https://kubernetes-dashboard.kubernetes-dashboard:443
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: frontend-mapping
+spec:
+  hostname: "*"
+  prefix: /
+  service: frontend-service:80
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: common-service-mapping
+spec:
+  hostname: "*"
+  prefix: /api/common/
+  service: common-service:8080
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: stock-service-mapping
+spec:
+  hostname: "*"
+  prefix: /api/stock/
+  service: stock-service:8080
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: account-service-mapping
+spec:
+  hostname: "*"
+  prefix: /api/account/
+  service: account-service:8080
+  

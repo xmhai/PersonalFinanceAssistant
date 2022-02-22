@@ -39,12 +39,12 @@ pipeline {
 
         stage("build Frontend") {
             steps {
-                script {
-                    sh "cd frontend"
+            	sh "pwd"
+				dir('frontend') {
                     sh "npm install"
                     sh "npm run build"
-                    sh "cd .."
-                }
+				}
+				sh "pwd"     
             }
         }
 

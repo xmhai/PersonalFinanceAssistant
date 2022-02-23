@@ -44,12 +44,14 @@ pipeline {
                     sh "npm install"
                     sh "npm run build"
                     
-                    echo "build frontend docker image..."
-                    def frontendImage = docker.build("${HARBOR_URL}/pfa-frontend", ".");
-                    echo "push frontend image to harbor..."
-                    docker.withRegistry("http://${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
-                        frontendImage.push();
-                    }
+	                script {
+	                    echo "build frontend docker image..."
+	                    def frontendImage = docker.build("${HARBOR_URL}/pfa-frontend", ".");
+	                    echo "push frontend image to harbor..."
+	                    docker.withRegistry("http://${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
+	                        frontendImage.push();
+	                    }
+	                }
 				}
 				sh "pwd"     
             }

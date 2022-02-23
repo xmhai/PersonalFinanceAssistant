@@ -111,10 +111,10 @@ pipeline {
             steps {
                 script {
                     echo "build frontend docker image..."
-                    def dockerImage = docker.build("${HARBOR_URL}/pfa-frontend", "./frontend");
+                    def frontendImage = docker.build("${HARBOR_URL}/pfa-frontend", "./frontend");
                     echo "push docker image to harbor..."
                     docker.withRegistry("http://${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
-                        dockerImage.push();
+                        frontendImage.push();
                     }
                 
                     // read parent pom

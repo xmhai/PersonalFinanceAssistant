@@ -43,6 +43,13 @@ pipeline {
 				dir('frontend') {
                     sh "npm install"
                     sh "npm run build"
+                    
+                    echo "build frontend docker image..."
+                    def frontendImage = docker.build("${HARBOR_URL}/pfa-frontend", ".");
+                    echo "push frontend image to harbor..."
+                    docker.withRegistry("http://${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
+                        frontendImage.push();
+                    }
 				}
 				sh "pwd"     
             }
@@ -110,13 +117,6 @@ pipeline {
         stage("publish to harbor") {
             steps {
                 script {
-                    echo "build frontend docker image..."
-                    def frontendImage = docker.build("${HARBOR_URL}/pfa-frontend", "./frontend");
-                    echo "push docker image to harbor..."
-                    docker.withRegistry("http://${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
-                        frontendImage.push();
-                    }
-                
                     // read parent pom
                     echo "build backend docker image..."
                     parentpom = readMavenPom file: "pom.xml";

@@ -110,7 +110,15 @@ pipeline {
         stage("publish to harbor") {
             steps {
                 script {
+                    echo "build frontend docker image..."
+                    def dockerImage = docker.build("${HARBOR_URL}/pfa-frontend", "./frontend");
+                    echo "push docker image to harbor..."
+                    docker.withRegistry("http://${HARBOR_URL}", "${HARBOR_CREDENTIAL_ID}") {
+                        dockerImage.push();
+                    }
+                
                     // read parent pom
+                    echo "build backend docker image..."
                     parentpom = readMavenPom file: "pom.xml";
 
                     def files = findFiles() 

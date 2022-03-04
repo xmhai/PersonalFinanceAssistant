@@ -1,0 +1,48 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingress-route
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix(`/`)
+    kind: Rule
+    middlewares:
+    - name: pfa-stripprefix
+    services:
+    - name: frontend-service
+      port: 80
+  - match: PathPrefix(`/api/account`)
+    kind: Rule
+    middlewares:
+    - name: pfa-stripprefix
+    services:
+    - name: account-service
+      port: 8080
+  - match: PathPrefix(`/api/common`)
+    kind: Rule
+    middlewares:
+    - name: pfa-stripprefix
+    services:
+    - name: common-service
+      port: 8080
+  - match: PathPrefix(`/api/stock`)
+    kind: Rule
+    middlewares:
+    - name: pfa-stripprefix
+    services:
+    - name: stock-service
+      port: 8080
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pfa-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /api/account
+      - /api/stock
+      - /api/common

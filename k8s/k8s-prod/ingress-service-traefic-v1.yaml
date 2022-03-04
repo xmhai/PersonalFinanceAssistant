@@ -13,34 +13,34 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: frontend-cluster-ip-service
+                name: frontend-service
                 port:
-                  number: 3000
+                  number: 80
           - path: /api/account
             pathType: Prefix
             backend:
               service:
-                name: account-service-cluster-ip-service
+                name: account-service
                 port:
                   number: 8080
           - path: /api/common
             pathType: Prefix
             backend:
               service:
-                name: common-service-cluster-ip-service
+                name: common-service
                 port:
                   number: 8080
           - path: /api/stock
             pathType: Prefix
             backend:
               service:
-                name: stock-service-cluster-ip-service
+                name: stock-service
                 port:
                   number: 8080
           - path: /api/job
             pathType: Prefix
             backend:
               service:
-                name: job-service-cluster-ip-service
+                name: job-service
                 port:
                   number: 8080

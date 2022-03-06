@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: ingress-route
+  name: ingress-route-pfa
 spec:
   entryPoints:
     - web
@@ -34,7 +34,7 @@ spec:
     services:
     - name: stock-service
       port: 8080
-
+    
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -46,3 +46,20 @@ spec:
       - /api/account
       - /api/stock
       - /api/common
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingress-route-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`dashboard.srv`)
+    kind: Rule
+    services:
+    - name: kubernetes-dashboard
+      scheme: https
+      port: 443

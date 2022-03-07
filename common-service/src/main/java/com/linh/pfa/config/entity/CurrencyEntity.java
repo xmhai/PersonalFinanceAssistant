@@ -11,9 +11,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name="currency")
 @Getter @Setter @NoArgsConstructor
-public class Currency extends BaseEntity {
+public class CurrencyEntity extends BaseEntity {
 	@Column(nullable=false, length=3)
 	private String code;
 	

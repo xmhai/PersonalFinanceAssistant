@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name="action")
 @Getter @Setter @NoArgsConstructor
-public class Action extends BaseEntity {
+public class ActionEntity extends BaseEntity {
 	private String code;
 }

@@ -1,25 +1,34 @@
 package com.linh.pfa.config.controller;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linh.pfa.config.entity.Action;
+import com.linh.pfa.api.common.Action;
+import com.linh.pfa.api.common.AssetCategory;
+import com.linh.pfa.api.common.ConfigServiceApi;
+import com.linh.pfa.api.common.Currency;
+import com.linh.pfa.api.common.Exchange;
+import com.linh.pfa.config.entity.ActionEntity;
 import com.linh.pfa.config.entity.ActionRepository;
-import com.linh.pfa.config.entity.AssetCategory;
+import com.linh.pfa.config.entity.AssetCategoryEntity;
 import com.linh.pfa.config.entity.AssetCategoryRepository;
-import com.linh.pfa.config.entity.Currency;
+import com.linh.pfa.config.entity.CurrencyEntity;
 import com.linh.pfa.config.entity.CurrencyRepository;
-import com.linh.pfa.config.entity.Exchange;
+import com.linh.pfa.config.entity.ExchangeEntity;
 import com.linh.pfa.config.entity.ExchangeRepository;
 
 @RestController
 @RequestMapping("/config")
-public class ConfigController {
+public class ConfigController implements ConfigServiceApi {
 	@Autowired
 	private CurrencyRepository currencyRespository;
 	@Autowired
@@ -29,23 +38,48 @@ public class ConfigController {
 	@Autowired
 	private ActionRepository actionRespository;
 	
+	private ModelMapper mapper = new ModelMapper(); 
+	
 	@GetMapping("currencies")
 	public ResponseEntity<List<Currency>> getCurrencies() {
-		return ResponseEntity.ok(currencyRespository.findAll());
+		List<CurrencyEntity> l = currencyRespository.findAll();
+		
+		//List<Currency> currencies = new ArrayList<Currency>();
+		//mapper.map(l, currencies);
+		Type listType = new TypeToken<List<Currency>>(){}.getType();
+		List<Currency> currencies = mapper.map(l, listType);
+		
+		
+		return ResponseEntity.ok(currencies);
 	}
 	
 	@GetMapping("categories")
 	public ResponseEntity<List<AssetCategory>> getCategoris() {
-		return ResponseEntity.ok(categoryRespository.findAll());
+		List<AssetCategoryEntity> l = categoryRespository.findAll();
+
+		List<AssetCategory> categories = new ArrayList<AssetCategory>();
+		mapper.map(l, categories);
+		
+		return ResponseEntity.ok(categories);
 	}
 	
 	@GetMapping("exchanges")
 	public ResponseEntity<List<Exchange>> getExchanges() {
-		return ResponseEntity.ok(exchangeRespository.findAll());
+		List<ExchangeEntity> l = exchangeRespository.findAll();
+
+		List<Exchange> exchanges = new ArrayList<Exchange>();
+		mapper.map(l, exchanges);
+		
+		return ResponseEntity.ok(exchanges);
 	}
 	
 	@GetMapping("actions")
 	public ResponseEntity<List<Action>> getTransactionTypes() {
-		return ResponseEntity.ok(actionRespository.findAll());
+		List<ActionEntity> l = actionRespository.findAll();
+
+		List<Action> actions = new ArrayList<Action>();
+		mapper.map(l, actions);
+		
+		return ResponseEntity.ok(actions);
 	}
 }

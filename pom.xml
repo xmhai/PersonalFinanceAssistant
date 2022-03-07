@@ -54,6 +54,12 @@
 				<artifactId>redisson-hibernate-53</artifactId>
 				<version>${redisson.version}</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+			<dependency>
+			    <groupId>org.modelmapper</groupId>
+			    <artifactId>modelmapper</artifactId>
+			    <version>2.4.5</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	
@@ -110,6 +116,11 @@
 		<dependency>
 		    <groupId>org.redisson</groupId>
 		    <artifactId>redisson-hibernate-53</artifactId>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.modelmapper</groupId>
+		    <artifactId>modelmapper</artifactId>
 		</dependency>
 
 		<dependency>

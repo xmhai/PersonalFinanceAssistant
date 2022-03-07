@@ -9,9 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name="exchange")
 @Getter @Setter @NoArgsConstructor
-public class Exchange extends BaseEntity {
+public class ExchangeEntity extends BaseEntity {
 	@Column(nullable=false, length=10)
 	private String code;
 }

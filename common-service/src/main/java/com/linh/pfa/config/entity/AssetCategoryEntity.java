@@ -9,9 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name="asset_category")
 @Getter @Setter @NoArgsConstructor
-public class AssetCategory extends BaseEntity {
+public class AssetCategoryEntity extends BaseEntity {
 	@Column(nullable=false, length=20)
 	private String code;
 }

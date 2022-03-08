@@ -19,7 +19,7 @@
 		<module>common-service</module>
 		<module>stock-service</module>
 		<module>account-service</module>
-		<module>job-service</module>
+		<module>stock-price-job</module>
 	</modules>
   
 	<properties>

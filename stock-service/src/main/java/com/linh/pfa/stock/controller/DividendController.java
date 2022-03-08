@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linh.pfa.stock.entity.Dividend;
+import com.linh.pfa.stock.entity.DividendEntity;
 import com.linh.pfa.stock.entity.DividendRepository;
 import com.linh.pfa.stock.service.DividendService;
 
@@ -28,13 +28,13 @@ public class DividendController {
 	private DividendRepository dividendRespository;
 	
 	@GetMapping("")
-	public ResponseEntity<List<Dividend>> getDividends() {
+	public ResponseEntity<List<DividendEntity>> getDividends() {
 		return ResponseEntity.ok(dividendRespository.findAll());
 	}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Dividend> findById(@PathVariable Long id) {
-    	Dividend dividend = dividendRespository.findById(id).orElse(null);
+    public ResponseEntity<DividendEntity> findById(@PathVariable Long id) {
+    	DividendEntity dividend = dividendRespository.findById(id).orElse(null);
         if (dividend == null) {
             return ResponseEntity.notFound().build();
         }
@@ -44,14 +44,14 @@ public class DividendController {
 
 	@PostMapping("")
 	@Transactional
-	public ResponseEntity<Dividend> create(@RequestBody Dividend dividend) {
+	public ResponseEntity<DividendEntity> create(@RequestBody DividendEntity dividend) {
 		return ResponseEntity.ok(dividendService.create(dividend));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Dividend> update(@PathVariable Long id, @RequestBody Dividend dividend) {
-    	Dividend dividendOld = dividendRespository.findById(id).orElse(null);
+    public ResponseEntity<DividendEntity> update(@PathVariable Long id, @RequestBody DividendEntity dividend) {
+    	DividendEntity dividendOld = dividendRespository.findById(id).orElse(null);
         if (dividendOld == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -62,7 +62,7 @@ public class DividendController {
     @DeleteMapping("/{id}")
 	@Transactional
     public ResponseEntity delete(@PathVariable Long id) {
-    	Dividend dividend = dividendRespository.findById(id).orElse(null);
+    	DividendEntity dividend = dividendRespository.findById(id).orElse(null);
         if (dividend == null) {
             return ResponseEntity.badRequest().build();
         }

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 // use JpaRepository instead of CrudRepository because findAll() return List<>
 @Repository
-public interface StockRepository extends JpaRepository<Stock, Long> {
+public interface StockRepository extends JpaRepository<StockEntity, Long> {
 }

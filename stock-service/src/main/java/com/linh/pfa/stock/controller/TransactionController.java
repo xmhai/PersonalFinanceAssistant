@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linh.common.base.BusinessException;
-import com.linh.pfa.stock.entity.Transaction;
+import com.linh.pfa.stock.entity.TransactionEntity;
 import com.linh.pfa.stock.entity.TransactionRepository;
 import com.linh.pfa.stock.service.TransactionService;
 
@@ -30,13 +30,13 @@ public class TransactionController {
 	private TransactionRepository transactionRespository;
 	
 	@GetMapping("")
-	public ResponseEntity<List<Transaction>> getTransactions() {
+	public ResponseEntity<List<TransactionEntity>> getTransactions() {
 		return ResponseEntity.ok(transactionRespository.findAll(Sort.by(Sort.Direction.DESC, "transactionDate")));
 	}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> findById(@PathVariable Long id) {
-    	Transaction transaction = transactionRespository.findById(id).orElse(null);
+    public ResponseEntity<TransactionEntity> findById(@PathVariable Long id) {
+    	TransactionEntity transaction = transactionRespository.findById(id).orElse(null);
         if (transaction == null) {
             return ResponseEntity.notFound().build();
         }
@@ -46,13 +46,13 @@ public class TransactionController {
 
 	@PostMapping("")
 	@Transactional
-	public ResponseEntity<Transaction> create(@RequestBody Transaction transaction) throws BusinessException {
+	public ResponseEntity<TransactionEntity> create(@RequestBody TransactionEntity transaction) throws BusinessException {
 		return ResponseEntity.ok(transactionService.create(transaction));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Transaction> update(@PathVariable Long id, @RequestBody Transaction transaction) {
+    public ResponseEntity<TransactionEntity> update(@PathVariable Long id, @RequestBody TransactionEntity transaction) {
         if (transactionRespository.findById(id).orElse(null) == null) {
             return ResponseEntity.badRequest().build();
         }

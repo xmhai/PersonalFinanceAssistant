@@ -10,12 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linh.pfa.common.service.CommonServiceProxy;
-import com.linh.pfa.stock.entity.Portfolio;
+import com.linh.pfa.stock.entity.PortfolioEntity;
 import com.linh.pfa.stock.entity.PortfolioRepository;
-import com.linh.pfa.stock.entity.Profit;
+import com.linh.pfa.stock.entity.ProfitEntity;
 import com.linh.pfa.stock.entity.ProfitRepository;
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 
 @Service
 public class ProfitService {
@@ -24,15 +23,15 @@ public class ProfitService {
 	@Autowired
 	private PortfolioRepository portfolioRespository;
 	@Autowired
-	private CommonServiceProxy commonService;
+	private CommonService commonService;
 	
 	@Transactional
-	public void addRealized(Stock stock, BigDecimal realized) {
-    	Profit profit = null;
-    	List<Profit> profits = profitRespository.findByStockId(stock.getId());
+	public void addRealized(StockEntity stock, BigDecimal realized) {
+    	ProfitEntity profit = null;
+    	List<ProfitEntity> profits = profitRespository.findByStockId(stock.getId());
     	if (profits.isEmpty()) {
     		// create new portfolio
-    		profit = new Profit(stock);
+    		profit = new ProfitEntity(stock);
     	} else {
     		// update portfolio
     		profit = profits.get(0);
@@ -46,9 +45,9 @@ public class ProfitService {
 		Map<Long, BigDecimal> currencyMap = commonService.getExchangeRate();
 		
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-		List<Profit> profits = profitRespository.findAll();
-		for (Profit profit : profits) {
-    		Stock stock = profit.getStock();
+		List<ProfitEntity> profits = profitRespository.findAll();
+		for (ProfitEntity profit : profits) {
+    		StockEntity stock = profit.getStock();
 			Long currencyId = Long.valueOf(stock.getCurrency().getValue());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -59,9 +58,9 @@ public class ProfitService {
 			
 			// get unrealized
 			BigDecimal unrealizedSGD = new BigDecimal(0.00);
-			List<Portfolio> portfolios = portfolioRespository.findByStockId(stock.getId());
+			List<PortfolioEntity> portfolios = portfolioRespository.findByStockId(stock.getId());
 	    	if (!portfolios.isEmpty()) {
-	    		Portfolio p = portfolios.get(0);
+	    		PortfolioEntity p = portfolios.get(0);
 	    		unrealizedSGD = stock.getLatestPrice().subtract(p.getCost()).multiply(new BigDecimal(p.getQuantity())).multiply(currencyMap.get(currencyId)); 
 	    	}
 			map.put("unrealized", unrealizedSGD);
@@ -75,11 +74,11 @@ public class ProfitService {
 	}
 
 	@Transactional
-	public void addStock(Stock stock) {
-    	List<Profit> profits = profitRespository.findByStockId(stock.getId());
+	public void addStock(StockEntity stock) {
+    	List<ProfitEntity> profits = profitRespository.findByStockId(stock.getId());
     	if (profits.isEmpty()) {
     		// create new portfolio
-    		Profit profit = new Profit(stock);
+    		ProfitEntity profit = new ProfitEntity(stock);
         	profitRespository.save(profit);
     	}
 	}

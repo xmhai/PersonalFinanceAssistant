@@ -6,13 +6,13 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 
 public abstract class HtmlStockPriceRetriever implements StockPriceRetriever {
 	private String url;
 	private String pattern;
 	
-    abstract String getStockCode(Stock stock);
+    abstract String getStockCode(StockEntity stock);
     
     void setUrl(String url, String pattern) {
     	this.url = url;
@@ -20,7 +20,7 @@ public abstract class HtmlStockPriceRetriever implements StockPriceRetriever {
     }
 
     @Override
-    public double getPrice(Stock stock)
+    public double getPrice(StockEntity stock)
     {
         String code = getStockCode(stock);
         String s = String.format(url, code);

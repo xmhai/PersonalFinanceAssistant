@@ -1,7 +1,7 @@
 package com.linh.pfa.stock.util;
 
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 
 public interface StockPriceRetriever {
-	double getPrice(Stock stock);
+	double getPrice(StockEntity stock);
 }

@@ -21,7 +21,6 @@ import com.linh.pfa.account.entity.AccountRepository;
 import com.linh.pfa.account.entity.AssetHistory;
 import com.linh.pfa.account.entity.AssetHistoryRepository;
 import com.linh.pfa.common.enums.Category;
-import com.linh.pfa.common.service.CommonServiceProxy;
 
 @Service
 public class AssetService {
@@ -32,7 +31,7 @@ public class AssetService {
 	private RestTemplate restTemplate;
 	
 	@Autowired
-	private CommonServiceProxy commonService;
+	private CommonService commonService;
 	
 	@Autowired
 	private AssetHistoryRepository assetHistoryRespository;

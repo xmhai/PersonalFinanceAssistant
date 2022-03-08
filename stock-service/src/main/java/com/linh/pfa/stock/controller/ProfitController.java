@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linh.pfa.stock.entity.Profit;
+import com.linh.pfa.stock.entity.ProfitEntity;
 import com.linh.pfa.stock.entity.ProfitRepository;
 import com.linh.pfa.stock.service.ProfitService;
 
@@ -34,8 +34,8 @@ public class ProfitController {
 	}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Profit> findById(@PathVariable Long id) {
-    	Profit profit = profitRespository.findById(id).orElse(null);
+    public ResponseEntity<ProfitEntity> findById(@PathVariable Long id) {
+    	ProfitEntity profit = profitRespository.findById(id).orElse(null);
         if (profit == null) {
             return ResponseEntity.notFound().build();
         }
@@ -45,13 +45,13 @@ public class ProfitController {
 
 	@PostMapping("")
 	@Transactional
-	public ResponseEntity<Profit> create(@RequestBody Profit profit) {
+	public ResponseEntity<ProfitEntity> create(@RequestBody ProfitEntity profit) {
 		return ResponseEntity.ok(profitRespository.save(profit));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Profit> update(@PathVariable Long id, @RequestBody Profit profit) {
+    public ResponseEntity<ProfitEntity> update(@PathVariable Long id, @RequestBody ProfitEntity profit) {
         if (profitRespository.findById(id).orElse(null) == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -62,7 +62,7 @@ public class ProfitController {
     @DeleteMapping("/{id}")
 	@Transactional
     public ResponseEntity delete(@PathVariable Long id) {
-    	Profit profit = profitRespository.findById(id).orElse(null);
+    	ProfitEntity profit = profitRespository.findById(id).orElse(null);
         if (profit == null) {
             return ResponseEntity.badRequest().build();
         }

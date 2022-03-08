@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linh.pfa.common.enums.Category;
-import com.linh.pfa.stock.entity.Portfolio;
+import com.linh.pfa.stock.entity.PortfolioEntity;
 import com.linh.pfa.stock.entity.PortfolioRepository;
 import com.linh.pfa.stock.service.PortfolioService;
 
@@ -32,13 +32,13 @@ public class PortfolioController {
 	private PortfolioRepository portfolioRespository;
 	
 	@GetMapping("")
-	public ResponseEntity<List<Portfolio>> getPortfolios() {
+	public ResponseEntity<List<PortfolioEntity>> getPortfolios() {
 		return ResponseEntity.ok(portfolioRespository.findActivePortfolio());
 	}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Portfolio> findById(@PathVariable Long id) {
-    	Portfolio portfolio = portfolioRespository.findById(id).orElse(null);
+    public ResponseEntity<PortfolioEntity> findById(@PathVariable Long id) {
+    	PortfolioEntity portfolio = portfolioRespository.findById(id).orElse(null);
         if (portfolio == null) {
             return ResponseEntity.notFound().build();
         }
@@ -48,13 +48,13 @@ public class PortfolioController {
 
 	@PostMapping("")
 	@Transactional
-	public ResponseEntity<Portfolio> create(@RequestBody Portfolio portfolio) {
+	public ResponseEntity<PortfolioEntity> create(@RequestBody PortfolioEntity portfolio) {
 		return ResponseEntity.ok(portfolioRespository.save(portfolio));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
-    public ResponseEntity<Portfolio> update(@PathVariable Long id, @RequestBody Portfolio portfolio) {
+    public ResponseEntity<PortfolioEntity> update(@PathVariable Long id, @RequestBody PortfolioEntity portfolio) {
         if (portfolioRespository.findById(id).orElse(null) == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -65,7 +65,7 @@ public class PortfolioController {
     @DeleteMapping("/{id}")
 	@Transactional
     public ResponseEntity delete(@PathVariable Long id) {
-    	Portfolio portfolio = portfolioRespository.findById(id).orElse(null);
+    	PortfolioEntity portfolio = portfolioRespository.findById(id).orElse(null);
         if (portfolio == null) {
             return ResponseEntity.badRequest().build();
         }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 import com.linh.pfa.stock.entity.StockRepository;
 import com.linh.pfa.stock.service.StockService;
 
@@ -34,13 +34,13 @@ public class StockController {
 	
 	@GetMapping("")
 	@Cacheable("stocks")
-	public List<Stock> getStocks() {
+	public List<StockEntity> getStocks() {
 		return stockRespository.findAll(Sort.by(Sort.Direction.ASC, "name"));
 	}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Stock> findById(@PathVariable Long id) {
-    	Stock stock = stockRespository.findById(id).orElse(null);
+    public ResponseEntity<StockEntity> findById(@PathVariable Long id) {
+    	StockEntity stock = stockRespository.findById(id).orElse(null);
         if (stock == null) {
             return ResponseEntity.notFound().build();
         }
@@ -51,15 +51,15 @@ public class StockController {
 	@PostMapping("")
 	@Transactional
     @CacheEvict(value = "stocks", allEntries = true)
-	public ResponseEntity<Stock> create(@RequestBody Stock stock) {
+	public ResponseEntity<StockEntity> create(@RequestBody StockEntity stock) {
 		return ResponseEntity.ok(stockService.create(stock));
 	}
 
     @PutMapping("/{id}")
 	@Transactional
     @CacheEvict(value = "stocks", allEntries = true)
-    public ResponseEntity<Stock> update(@PathVariable Long id, @RequestBody Stock stock) {
-    	Stock stockOld = stockRespository.findById(id).orElse(null);
+    public ResponseEntity<StockEntity> update(@PathVariable Long id, @RequestBody StockEntity stock) {
+    	StockEntity stockOld = stockRespository.findById(id).orElse(null);
         if (stockOld == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -70,7 +70,7 @@ public class StockController {
     @DeleteMapping("/{id}")
     @CacheEvict(value = "stocks", allEntries = true)
     public ResponseEntity delete(@PathVariable Long id) {
-    	Stock stock = stockRespository.findById(id).orElse(null);
+    	StockEntity stock = stockRespository.findById(id).orElse(null);
         if (stock == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -89,7 +89,7 @@ public class StockController {
     @PutMapping("/refresh/price/{id}")
     @CacheEvict(value = "stocks", allEntries = true)
     public ResponseEntity<Double> refreshPrice(@PathVariable Long id) {
-    	Stock stock = stockRespository.findById(id).orElse(null);
+    	StockEntity stock = stockRespository.findById(id).orElse(null);
         if (!stockRespository.findById(id).isPresent()) {
             return ResponseEntity.badRequest().build();
         }
@@ -102,7 +102,7 @@ public class StockController {
 
     @GetMapping("/latestprice/{id}")
     public ResponseEntity<BigDecimal> getLatestPrice(@PathVariable Long id) {
-    	Stock stock = stockRespository.findById(id).orElse(null);
+    	StockEntity stock = stockRespository.findById(id).orElse(null);
         if (!stockRespository.findById(id).isPresent()) {
             return ResponseEntity.badRequest().build();
         }

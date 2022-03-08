@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.linh.pfa.stock.entity.Portfolio;
+import com.linh.pfa.stock.entity.PortfolioEntity;
 import com.linh.pfa.stock.entity.PortfolioRepository;
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 import com.linh.pfa.stock.entity.StockRepository;
 import com.linh.pfa.stock.util.StockPriceRetrieverChain;
 
@@ -25,14 +25,14 @@ public class StockService {
 	private StockPriceRetrieverChain stockPriceRetrieverChain;
 
 	@Transactional
-	public Stock create(Stock stock) {
+	public StockEntity create(StockEntity stock) {
 		stock = stockRespository.saveAndFlush(stock);
 		stock = refreshPrice(stock);
 		return stock;
 	}
 	
 	@Transactional
-	public Stock update(Stock stockOld, Stock stockNew) {
+	public StockEntity update(StockEntity stockOld, StockEntity stockNew) {
 		boolean codeChanged = !stockOld.getCode().equals(stockNew.getCode()); 
         stockRespository.save(stockNew); 
 		if (codeChanged) {
@@ -44,14 +44,14 @@ public class StockService {
 	@Transactional
     public void refreshPrice() {
 		// refresh active portfolio stock price
-		List<Portfolio> portfolios = portfolioRespository.findActivePortfolio();
-		for (Portfolio portfolio : portfolios) {
+		List<PortfolioEntity> portfolios = portfolioRespository.findActivePortfolio();
+		for (PortfolioEntity portfolio : portfolios) {
 			refreshPrice(portfolio.getStock());
 		}
 	}
 	
 	@Transactional
-    public Stock refreshPrice(Stock stock) {
+    public StockEntity refreshPrice(StockEntity stock) {
 		if (stock.getCode()==null || stock.getCode().endsWith(".UN")) {
 			return stock;
 		}
@@ -72,7 +72,7 @@ public class StockService {
 		return stock;
     }
 	
-	public BigDecimal getLatestPrice(Stock stock) {
+	public BigDecimal getLatestPrice(StockEntity stock) {
 		if (stock.getCode().endsWith(".UN")) {
 			// psudeo stock
 			return stock.getLatestPrice();

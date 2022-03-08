@@ -16,12 +16,12 @@ import lombok.Setter;
 
 import com.linh.common.base.BaseEntity;
 
-@Entity
+@Entity(name="dividend")
 @SQLDelete(sql = "UPDATE dividend SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
-public class Dividend extends BaseEntity {
+public class DividendEntity extends BaseEntity {
 	@Column(nullable=false)
 	private Long stockId;
 	

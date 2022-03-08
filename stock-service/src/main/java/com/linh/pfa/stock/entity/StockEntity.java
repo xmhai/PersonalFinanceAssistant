@@ -19,13 +19,13 @@ import com.linh.pfa.common.enums.Category;
 import com.linh.pfa.common.enums.Currency;
 import com.linh.pfa.common.enums.Exchange;
 
-@Entity
+@Entity(name="stock")
 @SQLDelete(sql = "UPDATE stock SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
 @Cacheable
-public class Stock extends BaseEntity {
+public class StockEntity extends BaseEntity {
 	@Column(nullable=false, length=10)
 	private String code;
 	

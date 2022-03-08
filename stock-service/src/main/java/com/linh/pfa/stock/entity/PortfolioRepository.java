@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 
 // use JpaRepository instead of CrudRepository because findAll() return List<>
 @Repository
-public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
+public interface PortfolioRepository extends JpaRepository<PortfolioEntity, Long> {
 
 	@Query(value="SELECT * FROM portfolio where (realized_price is null or realized_price = 0) and stock_id = ?1", nativeQuery = true) 
-	List<Portfolio> findByStockId(Long stockId);
+	List<PortfolioEntity> findByStockId(Long stockId);
 	
 	@Query(value="SELECT * FROM portfolio where realized_price is null or realized_price = 0", nativeQuery = true) 
-	List<Portfolio> findActivePortfolio(); 
+	List<PortfolioEntity> findActivePortfolio(); 
 }

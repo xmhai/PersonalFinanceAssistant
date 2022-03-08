@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.linh.pfa.stock.entity.Dividend;
+import com.linh.pfa.stock.entity.DividendEntity;
 import com.linh.pfa.stock.entity.DividendRepository;
-import com.linh.pfa.stock.entity.Profit;
+import com.linh.pfa.stock.entity.ProfitEntity;
 import com.linh.pfa.stock.entity.ProfitRepository;
 
 @Service
@@ -21,10 +21,10 @@ public class DividendService {
 	private ProfitRepository profitRespository;
 	
 	@Transactional
-	public Dividend create(Dividend dividend) {
+	public DividendEntity create(DividendEntity dividend) {
 		// update profit
-    	Profit profit = null;
-    	List<Profit> profits = profitRespository.findByStockId(dividend.getStockId());
+    	ProfitEntity profit = null;
+    	List<ProfitEntity> profits = profitRespository.findByStockId(dividend.getStockId());
 		profit = profits.get(0);
 		profit.setDividend(profit.getDividend().add(dividend.getAmount()));
     	profitRespository.save(profit);
@@ -33,11 +33,11 @@ public class DividendService {
 	}
 
 	@Transactional
-	public Dividend update(Dividend dividendOld, Dividend dividendNew) {
+	public DividendEntity update(DividendEntity dividendOld, DividendEntity dividendNew) {
 		// update profit
 		if (!dividendOld.getAmount().equals(dividendNew.getAmount())) {
 			BigDecimal difference = dividendNew.getAmount().subtract(dividendOld.getAmount());
-	    	Profit profit = profitRespository.findByStockId(dividendNew.getStockId()).get(0);
+	    	ProfitEntity profit = profitRespository.findByStockId(dividendNew.getStockId()).get(0);
 			profit.setDividend(profit.getDividend().add(difference));
 	    	profitRespository.save(profit);
 		}
@@ -46,9 +46,9 @@ public class DividendService {
 	}
 
 	@Transactional
-	public void delete(Dividend dividend) {
+	public void delete(DividendEntity dividend) {
 		// update profit
-    	Profit profit = profitRespository.findByStockId(dividend.getStockId()).get(0);
+    	ProfitEntity profit = profitRespository.findByStockId(dividend.getStockId()).get(0);
 		profit.setDividend(profit.getDividend().subtract(dividend.getAmount()));
     	profitRespository.save(profit);
 		

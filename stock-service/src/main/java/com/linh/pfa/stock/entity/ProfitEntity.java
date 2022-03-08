@@ -17,15 +17,15 @@ import lombok.Setter;
 
 import com.linh.common.base.BaseEntity;
 
-@Entity
+@Entity(name="profit")
 @SQLDelete(sql = "UPDATE profit SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
-public class Profit extends BaseEntity {
+public class ProfitEntity extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "stock_id", foreignKey = @javax.persistence.ForeignKey(name = "none"))
-	private Stock stock;
+	private StockEntity stock;
 	
 	// in SGD as it should reflect the earning at the time when profit is realized
 	@Column(precision=8, scale=2)
@@ -35,7 +35,7 @@ public class Profit extends BaseEntity {
 	@Column(precision=8, scale=2)
 	private BigDecimal dividend = new BigDecimal(0);
 
-	public Profit(Stock stock) {
+	public ProfitEntity(StockEntity stock) {
 		this.stock = stock;
 	}
 }

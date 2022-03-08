@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 
 @Service
 public class StockPriceRetrieverChain {
@@ -27,7 +27,7 @@ public class StockPriceRetrieverChain {
 		return this;
 	}
 	
-	public double getPrice(Stock stock) {
+	public double getPrice(StockEntity stock) {
 		for (StockPriceRetriever retriever : retrievers) {
 			System.out.println("Stock:" + stock.getCode());
 			double price = retriever.getPrice(stock);

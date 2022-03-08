@@ -19,7 +19,7 @@ import lombok.Setter;
 import com.linh.common.base.BaseEntity;
 import com.linh.pfa.common.enums.Action;
 
-@Entity
+@Entity(name="transaction")
 @SQLDelete(sql = "UPDATE transaction SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @Table(indexes = {
@@ -27,7 +27,7 @@ import com.linh.pfa.common.enums.Action;
 		@Index(name = "idx_transaction_portfolio_id", columnList="portfolioId")})
 @DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
-public class Transaction extends BaseEntity {
+public class TransactionEntity extends BaseEntity {
 	@Column(nullable=false)
 	private Long stockId;
 	

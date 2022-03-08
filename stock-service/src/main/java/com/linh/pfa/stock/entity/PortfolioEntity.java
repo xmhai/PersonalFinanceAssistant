@@ -18,15 +18,15 @@ import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linh.common.base.BaseEntity;
 
-@Entity
+@Entity(name="portfolio")
 @SQLDelete(sql = "UPDATE portfolio SET is_deleted = 1 WHERE id = ?")
 @Where(clause = "is_deleted = 0")
 @DynamicInsert @DynamicUpdate
 @Getter @Setter @NoArgsConstructor
-public class Portfolio extends BaseEntity {
+public class PortfolioEntity extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "stock_id", foreignKey = @javax.persistence.ForeignKey(name = "none"))
-	private Stock stock;
+	private StockEntity stock;
 	
 	@Column(nullable=false)
 	private Integer quantity; // if quantity, means this portfolio is closed
@@ -38,7 +38,7 @@ public class Portfolio extends BaseEntity {
 	@Column(precision=8, scale=3)
 	private BigDecimal realizedPrice;
 	
-	public Portfolio(Stock stock, Integer quantity, BigDecimal cost) {
+	public PortfolioEntity(StockEntity stock, Integer quantity, BigDecimal cost) {
 		this.stock = stock; 
 		this.quantity = quantity; 
 		this.cost = cost; 

@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.jayway.jsonpath.JsonPath;
 import com.linh.pfa.common.enums.Exchange;
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 
 import antlr.StringUtils;
 
@@ -21,7 +21,7 @@ public class AlphavantageRetriever implements StockPriceRetriever {
 	private LocalDateTime invokeTime;
 	
 	@Override
-	public double getPrice(Stock stock) {
+	public double getPrice(StockEntity stock) {
 		String code = stock.getCode();
         // Format stock code 
 		if (code.indexOf('.')<0) {

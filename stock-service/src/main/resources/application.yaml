@@ -19,7 +19,8 @@ spring:
     date-format: dd-MM-yyyy HH:mm:ss
   data:
     redis.repositories.enabled: false
-
+  favicon.enabled: false
+  
 pfa:
   endpoint:
     common-service: ${COMMON_SERVICE_ENDPOINT:http://localhost:10081}

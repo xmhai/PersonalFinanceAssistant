@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.linh.common.base.BusinessException;
 import com.linh.pfa.common.enums.Category;
-import com.linh.pfa.common.service.CommonServiceProxy;
-import com.linh.pfa.stock.entity.Portfolio;
+import com.linh.pfa.stock.entity.PortfolioEntity;
 import com.linh.pfa.stock.entity.PortfolioRepository;
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 import com.linh.pfa.stock.entity.StockRepository;
 
 @Service
@@ -27,14 +26,14 @@ public class PortfolioService {
 	@Autowired
 	private StockRepository stockRespository;
 	@Autowired
-	private CommonServiceProxy commonService;
+	private CommonService commonService;
 
 	@Transactional
-	public Portfolio addPosition(Long stockId, Integer quantity, BigDecimal price) {
-    	Portfolio portfolio = null;
-    	List<Portfolio> portfolios = portfolioRespository.findByStockId(stockId);
+	public PortfolioEntity addPosition(Long stockId, Integer quantity, BigDecimal price) {
+    	PortfolioEntity portfolio = null;
+    	List<PortfolioEntity> portfolios = portfolioRespository.findByStockId(stockId);
     	
-    	Stock stock = stockRespository.findById(stockId).orElse(null);
+    	StockEntity stock = stockRespository.findById(stockId).orElse(null);
     	
     	// create new profit item if not exists
     	profitService.addStock(stock);
@@ -42,7 +41,7 @@ public class PortfolioService {
 		// BUY
     	if (portfolios.isEmpty()) {
     		// create new portfolio
-    		portfolio = new Portfolio(stock, quantity, price);
+    		portfolio = new PortfolioEntity(stock, quantity, price);
     	} else {
     		// update portfolio
     		portfolio = portfolios.get(0);
@@ -52,9 +51,9 @@ public class PortfolioService {
 	}
 
 	@Transactional
-	public Portfolio reducePosition(Long stockId, Integer quantity, BigDecimal price) throws BusinessException {
-    	Portfolio portfolio = null;
-    	List<Portfolio> portfolios = portfolioRespository.findByStockId(stockId);
+	public PortfolioEntity reducePosition(Long stockId, Integer quantity, BigDecimal price) throws BusinessException {
+    	PortfolioEntity portfolio = null;
+    	List<PortfolioEntity> portfolios = portfolioRespository.findByStockId(stockId);
 		// SELL, decrease portfolio
     	if (portfolios.isEmpty()) {
     		throw new BusinessException("No position, cannot sell the stock: "+stockId);
@@ -71,9 +70,9 @@ public class PortfolioService {
 		return portfolioRespository.save(portfolio);
 	}
 	
-	private Portfolio closePosition(Portfolio portfolio, Long stockId, Integer quantity, BigDecimal price) {
+	private PortfolioEntity closePosition(PortfolioEntity portfolio, Long stockId, Integer quantity, BigDecimal price) {
 		Map<Long, BigDecimal> currencies = commonService.getExchangeRate();
-    	Stock stock = stockRespository.findById(stockId).orElse(null);
+    	StockEntity stock = stockRespository.findById(stockId).orElse(null);
 		
     	// calculate profit
 		Long currencyId = Long.valueOf(stock.getCurrency().getValue());
@@ -90,12 +89,12 @@ public class PortfolioService {
 	public Map<String, Double> getAllocation() {
 		Map<Long, BigDecimal> currencies = commonService.getExchangeRate();
 		
-		List<Portfolio> portfolios = portfolioRespository.findActivePortfolio();
+		List<PortfolioEntity> portfolios = portfolioRespository.findActivePortfolio();
 		double stockAmt = 0; 
 		double bondAmt = 0; 
 		double reitAmt = 0; 
-		for (Portfolio portfolio : portfolios) {
-			Stock stock = portfolio.getStock();
+		for (PortfolioEntity portfolio : portfolios) {
+			StockEntity stock = portfolio.getStock();
 			BigDecimal amt = stock.getLatestPrice().multiply(new BigDecimal(portfolio.getQuantity()));
 			Long currencyId = Long.valueOf(stock.getCurrency().getValue());
 			double amtSGD = amt.doubleValue() * currencies.get(currencyId).doubleValue();

@@ -2,7 +2,7 @@ package com.linh.pfa.stock.util;
 
 import org.springframework.stereotype.Service;
 
-import com.linh.pfa.stock.entity.Stock;
+import com.linh.pfa.stock.entity.StockEntity;
 
 @Service
 public class SiHtmlStockPriceRetriever extends HtmlStockPriceRetriever {
@@ -13,13 +13,13 @@ public class SiHtmlStockPriceRetriever extends HtmlStockPriceRetriever {
 	}
 	
 	@Override
-    public String getStockCode(Stock stock) {
+    public String getStockCode(StockEntity stock) {
         return stock.getCode();
     }
 	
 	public static void main (String[] args) {
 		SiHtmlStockPriceRetriever r = new SiHtmlStockPriceRetriever();
-		Stock stock = new Stock();
+		StockEntity stock = new StockEntity();
 		stock.setCode("D05.SI");
 		System.out.println(r.getPrice(stock));
 	}

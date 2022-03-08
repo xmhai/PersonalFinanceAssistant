@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: CronJob
+metadata:
+  name: stock-price-job
+  labels:
+    component: stock-price-job
+spec:
+  schedule: "30 22 * * *"
+  jobTemplate:
+    spec:
+      containers:
+        - name: stock-price-job
+          image: harbor.home:9443/library/stock-price-job
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service/pfa
+            - name: SPRING_DATASOURCE_USERNAME
+              value: hai
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dbpassword
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: REDIS_URL
+              value: redis://redis-service:6379 # must include the port, otherwise redission client cannot connect
+            - name: COMMON_SERVICE_ENDPOINT
+              value: http://common-service:8080
+            - name: STOCK_SERVICE_ENDPOINT
+              value: http://stock-service:8080

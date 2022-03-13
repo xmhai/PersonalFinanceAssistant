@@ -27,7 +27,7 @@ import org.springframework.web.client.RestTemplate;
 public class StockPriceJobApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StockPriceJobApplication.class, args);
+		SpringApplication.exit(SpringApplication.run(StockPriceJobApplication.class, args));
 	}
 
 	@Bean
